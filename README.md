@@ -1,2 +1,2 @@
-# Tema13-SmartGarage
+# Team13-SmartGarage
 

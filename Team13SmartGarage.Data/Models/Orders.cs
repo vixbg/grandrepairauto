@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Team13SmartGarage.Data.Enums;
 
@@ -7,14 +9,19 @@ namespace Team13SmartGarage.Data.Models
 {
     public class Orders
     {
+        [Key]
         public int OrderID { get; set; }
+        [Required]
         public OrderStatuses Status { get; set; }
         public int UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
         public Users User { get; set; }
         public int VehicleId { get; set; }
+        [ForeignKey(nameof(VehicleId))]
         public Vehicles Vehicle { get; set; }
-        public List<CustomerService> CustomerServices { get; set; }
+        public List<CustomerService> CustomerServices { get; set; } = new List<CustomerService>();
         public double TotalPrice { get; set; }
+        [Required]
         public bool IsDeleted { get; set; }
     }
 }

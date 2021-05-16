@@ -21,7 +21,6 @@ namespace Team13SmartGarage.Data.Models
         public Vehicles Vehicle { get; set; }
         public List<CustomerService> CustomerServices { get; set; } = new List<CustomerService>();
         public double TotalPrice { get; set; }
-        [Required]
-        public bool IsDeleted { get; set; }
+        public DateTime IsDeleted { get; set; }
     }
 }

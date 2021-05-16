@@ -9,6 +9,7 @@ namespace Team13SmartGarage.Data.Models
     {
         [Key]
         public int UserID { get; set; }
+        public DateTime IsDeleted { get; set; }
        
     }
 }

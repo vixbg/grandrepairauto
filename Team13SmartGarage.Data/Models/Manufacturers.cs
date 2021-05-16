@@ -12,7 +12,7 @@ namespace Team13SmartGarage.Data.Models
         [Required]
         [StringLength(30, MinimumLength = 1, ErrorMessage = "Manufacturer name should be between 1 and 30 characters.")]
         public string Name { get; set; }
-        [Required]
-        public bool IsDeleted { get; set; }
+        public DateTime IsDeleted { get; set; }
+
     }
 }

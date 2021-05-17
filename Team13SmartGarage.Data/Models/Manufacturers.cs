@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class Manufacturer
+    public class Manufacturers
     {
         [Key]
         public int Id { get; set; }

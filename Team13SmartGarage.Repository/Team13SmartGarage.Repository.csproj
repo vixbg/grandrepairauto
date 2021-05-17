@@ -21,8 +21,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Team13SmartGarage.Data\Team13SmartGarage.Data.csproj" />
-  </ItemGroup>
-
 </Project>

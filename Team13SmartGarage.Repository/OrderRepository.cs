@@ -2,7 +2,7 @@
 
 namespace Team13SmartGarage.Repository
 {
-    public class Class1
+    public class OrderRepository
     {
     }
 }

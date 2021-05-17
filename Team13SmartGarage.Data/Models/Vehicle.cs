@@ -7,7 +7,7 @@ using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class Vehicles
+    public class Vehicle
     {
         [Key]
         public int VehicleId { get; set; }
@@ -16,7 +16,7 @@ namespace Team13SmartGarage.Data.Models
         public string RegPlate { get; set; }
         [Required]
         public int ManufacturerId { get; set; }
-        public Manufacturers Manufacturer { get; set; }
+        public Manufacturer Manufacturer { get; set; }
         [Required]
         public VehicleTypes VehicleType { get; set; }
         [Required]
@@ -26,7 +26,7 @@ namespace Team13SmartGarage.Data.Models
         public string Vin { get; set; }
         [Required]
         public int ModelId { get; set; }
-        public VehicleModels Model { get; set; }
+        public VehicleModel Model { get; set; }
         [Required]
         [Range(0, 2000000, ErrorMessage = "Mileage must be between 0 and 2 000 000 kilometers.")]
         public int Mileage { get; set; }
@@ -35,7 +35,7 @@ namespace Team13SmartGarage.Data.Models
         public string Color { get; set; }
         [Required]
         public int OwnerId { get; set; }
-        public Users Owner { get; set; }
+        public User Owner { get; set; }
         public DateTime IsDeleted { get; set; }
 
 

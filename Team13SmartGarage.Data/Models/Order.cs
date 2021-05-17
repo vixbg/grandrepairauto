@@ -7,7 +7,7 @@ using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class Orders
+    public class Order
     {
         [Key]
         public int OrderID { get; set; }
@@ -15,10 +15,10 @@ namespace Team13SmartGarage.Data.Models
         public OrderStatuses Status { get; set; }
         public int UserId { get; set; }
         [ForeignKey(nameof(UserId))]
-        public Users User { get; set; }
+        public User User { get; set; }
         public int VehicleId { get; set; }
         [ForeignKey(nameof(VehicleId))]
-        public Vehicles Vehicle { get; set; }
+        public Vehicle Vehicle { get; set; }
         public List<CustomerService> CustomerServices { get; set; } = new List<CustomerService>();
         public double TotalPrice { get; set; }
         public DateTime IsDeleted { get; set; }

@@ -13,21 +13,21 @@ namespace Team13SmartGarage.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Order>()
-                .HasOne<User>(o => o.User)
+            modelBuilder.Entity<Orders>()
+                .HasOne<Users>(o => o.User)
                 .WithMany()
                 .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
-            modelBuilder.Entity<Order>()
-                .HasOne<Vehicle>(o => o.Vehicle)
+            modelBuilder.Entity<Orders>()
+                .HasOne<Vehicles>(o => o.Vehicle)
                 .WithMany()
                 .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
         }
 
-        public DbSet<Vehicle> Vehicles { get; set; }
-        public DbSet<VehicleModel> VehicleModels { get; set; }
-        public DbSet<Service> Services { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Manufacturer> Manufacturers { get; set; }
+        public DbSet<Vehicles> Vehicles { get; set; }
+        public DbSet<VehicleModels> VehicleModels { get; set; }
+        public DbSet<Services> Services { get; set; }
+        public DbSet<Orders> Orders { get; set; }
+        public DbSet<Manufacturers> Manufacturers { get; set; }
         public DbSet<CustomerService> CustomerServices { get; set; }
     }
 }

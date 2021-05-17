@@ -36,7 +36,7 @@ namespace Team13SmartGarage.Data.Models
         [Required]
         public int OwnerId { get; set; }
         public User Owner { get; set; }
-        public DateTime IsDeleted { get; set; }
+        public DateTime? IsDeleted { get; set; }
 
 
     }

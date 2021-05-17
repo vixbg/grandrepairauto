@@ -5,14 +5,13 @@ using System.Text;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class Manufacturer
+    public class Manufacturer : Entity<int>
     {
-        [Key]
-        public int Id { get; set; }
+
         [Required]
         [StringLength(30, MinimumLength = 1, ErrorMessage = "Manufacturer name should be between 1 and 30 characters.")]
         public string Name { get; set; }
-        public DateTime IsDeleted { get; set; }
+        public DateTime? IsDeleted { get; set; }
 
     }
 }

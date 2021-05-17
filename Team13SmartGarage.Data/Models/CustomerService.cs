@@ -19,6 +19,6 @@ namespace Team13SmartGarage.Data.Models
         public Order Order { get; set; }
         public ServiceStatuses Status { get; set; }
         public DateTime Date { get; set; }
-        public DateTime IsDeleted { get; set; }
+        public DateTime? IsDeleted { get; set; }
     }
 }

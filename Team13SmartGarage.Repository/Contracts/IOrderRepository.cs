@@ -5,7 +5,7 @@ using Team13SmartGarage.Data.Models;
 
 namespace Team13SmartGarage.Repository.Contracts
 {
-    interface IOrderRepository
+    interface IOrderRepository : IDisposable
     {
         IEnumerable<Order> GetOrders();
         Order GetOrderByID(int orderId);

@@ -9,9 +9,15 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Team13SmartGarage.Data;
+using Team13SmartGarage.Data.Models;
+using Team13SmartGarage.Repository;
+using Team13SmartGarage.Services;
+using Team13SmartGarage.Services.Models.ManufacturerDTOs;
+using Team13SmartGarage.Services.Models.OrderDTOs;
 
 namespace Team13SmartGarage
 {
@@ -24,9 +30,23 @@ namespace Team13SmartGarage
 
         public IConfiguration Configuration { get; }
 
+        public void AddAutomapper(IServiceCollection services)
+        {
+            var config = new MapperConfiguration(c =>
+            {
+                c.CreateMap<Order, OrderDTO>().ReverseMap();
+                c.CreateMap<Order, OrderCreateDTO>().ReverseMap();
+                c.CreateMap<Manufacturer, ManufacturerDTO>().ReverseMap();
+                c.CreateMap<Manufacturer, ManufacturerCreateDTO>().ReverseMap();
+            });
+
+            services.AddSingleton(config.CreateMapper());
+        }
+
         // This method gets called by the runtime. Use this method to add services to the Container.
         public void ConfigureServices(IServiceCollection services)
         {
+            AddAutomapper(services);
             services.AddControllersWithViews();
 
             services.AddDbContext<GarageContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EntityString")));
@@ -35,9 +55,17 @@ namespace Team13SmartGarage
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
-            services.AddSwaggerGen(c => c.ResolveConflictingActions(a => a.First()));
+            // Repositories
+            services.AddScoped<GenericRepository<Order, int>>();
+            services.AddScoped<GenericRepository<Manufacturer, int>>();
+
+            // Services
+            services.AddScoped<GenericService<Order, int, OrderDTO, OrderCreateDTO>>();
+            services.AddScoped<GenericService<Manufacturer, int, ManufacturerDTO, ManufacturerCreateDTO>>();
+
             services.AddSwaggerGen(c =>
             {
+                c.ResolveConflictingActions(a => a.First());
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SmartGarage13", Version = "V1", Description = "This is Swagger documentation about SmartGarage13" });
 
                 var fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

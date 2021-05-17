@@ -12,6 +12,6 @@ namespace Team13SmartGarage.Data.Models
         [Required]
         [StringLength(30, MinimumLength = 1, ErrorMessage = "Model name should be between 1 and 30 characters.")]
         public string Name { get; set; }
-        public DateTime IsDeleted { get; set; }
+        public DateTime? IsDeleted { get; set; }
     }
 }

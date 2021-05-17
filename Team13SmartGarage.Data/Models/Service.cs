@@ -6,7 +6,7 @@ using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class Services
+    public class Service
     {
         [Key]
         public int ServiceID { get; set; }

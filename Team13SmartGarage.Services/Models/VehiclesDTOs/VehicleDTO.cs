@@ -1,7 +1,18 @@
-﻿namespace Team13SmartGarage.Services.Models.VehiclesDTOs
+﻿using Team13SmartGarage.Data.Enums;
+using Team13SmartGarage.Data.Models;
+
+namespace Team13SmartGarage.Services.Models.VehiclesDTOs
 {
     public class VehicleDTO : DTO<int>
     {
-        
+        public string RegPlate { get; set; }
+        public Manufacturer Manufacturer { get; set; }
+        public VehicleTypes VehicleType { get; set; }
+        public EngineTypes EngineType { get; set; }
+        public string Vin { get; set; }
+        public VehicleModel Model { get; set; }
+        public int Mileage { get; set; }
+        public string Color { get; set; }
+        public User Owner { get; set; }
     }
 }

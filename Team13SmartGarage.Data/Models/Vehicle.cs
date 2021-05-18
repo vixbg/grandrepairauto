@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Text;
 using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
@@ -35,7 +32,5 @@ namespace Team13SmartGarage.Data.Models
         public int OwnerId { get; set; }
         public User Owner { get; set; }
         public DateTime? IsDeleted { get; set; }
-
-
     }
 }

@@ -7,10 +7,8 @@ using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class CustomerService
+    public class CustomerService : Entity<int>
     {
-        [Key]
-        public int CustomerServiceID { get; set; }
         public int ServiceId { get; set; }
         [ForeignKey(nameof(ServiceId))]
         public Service Service { get; set; }

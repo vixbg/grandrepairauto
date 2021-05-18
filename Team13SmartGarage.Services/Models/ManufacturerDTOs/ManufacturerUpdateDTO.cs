@@ -1,6 +1,6 @@
 ﻿namespace Team13SmartGarage.Services.Models.ManufacturerDTOs
 {
-    public class ManufacturerCreateDTO : DTO<int>
+    public class ManufacturerUpdateDTO : DTO<int>
     {
         
     }

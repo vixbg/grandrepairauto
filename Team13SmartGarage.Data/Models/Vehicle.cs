@@ -7,10 +7,8 @@ using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class Vehicle
+    public class Vehicle : Entity<int>
     {
-        [Key]
-        public int VehicleId { get; set; }
         [Required]
         [StringLength(7, MinimumLength = 4, ErrorMessage = "Registration Plate must be between 4 and 7 characters.")]
         public string RegPlate { get; set; }

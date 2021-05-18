@@ -1,6 +1,6 @@
 ﻿namespace Team13SmartGarage.Services.Models.OrderDTOs
 {
-    public class OrderDTO : IDto
+    public class OrderDTO : DTO<int>
     {
         
     }

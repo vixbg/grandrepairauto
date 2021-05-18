@@ -5,10 +5,8 @@ using System.Text;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class VehicleModel
+    public class VehicleModel : Entity<int>
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         [StringLength(30, MinimumLength = 1, ErrorMessage = "Model name should be between 1 and 30 characters.")]
         public string Name { get; set; }

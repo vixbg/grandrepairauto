@@ -6,10 +6,8 @@ using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class Service
+    public class Service : Entity<int>
     {
-        [Key]
-        public int ServiceID { get; set; }
         public VehicleTypes VehicleType { get; set; }
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Service name Must be between 5 and 100 characters.")]
         public string Name { get; set; }

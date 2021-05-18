@@ -5,10 +5,8 @@ using System.Text;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class User
+    public class User : Entity<int>
     {
-        [Key]
-        public int UserID { get; set; }
         public DateTime? IsDeleted { get; set; }
        
     }

@@ -18,6 +18,7 @@ using Team13SmartGarage.Repository;
 using Team13SmartGarage.Services;
 using Team13SmartGarage.Services.Models.ManufacturerDTOs;
 using Team13SmartGarage.Services.Models.OrderDTOs;
+using Team13SmartGarage.Services.Models.VehiclesDTOs;
 
 namespace Team13SmartGarage
 {
@@ -58,11 +59,13 @@ namespace Team13SmartGarage
             // Repositories
             services.AddScoped<GenericRepository<Order, int>>();
             services.AddScoped<GenericRepository<Manufacturer, int>>();
+            services.AddScoped<GenericRepository<Vehicle, int>>();
 
             // Services
-            services.AddScoped<GenericService<Order, int, OrderDTO, OrderCreateDTO>>();
-            services.AddScoped<GenericService<Manufacturer, int, ManufacturerDTO, ManufacturerCreateDTO>>();
-
+            services.AddScoped<GenericService<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO>>();
+            services.AddScoped<GenericService<Manufacturer, int, ManufacturerDTO, ManufacturerCreateDTO, ManufacturerUpdateDTO>>();
+            services.AddScoped<GenericService<Vehicle, int, VehicleDTO, VehicleCreateDTO, VehicleUpdateDTO>>();
+            
             services.AddSwaggerGen(c =>
             {
                 c.ResolveConflictingActions(a => a.First());

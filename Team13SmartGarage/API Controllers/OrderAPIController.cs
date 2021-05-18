@@ -6,15 +6,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Team13SmartGarage.Data.Models;
 using Team13SmartGarage.Services;
-using Team13SmartGarage.Services.Models.ManufacturerDTOs;
+using Team13SmartGarage.Services.Models.OrderDTOs;
 
 namespace Team13SmartGarage.Web.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ManufacturerController : GenericAPIController<Manufacturer, int, ManufacturerDTO,ManufacturerCreateDTO>
+    public class OrderAPIController : GenericAPIController<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO>
     {
-        public ManufacturerController(GenericService<Manufacturer, int, ManufacturerDTO, ManufacturerCreateDTO> service) : base(service)
+        public OrderAPIController(GenericService<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO> service) : base(service)
         {
             
         }

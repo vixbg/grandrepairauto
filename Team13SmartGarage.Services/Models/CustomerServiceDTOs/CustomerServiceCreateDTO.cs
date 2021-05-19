@@ -6,8 +6,8 @@ namespace Team13SmartGarage.Services.Models.CustomerServiceDTOs
 {
     public class CustomerServiceCreateDTO : DTO<int>
     {
-        public Service Service { get; set; }
-        public Order Order { get; set; }
+        public int ServiceId { get; set; }
+        public int OrderID { get; set; }
         public ServiceStatuses Status { get; set; }
         public DateTime Date { get; set; }
     }

@@ -23,7 +23,6 @@
     },
     "Team13SmartGarage.Web.Vix": {
       "commandName": "Project",
-      "workingDirectory": ".\\bin\\Debug\\netcoreapp3.1",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development.Vix",
@@ -33,7 +32,6 @@
     },
     "Team13SmartGarage.Web.Rumi": {
       "commandName": "Project",
-      "workingDirectory": ".\\bin\\Debug\\netcoreapp3.1",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development.Rumi",

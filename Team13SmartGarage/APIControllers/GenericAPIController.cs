@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Team13SmartGarage.Data.Models;
 using Team13SmartGarage.Services;
@@ -11,7 +12,7 @@ using Team13SmartGarage.Services.Models;
 namespace Team13SmartGarage.Web.Controllers.API
 {
     public abstract class GenericAPIController<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> : ControllerBase
-        where TEntity : class, IEntity<TPrimaryKey>
+        where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
         where TPrimaryDTO : class, IDTO
         where TCreateDTO : class, IDTO
         where TUpdateDTO : class, IDTO
@@ -30,9 +31,17 @@ namespace Team13SmartGarage.Web.Controllers.API
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public TPrimaryDTO GetByID(TPrimaryKey Id)
         {
-            return this.service.GetByID(Id);
+            var result = this.service.GetByID(Id);
+            if (result == null)
+            {
+                Response.StatusCode = StatusCodes.Status404NotFound;
+            }
+
+            return result;
         }
 
         [HttpPost()]
@@ -41,16 +50,27 @@ namespace Team13SmartGarage.Web.Controllers.API
             return this.service.Create(entity);
         }
 
-        [HttpPut()]
-        public TPrimaryDTO Update(TUpdateDTO entity)
+        [HttpPut("{id}")]
+        public TPrimaryDTO Update(TUpdateDTO entity, TPrimaryKey id)
         {
-            return this.service.Update(entity);
+            var result = this.service.Update(entity, id);
+            if (result == null)
+            {
+                Response.StatusCode = StatusCodes.Status404NotFound;
+            }
+
+            return result;
         }
 
         [HttpDelete("{id}")]
-        public bool Delete(TPrimaryKey id)
+        public IActionResult Delete(TPrimaryKey id)
         {
-            return this.service.Delete(id);
+            if (this.service.Delete(id))
+            {
+                return NoContent();
+            }
+
+            return NotFound();
         }
     }
 }

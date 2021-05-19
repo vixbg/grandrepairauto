@@ -8,7 +8,7 @@ using Team13SmartGarage.Services.Models;
 namespace Team13SmartGarage.Services
 {
     public class GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> 
-        where TEntity : class, IEntity<TPrimaryKey>
+        where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
         where TPrimaryDTO : class, IDTO
         where TCreateDTO : class, IDTO
         where TUpdateDTO : class, IDTO
@@ -30,6 +30,10 @@ namespace Team13SmartGarage.Services
         public TPrimaryDTO GetByID(TPrimaryKey id)
         {
             var entity = this.repository.GetByID(id);
+            if (entity == null)
+            {
+                return null;
+            }
             return mapper.Map<TPrimaryDTO>(entity);
         }
 
@@ -40,9 +44,14 @@ namespace Team13SmartGarage.Services
             return mapper.Map<TPrimaryDTO>(entity);
         }
 
-        public TPrimaryDTO Update(TUpdateDTO dto)
+        public TPrimaryDTO Update(TUpdateDTO dto, TPrimaryKey id)
         {
-            var entity = mapper.Map<TEntity>(dto);
+            var entity = repository.GetByID(id);
+            if (entity == null)
+            {
+                return null;
+            }
+            mapper.Map(dto, entity);
             repository.Update(entity);
             return mapper.Map<TPrimaryDTO>(entity);
 
@@ -50,7 +59,12 @@ namespace Team13SmartGarage.Services
 
         public bool Delete(TPrimaryKey id)
         {
-            repository.Delete(id);
+            var entity = repository.GetByID(id);
+            if (entity == null)
+            {
+                return false;
+            }
+            repository.Delete(entity);
             return true;
         }
     }

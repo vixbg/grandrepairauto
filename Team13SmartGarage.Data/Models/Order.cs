@@ -6,7 +6,7 @@ using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class Order : Entity<int>
+    public class Order : Entity<int>, ISoftDeletable
     {
         [Required]
         public OrderStatuses Status { get; set; }

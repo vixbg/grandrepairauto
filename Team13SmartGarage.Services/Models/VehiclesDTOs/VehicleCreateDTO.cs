@@ -6,7 +6,7 @@ namespace Team13SmartGarage.Services.Models.VehiclesDTOs
     public class VehicleCreateDTO : DTO<int>
     {
         public string RegPlate { get; set; }
-        public Manufacturer Manufacturer { get; set; }
+        public int ManufacturerId { get; set; }
         public VehicleTypes VehicleType { get; set; }
         public EngineTypes EngineType { get; set; }
         public string Vin { get; set; }

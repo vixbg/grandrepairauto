@@ -4,7 +4,7 @@ using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class Vehicle : Entity<int>
+    public class Vehicle : Entity<int>, ISoftDeletable
     {
         [Required]
         [StringLength(7, MinimumLength = 4, ErrorMessage = "Registration Plate must be between 4 and 7 characters.")]

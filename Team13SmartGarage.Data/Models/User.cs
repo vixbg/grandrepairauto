@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class User : Entity<int>
+    public class User : Entity<int>, ISoftDeletable
     {
         public DateTime? IsDeleted { get; set; }
        

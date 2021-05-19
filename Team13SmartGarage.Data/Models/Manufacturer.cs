@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class Manufacturer : Entity<int>
+    public class Manufacturer : Entity<int>, ISoftDeletable
     {
 
         [Required]

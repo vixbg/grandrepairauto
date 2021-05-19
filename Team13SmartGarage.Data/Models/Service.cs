@@ -6,7 +6,7 @@ using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class Service : Entity<int>
+    public class Service : Entity<int>, ISoftDeletable
     {
         public VehicleTypes VehicleType { get; set; }
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Service name Must be between 5 and 100 characters.")]

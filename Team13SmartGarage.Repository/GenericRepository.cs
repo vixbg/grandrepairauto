@@ -8,7 +8,7 @@ using Team13SmartGarage.Data.Models;
 
 namespace Team13SmartGarage.Repository
 {
-    public class GenericRepository<TEntity, TPrimaryKey> where TEntity : class, IEntity<TPrimaryKey>
+    public class GenericRepository<TEntity, TPrimaryKey> where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
     {
         internal GarageContext context;
         internal DbSet<TEntity> dbSet;
@@ -26,11 +26,14 @@ namespace Team13SmartGarage.Repository
         {
             IQueryable<TEntity> query = dbSet;
 
+            query = query.Where(e => e.IsDeleted == null);
+
             if (filter != null)
             {
                 query = query.Where(filter);
             }
 
+            
             foreach (var includeProperty in includeProperties.Split
                 (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
@@ -62,7 +65,7 @@ namespace Team13SmartGarage.Repository
         {
             TEntity entityToDelete = dbSet.Find(id);
             Delete(entityToDelete);
-            context.SaveChanges();
+            
         }
 
         public virtual void Delete(TEntity entityToDelete)
@@ -71,7 +74,9 @@ namespace Team13SmartGarage.Repository
             {
                 dbSet.Attach(entityToDelete);
             }
-            dbSet.Remove(entityToDelete);
+
+            entityToDelete.IsDeleted = DateTime.Now;
+
             context.SaveChanges();
         }
 

@@ -10,6 +10,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Team13SmartGarage.Data;
@@ -19,6 +21,7 @@ using Team13SmartGarage.Services;
 using Team13SmartGarage.Services.Models.ManufacturerDTOs;
 using Team13SmartGarage.Services.Models.OrderDTOs;
 using Team13SmartGarage.Services.Models.VehiclesDTOs;
+using Team13SmartGarage.Validators;
 
 namespace Team13SmartGarage
 {
@@ -48,13 +51,16 @@ namespace Team13SmartGarage
         public void ConfigureServices(IServiceCollection services)
         {
             AddAutomapper(services);
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddFluentValidation();
 
             services.AddDbContext<GarageContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EntityString")));
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            )
+                .AddFluentValidation(v => v.RegisterValidatorsFromAssemblyContaining<VehicleCreateValidator>());
+            
+            
 
             // Repositories
             services.AddScoped<GenericRepository<Order, int>>();
@@ -63,7 +69,7 @@ namespace Team13SmartGarage
 
             // Services
             services.AddScoped<GenericService<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO>>();
-            services.AddScoped<GenericService<Manufacturer, int, ManufacturerDTO, ManufacturerCreateDTO, ManufacturerUpdateDTO>>();
+            services.AddScoped<GenericService<Manufacturer, int, ManufacturerDTO, ManufacturerDTO, ManufacturerDTO>>();
             services.AddScoped<GenericService<Vehicle, int, VehicleDTO, VehicleCreateDTO, VehicleUpdateDTO>>();
             
             services.AddSwaggerGen(c =>

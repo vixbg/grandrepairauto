@@ -4,7 +4,7 @@ using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class CustomerService : Entity<int>
+    public class CustomerService : Entity<int>, ISoftDeletable
     {
         public int ServiceId { get; set; }
         [ForeignKey(nameof(ServiceId))]

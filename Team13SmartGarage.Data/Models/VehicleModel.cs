@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Team13SmartGarage.Data.Models
 {
-    public class VehicleModel : Entity<int>
+    public class VehicleModel : Entity<int>, ISoftDeletable
     {
         [Required]
         [StringLength(30, MinimumLength = 1, ErrorMessage = "Model name should be between 1 and 30 characters.")]

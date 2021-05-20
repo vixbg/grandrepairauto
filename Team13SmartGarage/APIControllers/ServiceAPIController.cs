@@ -8,9 +8,9 @@ namespace Team13SmartGarage.Web.API_Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ServiceAPIController : GenericAPIController<Service, int, ServiceDTO, ServiceCreateDTO, ServiceUpdateDTO>
+    public class ServiceAPIController : GenericAPIController<Service, int, ServiceDTO, ServiceDTO, ServiceDTO>
     {
-        public ServiceAPIController(GenericService<Service, int, ServiceDTO, ServiceCreateDTO, ServiceUpdateDTO> service) : base(service)
+        public ServiceAPIController(GenericService<Service, int, ServiceDTO, ServiceDTO, ServiceDTO> service) : base(service)
         {
 
         }

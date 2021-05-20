@@ -1,16 +1,14 @@
-﻿using System.Linq;
+﻿using AutoMapper;
 using System.Collections.Generic;
-using AutoMapper;
-using Team13SmartGarage.Data.Filters;
-using Team13SmartGarage.Data.Models;
-using Team13SmartGarage.Repository;
-using Team13SmartGarage.Services.Models;
-using Team13SmartGarage.Services.Models.Contracts;
+using System.Linq;
+using Team13SmartGarage.Data.Filters.Contracts;
 using Team13SmartGarage.Data.Models.Contracts;
+using Team13SmartGarage.Repository;
+using Team13SmartGarage.Services.Models.Contracts;
 
 namespace Team13SmartGarage.Services
 {
-    public class GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> 
+    public class GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO>
         where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
         where TPrimaryDTO : class, IDTO
         where TCreateDTO : class, IDTO
@@ -62,7 +60,6 @@ namespace Team13SmartGarage.Services
             mapper.Map(dto, entity);
             repository.Update(entity);
             return mapper.Map<TPrimaryDTO>(entity);
-
         }
 
         public bool Delete(TPrimaryKey id)

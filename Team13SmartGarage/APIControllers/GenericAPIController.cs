@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using Team13SmartGarage.Data.Filters;
+using Team13SmartGarage.Data.Filters.Contracts;
 using Team13SmartGarage.Data.Models.Contracts;
 using Team13SmartGarage.Services;
 using Team13SmartGarage.Services.Models.Contracts;

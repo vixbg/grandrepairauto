@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Team13SmartGarage.Data.Filters.Contracts;
 using Team13SmartGarage.Data.Models;
 
 namespace Team13SmartGarage.Data.Filters
@@ -15,13 +14,14 @@ namespace Team13SmartGarage.Data.Filters
         {
             if (!string.IsNullOrEmpty(this.Vehicle))
             {
-                entities = entities.Where(o =>
-                    o.Vehicle.RegPlate.Contains(this.Vehicle, StringComparison.OrdinalIgnoreCase));
+                entities = entities
+                    .Where(o => o.Vehicle.RegPlate
+                    .Contains(this.Vehicle, StringComparison.OrdinalIgnoreCase));
             }
 
             if (this.Date.HasValue)
             {
-                // entities = entities.Where( o => o.)
+                entities = entities.Where(o => o.Date.Equals(this.Date));
             }
 
             return entities;

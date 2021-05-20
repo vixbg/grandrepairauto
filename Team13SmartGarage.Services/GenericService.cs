@@ -5,6 +5,8 @@ using Team13SmartGarage.Data.Filters;
 using Team13SmartGarage.Data.Models;
 using Team13SmartGarage.Repository;
 using Team13SmartGarage.Services.Models;
+using Team13SmartGarage.Services.Models.Contracts;
+using Team13SmartGarage.Data.Models.Contracts;
 
 namespace Team13SmartGarage.Services
 {

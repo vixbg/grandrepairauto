@@ -1,4 +1,6 @@
-﻿namespace Team13SmartGarage.Services.Models.VehicleModelDTOs
+﻿using Team13SmartGarage.Services.Models.Abstract;
+
+namespace Team13SmartGarage.Services.Models.VehicleModelDTOs
 {
     public class VehicleModelDTO : DTO<int>
     {

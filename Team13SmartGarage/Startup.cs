@@ -1,30 +1,27 @@
+using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using AutoMapper;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 using Team13SmartGarage.Data;
 using Team13SmartGarage.Data.Models;
 using Team13SmartGarage.Repository;
 using Team13SmartGarage.Services;
+using Team13SmartGarage.Services.Models.CustomerServiceDTOs;
 using Team13SmartGarage.Services.Models.ManufacturerDTOs;
 using Team13SmartGarage.Services.Models.OrderDTOs;
+using Team13SmartGarage.Services.Models.ServiceDTOs;
+using Team13SmartGarage.Services.Models.VehicleModelDTOs;
 using Team13SmartGarage.Services.Models.VehiclesDTOs;
 using Team13SmartGarage.Validators;
-using Team13SmartGarage.Services.Models.VehicleModelDTOs;
-using Team13SmartGarage.Services.Models.CustomerServiceDTOs;
-using Team13SmartGarage.Services.Models.ServiceDTOs;
 
 namespace Team13SmartGarage
 {
@@ -80,7 +77,7 @@ namespace Team13SmartGarage
             services.AddScoped<GenericService<Service, int, ServiceDTO, ServiceDTO, ServiceDTO>>();
             services.AddScoped<GenericService<VehicleModel, int, VehicleModelDTO, VehicleModelDTO, VehicleModelDTO>>();
             services.AddScoped<GenericService<Vehicle, int, VehicleDTO, VehicleDTO, VehicleUpdateDTO>>();
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.ResolveConflictingActions(a => a.First());

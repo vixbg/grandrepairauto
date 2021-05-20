@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+using Team13SmartGarage.Data.Models.Abstract;
+using Team13SmartGarage.Data.Models.Contracts;
 
 namespace Team13SmartGarage.Data.Models
 {

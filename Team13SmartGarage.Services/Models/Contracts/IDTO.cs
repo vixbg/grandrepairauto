@@ -1,4 +1,4 @@
-﻿namespace Team13SmartGarage.Services.Models
+﻿namespace Team13SmartGarage.Services.Models.Contracts
 {
     public interface IDTO { }
 

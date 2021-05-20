@@ -1,16 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using Team13SmartGarage.Data.Filters;
 using Team13SmartGarage.Data.Models;
 using Team13SmartGarage.Services;
 using Team13SmartGarage.Services.Models.VehiclesDTOs;
-using Team13SmartGarage.Web.Controllers.API;
 
-namespace Team13SmartGarage.Web.API_Controllers
+namespace Team13SmartGarage.Web.APIControllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Team13SmartGarage.Data.Enums;
+using Team13SmartGarage.Data.Models.Abstract;
+using Team13SmartGarage.Data.Models.Contracts;
 
 namespace Team13SmartGarage.Data.Models
 {

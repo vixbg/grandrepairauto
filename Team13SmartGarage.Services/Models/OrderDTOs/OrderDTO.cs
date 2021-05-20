@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Team13SmartGarage.Data.Enums;
 using Team13SmartGarage.Data.Models;
+using Team13SmartGarage.Services.Models.Abstract;
 
 namespace Team13SmartGarage.Services.Models.OrderDTOs
 {

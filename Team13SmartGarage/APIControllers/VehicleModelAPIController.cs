@@ -3,9 +3,8 @@ using Team13SmartGarage.Data.Filters;
 using Team13SmartGarage.Data.Models;
 using Team13SmartGarage.Services;
 using Team13SmartGarage.Services.Models.VehicleModelDTOs;
-using Team13SmartGarage.Web.Controllers.API;
 
-namespace Team13SmartGarage.Web.API_Controllers
+namespace Team13SmartGarage.Web.APIControllers
 {
     [Route("api/[controller]")]
     [ApiController]

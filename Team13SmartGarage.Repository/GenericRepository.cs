@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Team13SmartGarage.Data;
-using Team13SmartGarage.Data.Models;
+using Team13SmartGarage.Data.Models.Contracts;
 
 namespace Team13SmartGarage.Repository
 {

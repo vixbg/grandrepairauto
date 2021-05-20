@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Team13SmartGarage.Data.Filters;
-using Team13SmartGarage.Data.Models;
+using Team13SmartGarage.Data.Models.Contracts;
 using Team13SmartGarage.Services;
-using Team13SmartGarage.Services.Models;
+using Team13SmartGarage.Services.Models.Contracts;
 
-namespace Team13SmartGarage.Web.Controllers.API
+namespace Team13SmartGarage.Web.APIControllers
 {
     public abstract class GenericAPIController<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO, TFilter> : ControllerBase
         where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable

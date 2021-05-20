@@ -1,4 +1,4 @@
-﻿namespace Team13SmartGarage.Data.Models
+﻿namespace Team13SmartGarage.Data.Models.Contracts
 {
     public interface IEntity { }
     public interface IEntity<TPrimaryKey> : IEntity

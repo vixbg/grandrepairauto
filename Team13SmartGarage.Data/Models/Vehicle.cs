@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Team13SmartGarage.Data.Enums;
 
 namespace Team13SmartGarage.Data.Models
@@ -11,8 +12,9 @@ namespace Team13SmartGarage.Data.Models
         public string RegPlate { get; set; }
 
         [Required]
-        public int ManufacturerId { get; set; }
-        public Manufacturer Manufacturer { get; set; }
+        public int VehicleModelId { get; set; }
+        [ForeignKey(nameof(VehicleModelId))]
+        public VehicleModel VehicleModel { get; set; }
 
         [Required]
         public VehicleTypes VehicleType { get; set; }
@@ -23,10 +25,6 @@ namespace Team13SmartGarage.Data.Models
         [Required]
         [StringLength(17, MinimumLength = 17, ErrorMessage = "VIN must be 17 characters long.")]
         public string Vin { get; set; }
-
-        [Required]
-        public int ModelId { get; set; }
-        public VehicleModel Model { get; set; }
 
         [Required]
         [Range(0, 2000000, ErrorMessage = "Mileage must be between 0 and 2 000 000 kilometers.")]

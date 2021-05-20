@@ -7,7 +7,7 @@ namespace Team13SmartGarage.Validators
     {
         public VehicleCreateValidator()
         {
-            RuleFor(v => v.Vin).NotNull().Length(17, 17);
+            RuleFor(v => v.Vin).NotNull().Length(17);
             RuleFor(v => v.RegPlate).NotNull().Must(r => r.StartsWith("CA")).WithMessage("The specified registration number is not valid.");
             
         }

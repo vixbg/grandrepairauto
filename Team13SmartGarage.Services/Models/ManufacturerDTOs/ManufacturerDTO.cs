@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Team13SmartGarage.Services.Models.ManufacturerDTOs
 {

@@ -11,9 +11,12 @@ namespace Team13SmartGarage.Data.Models
         [Required]
         [StringLength(30, MinimumLength = 1, ErrorMessage = "Model name should be between 1 and 30 characters.")]
         public string Name { get; set; }
+
         public int ManufacturerId { get; set; }
+
         [ForeignKey(nameof(ManufacturerId))]
-        public Manufacturer Manufacturer { get; set; }
+        public virtual Manufacturer Manufacturer { get; set; }
+
         public DateTime? IsDeleted { get; set; }
     }
 }

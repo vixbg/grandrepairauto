@@ -13,8 +13,9 @@ namespace Team13SmartGarage.Data.Models
 
         [Required]
         public int VehicleModelId { get; set; }
+
         [ForeignKey(nameof(VehicleModelId))]
-        public VehicleModel VehicleModel { get; set; }
+        public virtual VehicleModel VehicleModel { get; set; }
 
         [Required]
         public VehicleTypes VehicleType { get; set; }
@@ -36,7 +37,9 @@ namespace Team13SmartGarage.Data.Models
 
         [Required]
         public int OwnerId { get; set; }
-        public User Owner { get; set; }
+
+        public virtual User Owner { get; set; }
+
         public DateTime? IsDeleted { get; set; }
     }
 }

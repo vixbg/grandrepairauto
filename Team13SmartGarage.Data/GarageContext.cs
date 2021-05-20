@@ -18,26 +18,32 @@ namespace Team13SmartGarage.Data
                 .HasOne<User>(o => o.User)
                 .WithMany()
                 .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+
             modelBuilder.Entity<Order>()
                 .HasOne<Vehicle>(o => o.Vehicle)
                 .WithMany()
                 .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+
             modelBuilder.Entity<VehicleModel>()
                 .HasOne<Manufacturer>(vm => vm.Manufacturer)
                 .WithMany(m => m.VehicleModels)
                 .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+
             modelBuilder.Entity<Vehicle>()
                 .HasOne<VehicleModel>(v => v.VehicleModel)
                 .WithMany()
                 .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+
             modelBuilder.Entity<Vehicle>()
                 .HasOne<User>(v => v.Owner)
                 .WithMany()
                 .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+
             modelBuilder.Entity<CustomerService>()
                 .HasOne<Service>(c => c.Service)
                 .WithMany()
                 .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+
             modelBuilder.Entity<CustomerService>()
                 .HasOne<Order>(c => c.Order)
                 .WithMany(o => o.CustomerServices)

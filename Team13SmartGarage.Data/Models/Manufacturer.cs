@@ -12,7 +12,8 @@ namespace Team13SmartGarage.Data.Models
         [StringLength(30, MinimumLength = 1, ErrorMessage = "Manufacturer name should be between 1 and 30 characters.")]
         public string Name { get; set; }
 
-        public List<VehicleModel> VehicleModels { get; set; } = new List<VehicleModel>();
+        public virtual List<VehicleModel> VehicleModels { get; set; }
+
         public DateTime? IsDeleted { get; set; }
 
     }

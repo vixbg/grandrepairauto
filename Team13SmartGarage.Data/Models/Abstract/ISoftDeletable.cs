@@ -4,6 +4,6 @@ namespace Team13SmartGarage.Data.Models
 {
     public interface ISoftDeletable
     {
-        DateTime? IsDeleted { get; set; }
+        DateTime? DeletedOn { get; set; }
     }
 }

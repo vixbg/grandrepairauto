@@ -20,7 +20,7 @@ namespace Team13SmartGarage.Data.Models
 
         public DateTime Date { get; set; }
 
-        public DateTime? IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
 
     }
 }

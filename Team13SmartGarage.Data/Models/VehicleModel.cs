@@ -17,6 +17,6 @@ namespace Team13SmartGarage.Data.Models
         [ForeignKey(nameof(ManufacturerId))]
         public virtual Manufacturer Manufacturer { get; set; }
 
-        public DateTime? IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
     }
 }

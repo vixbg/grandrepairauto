@@ -13,6 +13,8 @@ namespace Team13SmartGarage.Data.Models
 
         public int UserId { get; set; }
 
+        public DateTime Date { get; set; }
+
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
 
@@ -25,6 +27,6 @@ namespace Team13SmartGarage.Data.Models
 
         public double TotalPrice { get; set; }
 
-        public DateTime? IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
     }
 }

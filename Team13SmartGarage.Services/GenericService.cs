@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using AutoMapper;
+using Team13SmartGarage.Data.Filters;
 using Team13SmartGarage.Data.Models;
 using Team13SmartGarage.Repository;
 using Team13SmartGarage.Services.Models;
@@ -22,9 +23,14 @@ namespace Team13SmartGarage.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<TPrimaryDTO> GetAll()
+        public IEnumerable<TPrimaryDTO> GetAll(IFilter<TEntity> filter)
         {
-            return this.repository.Get().Select(e => mapper.Map<TPrimaryDTO>(e));
+            var entities = this.repository.Get();
+            if (filter != null)
+            {
+                entities = filter.Apply(entities);
+            }
+            return entities.Select(e => mapper.Map<TPrimaryDTO>(e));
         }
 
         public TPrimaryDTO GetByID(TPrimaryKey id)

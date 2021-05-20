@@ -22,6 +22,6 @@ namespace Team13SmartGarage.Data.Models
         [Range(0, Double.MaxValue, ErrorMessage = "Time cannot be negative.")]
         public double WorkHours { get; set; }
 
-        public DateTime? IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
     }
 }

@@ -8,7 +8,10 @@ namespace Team13SmartGarage.Validators
         public VehicleValidator()
         {
             RuleFor(v => v.Vin).NotNull().Length(17);
-            RuleFor(v => v.RegPlate).NotNull().Must(r => r.StartsWith("CA")).WithMessage("The specified registration number is not valid.");
+            RuleFor(v => v.RegPlate)
+                .NotNull()
+                .Matches(@"^[ABCEKMHOPTYX]{1,2}\s?[0-9]{4}\s?[ABCEKMHOPTYX]{1,2}$")
+                .WithMessage("The specified registration number is not valid.");
             
         }
     }

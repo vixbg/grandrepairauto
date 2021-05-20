@@ -14,7 +14,7 @@ namespace Team13SmartGarage.Data.Models
 
         public virtual List<VehicleModel> VehicleModels { get; set; }
 
-        public DateTime? IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
 
     }
 }

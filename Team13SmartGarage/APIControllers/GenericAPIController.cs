@@ -5,17 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Team13SmartGarage.Data.Filters;
 using Team13SmartGarage.Data.Models;
 using Team13SmartGarage.Services;
 using Team13SmartGarage.Services.Models;
 
 namespace Team13SmartGarage.Web.Controllers.API
 {
-    public abstract class GenericAPIController<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> : ControllerBase
+    public abstract class GenericAPIController<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO, TFilter> : ControllerBase
         where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
         where TPrimaryDTO : class, IDTO
         where TCreateDTO : class, IDTO
         where TUpdateDTO : class, IDTO
+        where TFilter : class, IFilter<TEntity>
     {
         private readonly GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> service;
 
@@ -25,9 +27,9 @@ namespace Team13SmartGarage.Web.Controllers.API
         }
 
         [HttpGet()]
-        public IEnumerable<TPrimaryDTO> GetAll()
+        public IEnumerable<TPrimaryDTO> GetAll([FromQuery] TFilter filter)
         {
-            return this.service.GetAll();
+            return this.service.GetAll(filter);
         }
 
         [HttpGet("{id}")]

@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Contracts\" />
     <Folder Include="Models\UserDTOs\" />
   </ItemGroup>
 

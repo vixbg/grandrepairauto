@@ -19,14 +19,14 @@ namespace Team13SmartGarage.Repository
             this.dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
+        public virtual IQueryable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
         {
             IQueryable<TEntity> query = dbSet;
 
-            query = query.Where(e => e.IsDeleted == null);
+            query = query.Where(e => e.DeletedOn == null);
 
             if (filter != null)
             {
@@ -75,7 +75,7 @@ namespace Team13SmartGarage.Repository
                 dbSet.Attach(entityToDelete);
             }
 
-            entityToDelete.IsDeleted = DateTime.Now;
+            entityToDelete.DeletedOn = DateTime.Now;
 
             context.SaveChanges();
         }

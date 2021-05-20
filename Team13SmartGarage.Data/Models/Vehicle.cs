@@ -40,6 +40,6 @@ namespace Team13SmartGarage.Data.Models
 
         public virtual User Owner { get; set; }
 
-        public DateTime? IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
     }
 }

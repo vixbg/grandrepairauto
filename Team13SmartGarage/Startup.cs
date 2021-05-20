@@ -22,6 +22,9 @@ using Team13SmartGarage.Services.Models.ManufacturerDTOs;
 using Team13SmartGarage.Services.Models.OrderDTOs;
 using Team13SmartGarage.Services.Models.VehiclesDTOs;
 using Team13SmartGarage.Validators;
+using Team13SmartGarage.Services.Models.VehicleModelDTOs;
+using Team13SmartGarage.Services.Models.CustomerServiceDTOs;
+using Team13SmartGarage.Services.Models.ServiceDTOs;
 
 namespace Team13SmartGarage
 {
@@ -39,9 +42,7 @@ namespace Team13SmartGarage
             var config = new MapperConfiguration(c =>
             {
                 c.CreateMap<Order, OrderDTO>().ReverseMap();
-                c.CreateMap<Order, OrderCreateDTO>().ReverseMap();
                 c.CreateMap<Manufacturer, ManufacturerDTO>().ReverseMap();
-                c.CreateMap<Manufacturer, ManufacturerCreateDTO>().ReverseMap();
             });
 
             services.AddSingleton(config.CreateMapper());
@@ -58,19 +59,27 @@ namespace Team13SmartGarage
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             )
-                .AddFluentValidation(v => v.RegisterValidatorsFromAssemblyContaining<VehicleCreateValidator>());
-            
-            
+                .AddFluentValidation(v => v.RegisterValidatorsFromAssemblyContaining<VehicleValidator>());
+
+
 
             // Repositories
-            services.AddScoped<GenericRepository<Order, int>>();
+            services.AddScoped<GenericRepository<CustomerService, int>>();
             services.AddScoped<GenericRepository<Manufacturer, int>>();
+            services.AddScoped<GenericRepository<Order, int>>();
+            services.AddScoped<GenericRepository<Service, int>>();
+            services.AddScoped<GenericRepository<User, int>>();
             services.AddScoped<GenericRepository<Vehicle, int>>();
+            services.AddScoped<GenericRepository<VehicleModel, int>>();
+
 
             // Services
-            services.AddScoped<GenericService<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO>>();
+            services.AddScoped<GenericService<CustomerService, int, CustomerServiceCreateDTO, CustomerServiceDTO, CustomerServiceUpdateDTO>>();
             services.AddScoped<GenericService<Manufacturer, int, ManufacturerDTO, ManufacturerDTO, ManufacturerDTO>>();
-            services.AddScoped<GenericService<Vehicle, int, VehicleDTO, VehicleCreateDTO, VehicleUpdateDTO>>();
+            services.AddScoped<GenericService<Order, int, OrderDTO, OrderDTO, OrderUpdateDTO>>();
+            services.AddScoped<GenericService<Service, int, ServiceDTO, ServiceDTO, ServiceDTO>>();
+            services.AddScoped<GenericService<VehicleModel, int, VehicleModelDTO, VehicleModelDTO, VehicleModelDTO>>();
+            services.AddScoped<GenericService<Vehicle, int, VehicleDTO, VehicleDTO, VehicleUpdateDTO>>();
             
             services.AddSwaggerGen(c =>
             {

@@ -1,7 +1,6 @@
 ﻿namespace Team13SmartGarage.Repository.Contracts
 {
-    public interface IOrderRepository
+    public interface IServiceRepository
     {
-
     }
 }

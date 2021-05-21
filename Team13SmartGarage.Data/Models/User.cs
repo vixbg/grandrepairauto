@@ -8,5 +8,7 @@ namespace Team13SmartGarage.Data.Models
     {
         public DateTime? DeletedOn { get; set; }
        
-    }
+
+        //TODO: Create User Model and implement User
+    } 
 }

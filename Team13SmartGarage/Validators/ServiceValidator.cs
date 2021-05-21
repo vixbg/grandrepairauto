@@ -8,10 +8,22 @@ namespace Team13SmartGarage.Web.Validators
         public ServiceValidator()
         {
             RuleFor(s => s.VehicleType).IsInEnum();
-            RuleFor(s => s.Name).Length(5, 100);
-            RuleFor(s => s.FixedPrice).GreaterThan(0);
-            RuleFor(s => s.PricePerHour).GreaterThan(0);
-            RuleFor(s => s.WorkHours).GreaterThan(0);
+
+            RuleFor(s => s.Name)
+                .NotEmpty()
+                .Length(5, 100);
+
+            RuleFor(s => s.FixedPrice)
+                .NotEmpty()
+                .GreaterThan(0);
+
+            RuleFor(s => s.PricePerHour)
+                .NotEmpty()
+                .GreaterThan(0);
+
+            RuleFor(s => s.WorkHours)
+                .NotEmpty()
+                .GreaterThan(0);
         }
     }
 }

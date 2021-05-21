@@ -12,7 +12,11 @@ namespace Team13SmartGarage.Web.APIControllers
     {
         public OrderAPIController(GenericService<Order, int, OrderDTO, OrderDTO, OrderUpdateDTO> service) : base(service)
         {
+            //TODO: Finish Filter in Controllers
             // /api/order?vehicle=CA
+
+
+            //TODO: Pagination
         }
     }
 }

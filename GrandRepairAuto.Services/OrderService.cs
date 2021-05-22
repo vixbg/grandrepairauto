@@ -6,7 +6,7 @@ using GrandRepairAuto.Services.Models.OrderDTOs;
 
 namespace GrandRepairAuto.Services
 {
-    public class OrderService : GenericService<Order, int, OrderDTO, OrderDTO, OrderUpdateDTO>, IOrderService
+    public class OrderService : GenericService<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO>, IOrderService
     {
         public OrderService(GenericRepository<Order, int> repository, IMapper mapper) : base(repository, mapper)
         {

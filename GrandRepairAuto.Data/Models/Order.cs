@@ -15,10 +15,10 @@ namespace GrandRepairAuto.Data.Models
 
         public int UserId { get; set; }
 
-        public DateTime Date { get; set; }
-
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
+
+        public DateTime Date { get; set; }
 
         public int VehicleId { get; set; }
 

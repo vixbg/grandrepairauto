@@ -31,9 +31,9 @@ namespace GrandRepairAuto.Web.APIControllers
         [HttpGet("{id}")]
         [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
-        public TPrimaryDTO GetByID(TPrimaryKey Id)
+        public TPrimaryDTO GetByID(TPrimaryKey id)
         {
-            var result = this.service.GetByID(Id);
+            var result = this.service.GetByID(id);
             if (result == null)
             {
                 Response.StatusCode = StatusCodes.Status404NotFound;
@@ -69,6 +69,21 @@ namespace GrandRepairAuto.Web.APIControllers
             }
 
             return NotFound();
+        }
+
+        [HttpPut("restore/{id}")]
+        public TPrimaryDTO Restore(TPrimaryKey id)
+        {
+            var toRestore = this.service.Restore(id);
+
+            if (toRestore == null)
+            {
+                Response.StatusCode = StatusCodes.Status404NotFound;
+            }
+
+            var result = this.service.GetByID(id);
+
+            return result;
         }
     }
 }

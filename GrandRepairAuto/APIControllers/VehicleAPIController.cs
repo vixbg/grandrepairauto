@@ -8,9 +8,9 @@ namespace GrandRepairAuto.Web.APIControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VehicleAPIController : GenericAPIController<Vehicle, int, VehicleDTO, VehicleDTO, VehicleUpdateDTO, VehicleFilter>
+    public class VehicleAPIController : GenericAPIController<Vehicle, int, VehicleDTO, VehicleCreateDTO, VehicleUpdateDTO, VehicleFilter>
     {
-        public VehicleAPIController(GenericService<Vehicle, int, VehicleDTO, VehicleDTO, VehicleUpdateDTO> service) : base(service)
+        public VehicleAPIController(GenericService<Vehicle, int, VehicleDTO, VehicleCreateDTO, VehicleUpdateDTO> service) : base(service)
         {
         }
     }

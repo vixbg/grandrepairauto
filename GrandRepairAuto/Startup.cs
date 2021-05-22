@@ -39,7 +39,20 @@ namespace GrandRepairAuto
             var config = new MapperConfiguration(c =>
             {
                 c.CreateMap<Order, OrderDTO>().ReverseMap();
+                c.CreateMap<Order, OrderCreateDTO>().ReverseMap();
+                c.CreateMap<Order, OrderUpdateDTO>().ReverseMap();
                 c.CreateMap<Manufacturer, ManufacturerDTO>().ReverseMap();
+                c.CreateMap<Manufacturer, ManufacturerCreateDTO>().ReverseMap();
+                c.CreateMap<Service, ServiceCreateDTO>().ReverseMap();
+                c.CreateMap<Service, ServiceDTO>().ReverseMap();
+                c.CreateMap<VehicleModel, VehicleModelDTO>().ReverseMap();
+                c.CreateMap<VehicleModel, VehicleModelCreateDTO>().ReverseMap();
+                c.CreateMap<CustomerService, CustomerServiceDTO>().ReverseMap();
+                c.CreateMap<CustomerService, CustomerServiceCreateDTO>().ReverseMap();
+                c.CreateMap<CustomerService, CustomerServiceUpdateDTO>().ReverseMap();
+                c.CreateMap<Vehicle, VehicleCreateDTO>().ReverseMap();
+                c.CreateMap<Vehicle, VehicleDTO>().ReverseMap();
+                c.CreateMap<Vehicle, VehicleUpdateDTO>().ReverseMap();
             });
 
             services.AddSingleton(config.CreateMapper());
@@ -72,11 +85,12 @@ namespace GrandRepairAuto
 
             // Services
             services.AddScoped<GenericService<CustomerService, int, CustomerServiceCreateDTO, CustomerServiceDTO, CustomerServiceUpdateDTO>>();
-            services.AddScoped<GenericService<Manufacturer, int, ManufacturerDTO, ManufacturerDTO, ManufacturerDTO>>();
-            services.AddScoped<GenericService<Order, int, OrderDTO, OrderDTO, OrderUpdateDTO>>();
-            services.AddScoped<GenericService<Service, int, ServiceDTO, ServiceDTO, ServiceDTO>>();
-            services.AddScoped<GenericService<VehicleModel, int, VehicleModelDTO, VehicleModelDTO, VehicleModelDTO>>();
-            services.AddScoped<GenericService<Vehicle, int, VehicleDTO, VehicleDTO, VehicleUpdateDTO>>();
+            services.AddScoped<GenericService<Manufacturer, int, ManufacturerDTO, ManufacturerCreateDTO, ManufacturerDTO>>();
+            services.AddScoped<GenericService<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO>>();
+            services.AddScoped<GenericService<Service, int, ServiceDTO, ServiceCreateDTO, ServiceDTO>>();
+            services.AddScoped<GenericService<VehicleModel, int, VehicleModelDTO, VehicleModelCreateDTO, VehicleModelDTO>>();
+            services.AddScoped<GenericService<Vehicle, int, VehicleDTO, VehicleCreateDTO, VehicleUpdateDTO>>();
+            
 
             services.AddSwaggerGen(c =>
             {

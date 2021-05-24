@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using GrandRepairAuto.Data.Models;
 using GrandRepairAuto.Repository;
-using GrandRepairAuto.Services.Models.Contracts;
+using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.ServiceDTOs;
 
 namespace GrandRepairAuto.Services

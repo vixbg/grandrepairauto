@@ -1,4 +1,4 @@
-﻿namespace GrandRepairAuto.Services.Models.Contracts
+﻿namespace GrandRepairAuto.Services.Contracts
 {
     public interface ICustomerServiceService
     {

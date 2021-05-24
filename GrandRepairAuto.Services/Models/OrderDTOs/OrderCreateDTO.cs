@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using GrandRepairAuto.Data.Enums;
-using GrandRepairAuto.Data.Models;
-using GrandRepairAuto.Services.Models.Abstract;
-using GrandRepairAuto.Services.Models.Contracts;
-using Microsoft.VisualBasic;
+﻿using GrandRepairAuto.Data.Enums;
+using GrandRepairAuto.Services.Contracts;
+using System;
 
 namespace GrandRepairAuto.Services.Models.OrderDTOs
 {
@@ -14,9 +10,9 @@ namespace GrandRepairAuto.Services.Models.OrderDTOs
         public int UserId { get; set; }
         public int VehicleId { get; set; }
         public DateTime Date { get; set; }
-        
+
         //TODO: How to add date ( to now )?
         //TODO: How to add services?
-        
+
     }
 }

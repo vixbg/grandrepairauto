@@ -4,7 +4,7 @@ using System.Linq;
 using GrandRepairAuto.Data.Filters.Contracts;
 using GrandRepairAuto.Data.Models.Contracts;
 using GrandRepairAuto.Repository;
-using GrandRepairAuto.Services.Models.Contracts;
+using GrandRepairAuto.Services.Contracts;
 
 namespace GrandRepairAuto.Services
 {

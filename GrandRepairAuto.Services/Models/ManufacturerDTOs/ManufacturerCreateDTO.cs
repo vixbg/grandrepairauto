@@ -1,5 +1,5 @@
-﻿using GrandRepairAuto.Services.Models.Abstract;
-using GrandRepairAuto.Services.Models.Contracts;
+﻿using GrandRepairAuto.Services.Abstract;
+using GrandRepairAuto.Services.Contracts;
 
 namespace GrandRepairAuto.Services.Models.ManufacturerDTOs
 {

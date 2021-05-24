@@ -1,7 +1,6 @@
-﻿using System;
-using GrandRepairAuto.Data.Enums;
-using GrandRepairAuto.Services.Models.Abstract;
-using GrandRepairAuto.Services.Models.Contracts;
+﻿using GrandRepairAuto.Data.Enums;
+using GrandRepairAuto.Services.Contracts;
+using System;
 
 namespace GrandRepairAuto.Services.Models.CustomerServiceDTOs
 {

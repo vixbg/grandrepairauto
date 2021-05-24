@@ -13,6 +13,7 @@ namespace GrandRepairAuto.Data.Models
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Service name Must be between 5 and 100 characters.")]
         public string Name { get; set; }
 
+        //TODO: To Remove Fixed Price if not needed.
         [Range(0, Double.MaxValue, ErrorMessage = "Price cannot be negative.")]
         public double FixedPrice { get; set; }
 

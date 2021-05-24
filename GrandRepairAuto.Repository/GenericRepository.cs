@@ -56,7 +56,7 @@ namespace GrandRepairAuto.Repository
 
         public virtual void Insert(TEntity entity)
         {
-            //TODO: How to throw propper error when ID of one entity is missing when adding another (adding order with missing vehicle?)
+            //TODO: How to throw proper error when ID of one entity is missing when adding another (adding order with missing vehicle?)
             dbSet.Add(entity);
             context.SaveChanges();
         }

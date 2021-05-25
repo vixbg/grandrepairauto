@@ -16,9 +16,6 @@ namespace GrandRepairAuto.Services.Models.OrderDTOs
 
         public int VehicleId { get; set; }
 
-        //TODO: How to stop cascade when displaying services?
-        public List<CustomerService> CustomerServices { get; set; } = new List<CustomerService>();
-
         public double TotalPrice { get; set; }
     }
 }

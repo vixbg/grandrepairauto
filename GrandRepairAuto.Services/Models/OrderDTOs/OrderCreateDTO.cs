@@ -9,10 +9,8 @@ namespace GrandRepairAuto.Services.Models.OrderDTOs
         public OrderStatuses Status { get; set; }
         public int UserId { get; set; }
         public int VehicleId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
 
-        //TODO: How to add date ( to now )?
-        //TODO: How to add services?
 
     }
 }

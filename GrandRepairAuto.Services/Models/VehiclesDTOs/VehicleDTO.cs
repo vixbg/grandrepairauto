@@ -6,8 +6,6 @@ namespace GrandRepairAuto.Services.Models.VehiclesDTOs
     public class VehicleDTO : DTO<int>
     {
         public string RegPlate { get; set; }
-        //TODO: How to display Manufacturer?
-        public int ManufacturerId { get; set; }
         public int VehicleModelId { get; set; }
         public string Vin { get; set; }
         public VehicleTypes VehicleType { get; set; }

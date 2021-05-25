@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using GrandRepairAuto.Data.Filters;
 using GrandRepairAuto.Data.Models;
 using GrandRepairAuto.Services;
@@ -13,6 +14,12 @@ namespace GrandRepairAuto.Web.APIControllers
         public CustomerServiceAPIController(GenericService<CustomerService, int, CustomerServiceDTO, CustomerServiceCreateDTO, CustomerServiceUpdateDTO> service) : base(service)
         {
 
+        }
+
+        [HttpGet("order/{orderId}")]
+        public IEnumerable<CustomerServiceDTO> GetByOrder([FromRoute] int orderId)
+        {
+            return this.service.GetAll(s => s.OrderID == orderId);
         }
     }
 }

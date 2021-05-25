@@ -12,11 +12,7 @@ namespace GrandRepairAuto.Web.APIControllers
     {
         public OrderAPIController(GenericService<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO> service) : base(service)
         {
-            //TODO: Finish Filter in Controllers
-            // /api/order?vehicle=CA
-
-
-            //TODO: Pagination
+            
         }
     }
 }

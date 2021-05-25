@@ -1,6 +1,8 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using GrandRepairAuto.Data.Filters.Contracts;
 using GrandRepairAuto.Data.Models.Contracts;
 using GrandRepairAuto.Repository;
@@ -8,7 +10,7 @@ using GrandRepairAuto.Services.Contracts;
 
 namespace GrandRepairAuto.Services
 {
-    public class GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO>
+    public class GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> : IGenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> 
         where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
         where TPrimaryDTO : class, IDTO
         where TCreateDTO : class, IDTO
@@ -33,6 +35,11 @@ namespace GrandRepairAuto.Services
                 entities = filter.Apply(entities);
             }
             return entities.Select(e => mapper.Map<TPrimaryDTO>(e));
+        }
+
+        public IEnumerable<TPrimaryDTO> GetAll(Expression<Func<TEntity, bool>> filter = null)
+        {
+            return this.repository.Get(filter).Select(e => mapper.Map<TPrimaryDTO>(e));
         }
 
         //DONE: GetByID Works.

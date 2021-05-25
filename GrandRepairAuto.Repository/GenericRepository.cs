@@ -4,10 +4,12 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using GrandRepairAuto.Data;
 using GrandRepairAuto.Data.Models.Contracts;
+using GrandRepairAuto.Repository.Contracts;
 
 namespace GrandRepairAuto.Repository
 {
-    public class GenericRepository<TEntity, TPrimaryKey> where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
+    public class GenericRepository<TEntity, TPrimaryKey> : IGenericRepository<TEntity, TPrimaryKey>
+        where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
     {
         internal GarageContext context;
         internal DbSet<TEntity> dbSet;

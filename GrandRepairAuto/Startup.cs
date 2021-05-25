@@ -14,7 +14,9 @@ using System.Reflection;
 using GrandRepairAuto.Data;
 using GrandRepairAuto.Data.Models;
 using GrandRepairAuto.Repository;
+using GrandRepairAuto.Repository.Contracts;
 using GrandRepairAuto.Services;
+using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.CustomerServiceDTOs;
 using GrandRepairAuto.Services.Models.ManufacturerDTOs;
 using GrandRepairAuto.Services.Models.OrderDTOs;
@@ -74,7 +76,7 @@ namespace GrandRepairAuto
 
 
             // Repositories
-            services.AddScoped<GenericRepository<CustomerService, int>>();
+            services.AddScoped<ICustomerServiceRepository, CustomerServiceRepository>();
             services.AddScoped<GenericRepository<Manufacturer, int>>();
             services.AddScoped<GenericRepository<Order, int>>();
             services.AddScoped<GenericRepository<Service, int>>();
@@ -83,8 +85,8 @@ namespace GrandRepairAuto
             services.AddScoped<GenericRepository<VehicleModel, int>>();
 
 
-            // Services
-            services.AddScoped<GenericService<CustomerService, int, CustomerServiceCreateDTO, CustomerServiceDTO, CustomerServiceUpdateDTO>>();
+            // Services //TODO: Implement Interfaces.
+            services.AddScoped<ICustomerServiceService, CustomerServiceService>();
             services.AddScoped<GenericService<Manufacturer, int, ManufacturerDTO, ManufacturerCreateDTO, ManufacturerDTO>>();
             services.AddScoped<GenericService<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO>>();
             services.AddScoped<GenericService<Service, int, ServiceDTO, ServiceCreateDTO, ServiceDTO>>();

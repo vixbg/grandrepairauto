@@ -14,6 +14,6 @@ namespace GrandRepairAuto.Services.Models.OrderDTOs
 
         public Vehicle VehicleId { get; set; }
 
-        //TODO: How to update services?
+        
     }
 }

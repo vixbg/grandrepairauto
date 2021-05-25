@@ -16,9 +16,9 @@ namespace GrandRepairAuto.Repository.Contracts
 
         void Insert(TEntity entity);
 
-        void Delete(TPrimaryKey id);
+        bool Delete(TPrimaryKey id);
 
-        void Delete(TEntity entityToDelete);
+        bool Delete(TEntity entityToDelete);
 
         void Update(TEntity entityToUpdate);
     }

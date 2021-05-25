@@ -15,7 +15,7 @@ namespace GrandRepairAuto.Web.APIControllers
         where TUpdateDTO : class, IDTO
         where TFilter : class, IFilter<TEntity>
     {
-        private readonly GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> service;
+        protected readonly GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> service;
 
         public GenericAPIController(GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> service)
         {
@@ -45,6 +45,8 @@ namespace GrandRepairAuto.Web.APIControllers
         [HttpPost()]
         public TPrimaryDTO Create(TCreateDTO entity)
         {
+            //TODO: Insert TryCatch Block.
+
             return this.service.Create(entity);
         }
 

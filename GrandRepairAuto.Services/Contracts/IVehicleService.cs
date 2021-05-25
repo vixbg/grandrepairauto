@@ -1,6 +1,9 @@
-﻿namespace GrandRepairAuto.Services.Contracts
+﻿using GrandRepairAuto.Data.Models;
+using GrandRepairAuto.Services.Models.VehiclesDTOs;
+
+namespace GrandRepairAuto.Services.Contracts
 {
-    public interface IVehicleService
+    public interface IVehicleService : IGenericService<Vehicle, int, VehicleDTO, VehicleCreateDTO, VehicleUpdateDTO>
     {
     }
 }

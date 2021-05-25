@@ -1,6 +1,8 @@
-﻿namespace GrandRepairAuto.Repository.Contracts
+﻿using GrandRepairAuto.Data.Models;
+
+namespace GrandRepairAuto.Repository.Contracts
 {
-    public interface IUserRepository
+    public interface IUserRepository : IGenericRepository<User, int>
     {
     }
 }

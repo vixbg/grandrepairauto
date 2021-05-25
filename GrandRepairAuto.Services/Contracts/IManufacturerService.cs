@@ -1,6 +1,9 @@
-﻿namespace GrandRepairAuto.Services.Contracts
+﻿using GrandRepairAuto.Data.Models;
+using GrandRepairAuto.Services.Models.ManufacturerDTOs;
+
+namespace GrandRepairAuto.Services.Contracts
 {
-    public interface IManufacturerService
+    public interface IManufacturerService : IGenericService<Manufacturer, int, ManufacturerDTO, ManufacturerCreateDTO, ManufacturerDTO>
     {
     }
 }

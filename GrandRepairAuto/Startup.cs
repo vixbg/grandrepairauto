@@ -77,22 +77,23 @@ namespace GrandRepairAuto
 
             // Repositories
             services.AddScoped<ICustomerServiceRepository, CustomerServiceRepository>();
-            services.AddScoped<GenericRepository<Manufacturer, int>>();
-            services.AddScoped<GenericRepository<Order, int>>();
-            services.AddScoped<GenericRepository<Service, int>>();
-            services.AddScoped<GenericRepository<User, int>>();
-            services.AddScoped<GenericRepository<Vehicle, int>>();
-            services.AddScoped<GenericRepository<VehicleModel, int>>();
+            services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
 
 
             // Services //TODO: Implement Interfaces.
             services.AddScoped<ICustomerServiceService, CustomerServiceService>();
-            services.AddScoped<GenericService<Manufacturer, int, ManufacturerDTO, ManufacturerCreateDTO, ManufacturerDTO>>();
-            services.AddScoped<GenericService<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO>>();
-            services.AddScoped<GenericService<Service, int, ServiceDTO, ServiceCreateDTO, ServiceDTO>>();
-            services.AddScoped<GenericService<VehicleModel, int, VehicleModelDTO, VehicleModelCreateDTO, VehicleModelDTO>>();
-            services.AddScoped<GenericService<Vehicle, int, VehicleDTO, VehicleCreateDTO, VehicleUpdateDTO>>();
-            
+            services.AddScoped<IManufacturerService, ManufacturerService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IServiceService, ServiceService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IVehicleModelService, VehicleModelService>();
+            services.AddScoped<IVehicleService, VehicleService>();
+
 
             services.AddSwaggerGen(c =>
             {

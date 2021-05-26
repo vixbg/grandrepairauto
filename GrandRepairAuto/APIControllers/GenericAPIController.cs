@@ -15,9 +15,9 @@ namespace GrandRepairAuto.Web.APIControllers
         where TUpdateDTO : class, IDTO
         where TFilter : class, IFilter<TEntity>
     {
-        protected readonly GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> service;
+        protected readonly IGenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> service;
 
-        public GenericAPIController(GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> service)
+        public GenericAPIController(IGenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> service)
         {
             this.service = service;
         }

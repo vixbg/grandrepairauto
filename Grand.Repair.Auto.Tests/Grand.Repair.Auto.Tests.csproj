@@ -24,6 +24,7 @@
     <ProjectReference Include="..\GrandRepairAuto.Data\GrandRepairAuto.Data.csproj" />
     <ProjectReference Include="..\GrandRepairAuto.Repository\GrandRepairAuto.Repository.csproj" />
     <ProjectReference Include="..\GrandRepairAuto.Services\GrandRepairAuto.Services.csproj" />
+    <ProjectReference Include="..\GrandRepairAuto\GrandRepairAuto.Web.csproj" />
   </ItemGroup>
 
 </Project>

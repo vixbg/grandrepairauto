@@ -2,11 +2,12 @@
 using GrandRepairAuto.Data.Enums;
 using GrandRepairAuto.Data.Models;
 using GrandRepairAuto.Services.Abstract;
+using GrandRepairAuto.Services.Contracts;
 using Microsoft.VisualBasic;
 
 namespace GrandRepairAuto.Services.Models.OrderDTOs
 {
-    public class OrderUpdateDTO : DTO<int>
+    public class OrderUpdateDTO : IDTO
     {
         public OrderStatuses Status { get; set; }
 

@@ -1,9 +1,10 @@
 ﻿using GrandRepairAuto.Data.Enums;
 using GrandRepairAuto.Services.Abstract;
+using GrandRepairAuto.Services.Contracts;
 
 namespace GrandRepairAuto.Services.Models.VehiclesDTOs
 {
-    public class VehicleUpdateDTO : DTO<int>
+    public class VehicleUpdateDTO : IDTO
     {
         public string RegPlate { get; set; }
         public int VehicleModelId { get; set; }

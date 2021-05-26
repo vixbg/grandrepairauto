@@ -2,6 +2,7 @@
 using GrandRepairAuto.Data.Filters;
 using GrandRepairAuto.Data.Models;
 using GrandRepairAuto.Services;
+using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.VehiclesDTOs;
 
 namespace GrandRepairAuto.Web.APIControllers
@@ -10,7 +11,7 @@ namespace GrandRepairAuto.Web.APIControllers
     [ApiController]
     public class VehicleAPIController : GenericAPIController<Vehicle, int, VehicleDTO, VehicleCreateDTO, VehicleUpdateDTO, VehicleFilter>
     {
-        public VehicleAPIController(GenericService<Vehicle, int, VehicleDTO, VehicleCreateDTO, VehicleUpdateDTO> service) : base(service)
+        public VehicleAPIController(IVehicleService service) : base(service)
         {
         }
     }

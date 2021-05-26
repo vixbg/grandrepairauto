@@ -2,6 +2,7 @@
 using GrandRepairAuto.Data.Filters;
 using GrandRepairAuto.Data.Models;
 using GrandRepairAuto.Services;
+using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.OrderDTOs;
 
 namespace GrandRepairAuto.Web.APIControllers
@@ -10,7 +11,7 @@ namespace GrandRepairAuto.Web.APIControllers
     [ApiController]
     public class OrderAPIController : GenericAPIController<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO, OrderFilter>
     {
-        public OrderAPIController(GenericService<Order, int, OrderDTO, OrderCreateDTO, OrderUpdateDTO> service) : base(service)
+        public OrderAPIController(IOrderService service) : base(service)
         {
             
         }

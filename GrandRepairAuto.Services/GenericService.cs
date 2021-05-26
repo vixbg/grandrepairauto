@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using GrandRepairAuto.Data.Filters.Contracts;
 using GrandRepairAuto.Data.Models.Contracts;
 using GrandRepairAuto.Repository;
+using GrandRepairAuto.Repository.Contracts;
 using GrandRepairAuto.Services.Contracts;
 
 namespace GrandRepairAuto.Services
@@ -16,10 +17,10 @@ namespace GrandRepairAuto.Services
         where TCreateDTO : class, IDTO
         where TUpdateDTO : class, IDTO
     {
-        private readonly GenericRepository<TEntity, TPrimaryKey> repository;
+        private readonly IGenericRepository<TEntity, TPrimaryKey> repository;
         private readonly IMapper mapper;
 
-        public GenericService(GenericRepository<TEntity, TPrimaryKey> repository, IMapper mapper)
+        public GenericService(IGenericRepository<TEntity, TPrimaryKey> repository, IMapper mapper)
         {
             this.repository = repository;
             this.mapper = mapper;

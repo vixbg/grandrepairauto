@@ -10,7 +10,7 @@ namespace GrandRepairAuto.Data.Models
     public class Vehicle : Entity<int>, ISoftDeletable
     {
         [Required]
-        [StringLength(7, MinimumLength = 4, ErrorMessage = "Registration Plate must be between 4 and 7 characters.")]
+        [StringLength(8, MinimumLength = 4, ErrorMessage = "Registration Plate must be between 4 and 8 characters.")]
         public string RegPlate { get; set; }
 
         [Required]

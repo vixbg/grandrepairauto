@@ -1,13 +1,16 @@
 ﻿using GrandRepairAuto.Data.Enums;
-using GrandRepairAuto.Services.Models.Abstract;
+using GrandRepairAuto.Services.Abstract;
+using GrandRepairAuto.Services.Contracts;
 
 namespace GrandRepairAuto.Services.Models.VehiclesDTOs
 {
-    public class VehicleUpdateDTO : DTO<int>
+    public class VehicleUpdateDTO : IDTO
     {
         public string RegPlate { get; set; }
+        public int VehicleModelId { get; set; }
+        public string Vin { get; set; }
+        public VehicleTypes VehicleType { get; set; }
         public EngineTypes EngineType { get; set; }
-        public int ModelId { get; set; }
         public int Mileage { get; set; }
         public string Color { get; set; }
         public int OwnerId { get; set; }

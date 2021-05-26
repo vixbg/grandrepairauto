@@ -1,10 +1,10 @@
-﻿using System;
-using GrandRepairAuto.Data.Enums;
-using GrandRepairAuto.Services.Models.Abstract;
+﻿using GrandRepairAuto.Data.Enums;
+using GrandRepairAuto.Services.Contracts;
+using System;
 
 namespace GrandRepairAuto.Services.Models.CustomerServiceDTOs
 {
-    public class CustomerServiceCreateDTO : DTO<int>
+    public class CustomerServiceCreateDTO : IDTO
     {
         public int ServiceId { get; set; }
         public int OrderID { get; set; }

@@ -1,6 +1,6 @@
-﻿using GrandRepairAuto.Services.Models.Contracts;
+﻿using GrandRepairAuto.Services.Contracts;
 
-namespace GrandRepairAuto.Services.Models.Abstract
+namespace GrandRepairAuto.Services.Abstract
 {
     public class DTO<TPrimaryKey> : IDTO<TPrimaryKey>
     { 

@@ -4,10 +4,12 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using GrandRepairAuto.Data;
 using GrandRepairAuto.Data.Models.Contracts;
+using GrandRepairAuto.Repository.Contracts;
 
 namespace GrandRepairAuto.Repository
 {
-    public class GenericRepository<TEntity, TPrimaryKey> where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
+    public class GenericRepository<TEntity, TPrimaryKey> : IGenericRepository<TEntity, TPrimaryKey>
+        where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
     {
         internal GarageContext context;
         internal DbSet<TEntity> dbSet;
@@ -56,6 +58,7 @@ namespace GrandRepairAuto.Repository
 
         public virtual void Insert(TEntity entity)
         {
+            //TODO: How to throw proper error when ID of one entity is missing when adding another (adding order with missing vehicle?)
             dbSet.Add(entity);
             context.SaveChanges();
         }
@@ -79,6 +82,32 @@ namespace GrandRepairAuto.Repository
             }
 
             entityToDelete.DeletedOn = DateTime.Now;
+
+            context.SaveChanges();
+
+            return true;
+        }
+
+        public virtual bool Restore(TPrimaryKey id)
+        {
+            TEntity entityToRestore = dbSet.Find(id);
+            
+            return Restore(entityToRestore);
+        }
+
+        public virtual bool Restore(TEntity entityToRestore)
+        {
+            if (entityToRestore == null)
+            {
+                return false;
+            }
+
+            if (context.Entry(entityToRestore).State == EntityState.Detached)
+            {
+                dbSet.Attach(entityToRestore);
+            }
+
+            entityToRestore.DeletedOn = null;
 
             context.SaveChanges();
 

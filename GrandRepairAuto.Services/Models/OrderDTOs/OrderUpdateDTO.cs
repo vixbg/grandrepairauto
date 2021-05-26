@@ -1,14 +1,20 @@
 ﻿using System.Collections.Generic;
 using GrandRepairAuto.Data.Enums;
 using GrandRepairAuto.Data.Models;
-using GrandRepairAuto.Services.Models.Abstract;
+using GrandRepairAuto.Services.Abstract;
+using GrandRepairAuto.Services.Contracts;
+using Microsoft.VisualBasic;
 
 namespace GrandRepairAuto.Services.Models.OrderDTOs
 {
-    public class OrderUpdateDTO : DTO<int>
+    public class OrderUpdateDTO : IDTO
     {
         public OrderStatuses Status { get; set; }
-        public List<CustomerService> CustomerServices { get; set; } = new List<CustomerService>();
-        public double TotalPrice { get; set; }
+
+        public DateAndTime Date { get; set; }
+
+        public Vehicle VehicleId { get; set; }
+
+        
     }
 }

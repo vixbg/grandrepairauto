@@ -2,11 +2,17 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using GrandRepairAuto.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GrandRepairAuto.Data
 {
-    public class GarageContext : DbContext
+    public class GarageContext : IdentityDbContext<User, IdentityRole, string>
     {
+        public GarageContext() : base()
+        {
+        }
+
         public GarageContext(DbContextOptions<GarageContext> options) : base (options)
         {
             

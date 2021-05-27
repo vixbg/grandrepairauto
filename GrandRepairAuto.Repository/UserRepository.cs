@@ -4,7 +4,7 @@ using GrandRepairAuto.Repository.Contracts;
 
 namespace GrandRepairAuto.Repository
 {
-    public class UserRepository : GenericRepository<User, int>, IUserRepository
+    public class UserRepository : GenericRepository<User, string>, IUserRepository
     {
         public UserRepository(GarageContext context) : base(context) { }
     }

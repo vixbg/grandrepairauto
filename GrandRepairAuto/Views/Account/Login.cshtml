@@ -1,10 +1,10 @@
 ﻿@model GrandRepairAuto.Web.Models.LoginInputModel
 <main id="main">
     <!-- ======= Services Section ======= -->
-    <section id="login" class="section-bg">
-        <div class="container">
+    <section id="login" class="section">
+        <!--<div class="container">
 
-            <div class="section-title">
+            <div class="login-form">
                 <h2>Login</h2>
             </div>
             
@@ -13,20 +13,59 @@
                 <div class="form-group">
                     <label class="small" asp-for="Username">Email</label>
                     <span asp-validation-for="Username" class="text-danger"></span>
-                    <input asp-for="Username" type="email" class="form-control rounded" id="Username" placeholder="Enter email" />
+                    <input asp-for="Username" type="email" class="form-control rounded" id="Username1" placeholder="Enter email" />
                 </div>
                 <div class="form-group">
                     <label class="small" asp-for="Password">Password</label>
                     <span asp-validation-for="Password" class="text-danger"></span>
-                    <input asp-for="Password" type="password" class="form-control rounded" id="Password" placeholder="Password" />
+                    <input asp-for="Password" type="password" class="form-control rounded" id="Password1" placeholder="Password" />
                 </div>
                 
                 <div class="alert alert-danger" role="alert" id="alert" style="display: none">@Html.ValidationSummary()</div>
 
                 <button name="button" class="btn rounded">Sign in</button>
             </form>
+        </div>-->
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                    <div class="card card-signin my-5">
+                        <div class="card-body">
+                            <h5 class="card-title text-center" style="color: #1bac91">Sign In</h5>
+                            <form class="form-signin">
+                                <div class="form-label-group">
+                                    <input asp-for="Username" type="email" id="Username" class="form-control" placeholder="Email address" required autofocus>
+                                    <span asp-validation-for="Username" class="text-danger"></span>
+                                    <label asp-for="Username">Email address</label>
+                                </div>
+
+                                <div class="form-label-group">
+                                    <input asp-for="Password" type="password" id="Password" class="form-control" placeholder="Password" required>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                    <label asp-for="Password">Password</label>
+                                </div>
+
+                                <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1" style="color: #1bac91">Remember password</label>
+                                </div>
+
+                                <div class="alert alert-danger" role="alert" id="alert" style="display: none">@Html.ValidationSummary()</div>
+                                <button class="btn btn-lg btn-block text-uppercase" style="background: #1bac91" type="submit">Sign in</button>
+                                <div style="width: max-content">
+                                    <a style="color: dimgray; vertical-align: sub; text-align: center" href="#">Forgot Password?</a>
+                                </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        
     </section><!-- End Services Section -->
+
 </main>
 
 @if (!ViewData.ModelState.IsValid)

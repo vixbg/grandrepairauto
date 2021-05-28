@@ -24,6 +24,10 @@ using GrandRepairAuto.Services.Models.ServiceDTOs;
 using GrandRepairAuto.Services.Models.VehicleModelDTOs;
 using GrandRepairAuto.Services.Models.VehiclesDTOs;
 using GrandRepairAuto.Validators;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace GrandRepairAuto
 {
@@ -76,15 +80,55 @@ namespace GrandRepairAuto
         {
             AddAutomapper(services);
             services.AddControllersWithViews().AddFluentValidation();
+            var connectionString = Configuration.GetConnectionString("EntityString");
 
-            services.AddDbContext<GarageContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EntityString")));
+            services.AddDbContext<GarageContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddIdentity<User, UserRole>(options =>
+            {
+                options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.User.RequireUniqueEmail = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(30);
+                options.SignIn.RequireConfirmedEmail = true;
+            })
+                .AddEntityFrameworkStores<GarageContext>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<CookieAuthenticationOptions>(options =>
+            {
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = c => c.UseSqlServer(connectionString,
+                        sql => sql.MigrationsAssembly(typeof(GarageContext).Assembly.GetName().Name));
+                })
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = c => c.UseSqlServer(connectionString,
+                        sql => sql.MigrationsAssembly(typeof(GarageContext).Assembly.GetName().Name));
+                })
+                .AddAspNetIdentity<User>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             )
                 .AddFluentValidation(v => v.RegisterValidatorsFromAssemblyContaining<VehicleValidator>());
 
+            services.AddAuthentication()
+                .AddCookie(cfg =>
+                {
+                    cfg.Cookie.SameSite = SameSiteMode.Strict;
+                });
 
+            services.AddAuthorization();
 
             // Repositories
             services.AddScoped<ICustomerServiceRepository, CustomerServiceRepository>();
@@ -130,9 +174,16 @@ namespace GrandRepairAuto
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
+            app.UseIdentityServer();
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                Secure = CookieSecurePolicy.None
+            });
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwagger();

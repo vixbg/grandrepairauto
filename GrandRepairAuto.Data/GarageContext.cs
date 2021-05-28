@@ -2,10 +2,12 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using GrandRepairAuto.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GrandRepairAuto.Data
 {
-    public class GarageContext : DbContext
+    public class GarageContext : IdentityDbContext<User, UserRole, int>
     {
         public GarageContext(DbContextOptions<GarageContext> options) : base (options)
         {
@@ -14,6 +16,8 @@ namespace GrandRepairAuto.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Order>()
                 .HasOne<User>(o => o.User)
                 .WithMany()

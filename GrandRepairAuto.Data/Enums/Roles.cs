@@ -4,10 +4,12 @@ using System.Text;
 
 namespace GrandRepairAuto.Data.Enums
 {
-    public enum Roles
+    public static class Roles
     {
-        Admin,
-        Employee,
-        Customer
+        public const string Admin = "Administrator";
+        public const string Employee = "Employee";
+        public const string Customer = "Customer";
+
+        public const string AdminsAndEmployees = "Administrator, Employee";
     }
 }

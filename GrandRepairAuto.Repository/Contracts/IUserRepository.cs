@@ -2,7 +2,7 @@
 
 namespace GrandRepairAuto.Repository.Contracts
 {
-    public interface IUserRepository : IGenericRepository<User, string>
+    public interface IUserRepository : IGenericRepository<User, int>
     {
     }
 }

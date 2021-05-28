@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GrandRepairAuto.Data.Models
 {
-    public class User : IdentityUser, IEntity<string>, ISoftDeletable
+    public class User : IdentityUser<int>, IEntity<int>, ISoftDeletable
     {
         public DateTime? DeletedOn { get; set; }
        

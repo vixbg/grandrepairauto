@@ -25,6 +25,7 @@ using GrandRepairAuto.Services.Models.VehicleModelDTOs;
 using GrandRepairAuto.Services.Models.VehiclesDTOs;
 using GrandRepairAuto.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
@@ -83,24 +84,26 @@ namespace GrandRepairAuto
 
             services.AddDbContext<GarageContext>(options => options.UseSqlServer(connectionString));
 
-            services.AddIdentity<User, IdentityRole>(options =>
+            services.AddIdentity<User, UserRole>(options =>
             {
                 options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
                 options.User.RequireUniqueEmail = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(30);
                 options.SignIn.RequireConfirmedEmail = true;
-            });
+            })
+                .AddEntityFrameworkStores<GarageContext>()
+                .AddDefaultTokenProviders();
 
             services.Configure<CookieAuthenticationOptions>(options =>
             {
                 options.Cookie.IsEssential = true;
             });
 
-            services.AddIdentityServer(options =>
-                {
-                    options.UserInteraction.LoginUrl = "/User/Login";
-                    options.UserInteraction.LogoutUrl = "/User/Logout";
-                })
+            services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
                 .AddConfigurationStore(options =>
                 {
@@ -119,7 +122,13 @@ namespace GrandRepairAuto
             )
                 .AddFluentValidation(v => v.RegisterValidatorsFromAssemblyContaining<VehicleValidator>());
 
+            services.AddAuthentication()
+                .AddCookie(cfg =>
+                {
+                    cfg.Cookie.SameSite = SameSiteMode.Strict;
+                });
 
+            services.AddAuthorization();
 
             // Repositories
             services.AddScoped<ICustomerServiceRepository, CustomerServiceRepository>();
@@ -166,6 +175,11 @@ namespace GrandRepairAuto
             }
             app.UseStaticFiles();
             app.UseIdentityServer();
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                Secure = CookieSecurePolicy.None
+            });
 
             app.UseRouting();
 

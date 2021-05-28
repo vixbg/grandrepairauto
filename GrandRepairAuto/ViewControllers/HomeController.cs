@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using GrandRepairAuto.Data.Enums;
 using GrandRepairAuto.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GrandRepairAuto.Controllers
 {
@@ -19,6 +21,7 @@ namespace GrandRepairAuto.Controllers
             return View();
         }
 
+        [Authorize(Roles = Roles.Admin)]
         public IActionResult Privacy()
         {
             return View();

@@ -28,6 +28,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using GrandRepairAuto.Web.Models;
 
 namespace GrandRepairAuto
 {
@@ -70,6 +71,11 @@ namespace GrandRepairAuto
                 c.CreateMap<VehicleCreateDTO, VehicleUpdateDTO>().ReverseMap();
                 c.CreateMap<VehicleModelCreateDTO, VehicleModelUpdateDTO>().ReverseMap();
                 c.CreateMap<ServiceCreateDTO, ServiceUpdateDTO>().ReverseMap();
+
+                //MVC
+                c.CreateMap<ServiceCreateDTO, ServiceVM>().ReverseMap();
+                c.CreateMap<ServiceDTO, ServiceVM>().ReverseMap();
+                c.CreateMap<ServiceUpdateDTO, ServiceVM>().ReverseMap();
             });
 
             services.AddSingleton(config.CreateMapper());
@@ -93,7 +99,7 @@ namespace GrandRepairAuto
                 options.Password.RequireUppercase = false;
                 options.User.RequireUniqueEmail = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(30);
-                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;                
             })
                 .AddEntityFrameworkStores<GarageContext>()
                 .AddDefaultTokenProviders();

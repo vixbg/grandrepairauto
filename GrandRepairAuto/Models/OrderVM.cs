@@ -3,7 +3,7 @@ using System;
 
 namespace GrandRepairAuto.Web.Models
 {
-    public class OrderModel
+    public class OrderVM
     {
         public OrderStatuses Status { get; set; }
 

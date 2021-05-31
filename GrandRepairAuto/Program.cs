@@ -33,10 +33,11 @@ namespace GrandRepairAuto
             await using var dbContext = scope.ServiceProvider.GetService<GarageContext>();
             await dbContext.Database.MigrateAsync();
 
-            if (! await dbContext.Roles.AnyAsync())
+            if (!await dbContext.Roles.AnyAsync())
             {
-                await dbContext.Roles.AddAsync(new UserRole() {
-                    Name = Roles.Admin, 
+                await dbContext.Roles.AddAsync(new UserRole()
+                {
+                    Name = Roles.Admin,
                     NormalizedName = Roles.Admin.ToUpper()
                 });
                 await dbContext.Roles.AddAsync(new UserRole()
@@ -59,15 +60,23 @@ namespace GrandRepairAuto
             {
                 SetIdentityInsert<Manufacturer>(dbContext, true);
                 SetIdentityInsert<VehicleModel>(dbContext, true);
-                var extracts = JsonConvert.DeserializeObject<List<ManufacturersAndModels>>(File.ReadAllText(manufacturerFile));
+                var extracts = JsonConvert.DeserializeObject<List<ManufacturersAndModelsSeedModel>>(File.ReadAllText(manufacturerFile));
 
                 foreach (var e in extracts)
                 {
-                    var manufacturer = new Manufacturer() { Name = e.brand, VehicleModels = new List<VehicleModel>() };
+                    var manufacturer = new Manufacturer()
+                    {
+                        Name = e.brand,
+                        VehicleModels = new List<VehicleModel>()
+                    };
 
                     foreach (var model in e.models)
                     {
-                        var vehicleModel = new VehicleModel() { Name = model };
+                        var vehicleModel = new VehicleModel()
+                        {
+                            Name = model
+                        };
+
                         manufacturer.VehicleModels.Add(vehicleModel);
                     }
 
@@ -80,20 +89,33 @@ namespace GrandRepairAuto
                 SetIdentityInsert<VehicleModel>(dbContext, false);
             }
 
-            if (!await dbContext.Users.AnyAsync())
+
+            var usersFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Seed", "Users.json");
+
+            if (!await dbContext.Users.AnyAsync() && File.Exists(usersFile))
             {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-                var newUser = new User
+                var extracts = JsonConvert.DeserializeObject<List<UserSeedModel>>(File.ReadAllText(usersFile));
+
+                foreach (var e in extracts)
                 {
-                    Email = "admin@grandrepair.com",
-                    UserName = "admin@grandrepair.com",
-                    EmailConfirmed = true
-                };
-                if( (await userManager.CreateAsync(newUser, "12345678")).Succeeded )
-                {
-                    await userManager.AddToRoleAsync(newUser, Roles.Admin);
+                    var user = new User()
+                    {
+                        Email = e.Email,
+                        EmailConfirmed = true,
+                        UserName = e.Username,
+                        PhoneNumber = e.PhoneNumber
+                    };
+
+                    if ((await userManager.CreateAsync(user, e.Password)).Succeeded)
+                    {
+                        foreach (var role in e.Roles)
+                        {
+                            await userManager.AddToRoleAsync(user, role);
+                        }
+                    } 
                 }
-            }
+            }            
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

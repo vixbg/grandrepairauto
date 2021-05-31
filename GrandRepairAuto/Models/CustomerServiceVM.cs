@@ -3,7 +3,7 @@ using System;
 
 namespace GrandRepairAuto.Web.Models
 {
-    public class CustomerServiceModel
+    public class CustomerServiceVM
     {
         public int ServiceId { get; set; }
 

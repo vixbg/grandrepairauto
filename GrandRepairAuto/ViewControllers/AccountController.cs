@@ -54,7 +54,7 @@ namespace GrandRepairAuto.Web.ViewControllers
                 return View(new LoginInputModel {ReturnUrl = model.ReturnUrl, Username = model.Username});
             }
 
-            var result = await signInManager.PasswordSignInAsync(user, model.Password, false, true);
+            var result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, true);
             if (result.Succeeded)
             {
                 if (!string.IsNullOrEmpty(model.ReturnUrl))

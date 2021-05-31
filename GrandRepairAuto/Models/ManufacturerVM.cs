@@ -1,10 +1,7 @@
 ﻿namespace GrandRepairAuto.Web.Models
 {
-    public class VehicleModelModel
+    public class ManufacturerVM
     {
         public string Name { get; set; }
-
-        public int ManufacturerId { get; set; }
-
     }
 }

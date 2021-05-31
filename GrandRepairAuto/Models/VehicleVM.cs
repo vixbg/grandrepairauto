@@ -2,7 +2,7 @@
 
 namespace GrandRepairAuto.Web.Models
 {
-    public class VehicleModel
+    public class VehicleVM
     {
         public string RegPlate { get; set; }
 

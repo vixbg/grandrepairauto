@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace GrandRepairAuto.Data.Models.SeedModels
 {
-    public class ManufacturersAndModels
+    public class ManufacturersAndModelsSeedModel
     {
         public string brand { get; set; }
 

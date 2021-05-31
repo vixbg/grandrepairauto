@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GrandRepairAuto.Web.Models
 {
-    public class UserModel
+    public class UserVM
     {
     }
 }

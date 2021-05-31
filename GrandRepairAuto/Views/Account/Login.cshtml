@@ -47,8 +47,8 @@
                                 </div>
 
                                 <div class="custom-control custom-checkbox mb-3">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1" style="color: #1bac91">Remember password</label>
+                                    <input asp-for="RememberMe" type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label asp-for="RememberMe" class="custom-control-label" for="customCheck1" style="color: #1bac91">Remember password</label>
                                 </div>
 
                                 <div class="alert alert-danger" role="alert" id="alert" style="display: none">@Html.ValidationSummary()</div>

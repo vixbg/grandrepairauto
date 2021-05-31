@@ -33,7 +33,7 @@
                     <div class="card card-signin my-5">
                         <div class="card-body">
                             <h5 class="card-title text-center" style="color: #1bac91">Sign In</h5>
-                            <form class="form-signin">
+                            <form method="POST" class="form-signin">
                                 <div class="form-label-group">
                                     <input asp-for="Username" type="email" id="Username" class="form-control" placeholder="Email address" required autofocus>
                                     <span asp-validation-for="Username" class="text-danger"></span>

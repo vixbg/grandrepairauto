@@ -32,18 +32,21 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#services">Services</a></li>
+                    <li><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a class="nav-link" asp-controller="Service" asp-action="Index">Services</a></li>
+                    <li><a class="nav-link" asp-controller="Order" asp-action="Index">Orders</a></li>
+                    <li><a class="nav-link" asp-controller="User" asp-action="Index">Users</a></li>
+                    <li><a class="nav-link" asp-controller="Vehicle" asp-action="Index">Vehicles</a></li>
                     <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
 
                     @if (User?.Identity.IsAuthenticated == true)
                     {
-                        <li><a class="nav-link" asp-controller="Account" asp-action="Logout" />Logout</li>
+                        <li><a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a></li>
                     }
                     else
                     {
-                        <li><a class="nav-link" asp-controller="Account" asp-action="Login" />Login</li>
+                        <li><a class="nav-link" asp-controller="Account" asp-action="Login">Login</a></li>
                     }
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -131,14 +134,14 @@
     </footer>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
     <script src="~/assets/vendor/aos/aos.js"></script>
-    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @*<script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>*@
     <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
     <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="~/assets/vendor/php-email-form/validate.js"></script>
     <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery/dist/js/bootstrap.bundle.min.js"></script>
+    @*<script src="~/lib/jquery/dist/js/bootstrap.bundle.min.js"></script>*@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/assets/js/main.js"></script>
     @RenderSection("Scripts", required: false)

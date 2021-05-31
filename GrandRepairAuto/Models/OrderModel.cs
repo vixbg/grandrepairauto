@@ -1,10 +1,9 @@
 ﻿using GrandRepairAuto.Data.Enums;
-using GrandRepairAuto.Services.Abstract;
 using System;
 
-namespace GrandRepairAuto.Services.Models.OrderDTOs
+namespace GrandRepairAuto.Web.Models
 {
-    public class OrderDTO : DTO<int>
+    public class OrderModel
     {
         public OrderStatuses Status { get; set; }
 

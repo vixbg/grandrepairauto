@@ -8,6 +8,11 @@ using GrandRepairAuto.Data.Models;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Internal;
+using System.IO;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using GrandRepairAuto.Data.Models.SeedModels;
+using System;
 
 namespace GrandRepairAuto
 {
@@ -48,6 +53,33 @@ namespace GrandRepairAuto
                 await dbContext.SaveChangesAsync();
             }
 
+            var manufacturerFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Seed", "ManufacturersAndModels.json");
+
+            if (!await dbContext.Manufacturers.AnyAsync() && File.Exists(manufacturerFile))
+            {
+                SetIdentityInsert<Manufacturer>(dbContext, true);
+                SetIdentityInsert<VehicleModel>(dbContext, true);
+                var extracts = JsonConvert.DeserializeObject<List<ManufacturersAndModels>>(File.ReadAllText(manufacturerFile));
+
+                foreach (var e in extracts)
+                {
+                    var manufacturer = new Manufacturer() { Name = e.brand, VehicleModels = new List<VehicleModel>() };
+
+                    foreach (var model in e.models)
+                    {
+                        var vehicleModel = new VehicleModel() { Name = model };
+                        manufacturer.VehicleModels.Add(vehicleModel);
+                    }
+
+                    await dbContext.Manufacturers.AddAsync(manufacturer);
+                }
+
+                dbContext.SaveChanges();
+
+                SetIdentityInsert<Manufacturer>(dbContext, false);
+                SetIdentityInsert<VehicleModel>(dbContext, false);
+            }
+
             if (!await dbContext.Users.AnyAsync())
             {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
@@ -70,5 +102,20 @@ namespace GrandRepairAuto
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+
+        /// <summary>
+        /// Turns ON and OFF IDENTITY INSERT for specific database table.
+        /// </summary>
+        /// <typeparam name="TEntity">Generic that takes the form of the Model that will show which table to be used.</typeparam>
+        /// <param name="dbContext">Database Instance</param>
+        /// <param name="on">Boolean to change ON or OFF of the parameter.</param>
+        private static void SetIdentityInsert<TEntity>(DbContext dbContext, bool on)
+        {
+            var entityType = dbContext.Model.FindEntityType(typeof(TEntity));
+            var query =
+                $"SET IDENTITY_INSERT dbo.{entityType.GetTableName()} {(on ? "ON" : "OFF")};";
+            dbContext.Database.ExecuteSqlRaw(query);
+        }
     }
 }

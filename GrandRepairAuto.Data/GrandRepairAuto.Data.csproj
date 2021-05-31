@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Seed\" />
+    <None Remove="Seed\ManufacturersAndModels.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Seed\ManufacturersAndModels.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

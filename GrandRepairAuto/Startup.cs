@@ -126,6 +126,8 @@ namespace GrandRepairAuto
                 .AddCookie(cfg =>
                 {
                     cfg.Cookie.SameSite = SameSiteMode.Strict;
+                    cfg.AccessDeniedPath = "/Account/Login";
+                    cfg.LoginPath = "/Account/Login";
                 });
 
             services.AddAuthorization();
@@ -137,8 +139,7 @@ namespace GrandRepairAuto
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
-            services.AddScoped<IVehicleRepository, VehicleRepository>();
-            
+            services.AddScoped<IVehicleRepository, VehicleRepository>();            
 
 
             // Services

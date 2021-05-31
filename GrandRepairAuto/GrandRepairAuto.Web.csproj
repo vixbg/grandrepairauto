@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>E:\My Documents\Projects\Telerik Academy\GrandRepairAuto\GrandRepairAuto\GrandRepairAuto.Web.xml</DocumentationFile>
+    <DocumentationFile>.\GrandRepairAuto.Web.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

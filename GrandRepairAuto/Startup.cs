@@ -156,6 +156,7 @@ namespace GrandRepairAuto
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IVehicleModelService, VehicleModelService>();
             services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IEmailService, EmailService>();
 
 
             services.AddSwaggerGen(c =>

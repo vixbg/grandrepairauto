@@ -1,10 +1,36 @@
-﻿@model GrandRepairAuto.Web.Models.UserVM
-<main id="main">
+﻿@model List<GrandRepairAuto.Web.Models.UserVM>
 
-    <section id="users" class="users">
+<section id="users" class="users">
 
-        <h1>Users</h1>
+    <h1>Users</h1>
 
-    </section>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email/Username</th>
+                <th>Phone Number</th>
+                <th>Roles</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td> @user.FirstName @user.LastName </td>
+                    <td> @user.Email </td>
+                    <td> @user.PhoneNumber </td>
+                    <td> @user.RolesString </td>
+                    <td> <a asp-action="Update" asp-route-id="@user.Id"> Update </a></td>
+                    <td> <a asp-action="Delete" asp-route-id="@user.Id"> Delete </a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-</main>
+    <a class="btn" asp-action="Create">Create user</a>
+</section>
+
+

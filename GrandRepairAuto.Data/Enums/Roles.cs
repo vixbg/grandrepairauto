@@ -11,5 +11,7 @@ namespace GrandRepairAuto.Data.Enums
         public const string Customer = "Customer";
 
         public const string AdminsAndEmployees = "Administrator, Employee";
+
+        public static readonly string[] AllRoles = new[] { Admin, Employee, Customer };
     }
 }

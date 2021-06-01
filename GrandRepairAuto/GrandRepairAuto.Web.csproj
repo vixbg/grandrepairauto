@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AutoMapper\NewFile.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     

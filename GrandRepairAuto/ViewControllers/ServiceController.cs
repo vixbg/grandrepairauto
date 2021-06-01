@@ -26,6 +26,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         {
             var services = serviceService.GetAll();
             var servicesVMs = mapper.Map<List<ServiceVM>>(services);
+
             return View(servicesVMs);
         }
 
@@ -48,6 +49,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         {
             var getDTO = serviceService.GetByID(id);
             var viewModel = mapper.Map<ServiceVM>(getDTO);
+
             return View(viewModel);
         }
 

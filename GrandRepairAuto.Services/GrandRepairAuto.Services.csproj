@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Contracts\NewFile1.txt" />
+    <None Remove="NewFile1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.15" />
@@ -26,10 +32,6 @@
   <ItemGroup>
     <ProjectReference Include="..\GrandRepairAuto.Data\GrandRepairAuto.Data.csproj" />
     <ProjectReference Include="..\GrandRepairAuto.Repository\GrandRepairAuto.Repository.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\UserDTOs\" />
   </ItemGroup>
 
 </Project>

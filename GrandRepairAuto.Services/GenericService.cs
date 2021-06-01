@@ -1,17 +1,16 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
+using GrandRepairAuto.Data.Filters.Contracts;
+using GrandRepairAuto.Data.Models.Contracts;
+using GrandRepairAuto.Repository.Contracts;
+using GrandRepairAuto.Services.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using GrandRepairAuto.Data.Filters.Contracts;
-using GrandRepairAuto.Data.Models.Contracts;
-using GrandRepairAuto.Repository;
-using GrandRepairAuto.Repository.Contracts;
-using GrandRepairAuto.Services.Contracts;
 
 namespace GrandRepairAuto.Services
 {
-    public class GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> : IGenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> 
+    public abstract class GenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO> : IGenericService<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO>
         where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
         where TPrimaryDTO : class, IDTO
         where TCreateDTO : class, IDTO
@@ -25,8 +24,6 @@ namespace GrandRepairAuto.Services
             this.repository = repository;
             this.mapper = mapper;
         }
-
-        //DONE: GetAll Works.
 
         public IEnumerable<TPrimaryDTO> GetAll(IFilter<TEntity> filter)
         {
@@ -43,9 +40,7 @@ namespace GrandRepairAuto.Services
             return this.repository.Get(filter).Select(e => mapper.Map<TPrimaryDTO>(e));
         }
 
-        //DONE: GetByID Works.
-
-        public TPrimaryDTO GetByID(TPrimaryKey id) 
+        public TPrimaryDTO GetByID(TPrimaryKey id)
         {
             var entity = this.repository.GetByID(id);
             if (entity == null)
@@ -55,37 +50,30 @@ namespace GrandRepairAuto.Services
             return mapper.Map<TPrimaryDTO>(entity);
         }
 
-        //DONE: Create Works. Had to create a CreateDTO
-
-        public TPrimaryDTO Create(TCreateDTO dto) 
+        public TPrimaryDTO Create(TCreateDTO dto)
         {
             var entity = mapper.Map<TEntity>(dto);
             repository.Insert(entity);
             return mapper.Map<TPrimaryDTO>(entity);
         }
 
-        //DONE: Update Works. Either Have UpdateDTO or remove id from method.
-
-        public TPrimaryDTO Update(TUpdateDTO dto, TPrimaryKey id) 
+        public TPrimaryDTO Update(TUpdateDTO dto, TPrimaryKey id)
         {
             var entity = repository.GetByID(id);
             if (entity == null)
             {
                 return null;
             }
+
             mapper.Map(dto, entity);
             repository.Update(entity);
             return mapper.Map<TPrimaryDTO>(entity);
         }
 
-        //DONE: Delete WORKS.
-
         public bool Delete(TPrimaryKey id)
         {
             return repository.Delete(id);
         }
-
-        //DONE: Restore WORKS.
 
         public bool Restore(TPrimaryKey id)
         {

@@ -101,6 +101,8 @@ namespace GrandRepairAuto
                 {
                     var user = new User()
                     {
+                        FirstName = e.FirstName,
+                        LastName = e.LastName,
                         Email = e.Email,
                         EmailConfirmed = true,
                         UserName = e.Username,

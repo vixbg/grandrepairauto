@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using GrandRepairAuto.Services.Contracts;
+using System.Collections.Generic;
 
-namespace GrandRepairAuto.Data.Models.SeedModels
+namespace GrandRepairAuto.Services.Models.UserDTOs
 {
-    public class UserSeedModel
+    public class UserCreateDTO : IDTO
     {
         public string FirstName { get; set; }
 

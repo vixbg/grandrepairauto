@@ -29,6 +29,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using GrandRepairAuto.Web.Models;
+using GrandRepairAuto.Services.Models.UserDTOs;
 
 namespace GrandRepairAuto
 {
@@ -43,48 +44,16 @@ namespace GrandRepairAuto
 
         public static void AddAutomapper(IServiceCollection services)
         {
-            var config = new MapperConfiguration(c =>
-            {
-                c.CreateMap<Order, OrderDTO>().ReverseMap();
-                c.CreateMap<Order, OrderCreateDTO>().ReverseMap();
-                c.CreateMap<Order, OrderUpdateDTO>().ReverseMap();
-                c.CreateMap<Manufacturer, ManufacturerDTO>().ReverseMap();
-                c.CreateMap<Manufacturer, ManufacturerCreateDTO>().ReverseMap();
-                c.CreateMap<Manufacturer, ManufacturerUpdateDTO>().ReverseMap();
-                c.CreateMap<Service, ServiceCreateDTO>().ReverseMap();
-                c.CreateMap<Service, ServiceDTO>().ReverseMap();
-                c.CreateMap<Service, ServiceUpdateDTO>().ReverseMap();
-                c.CreateMap<VehicleModel, VehicleModelDTO>().ReverseMap();
-                c.CreateMap<VehicleModel, VehicleModelCreateDTO>().ReverseMap();
-                c.CreateMap<VehicleModel, VehicleModelUpdateDTO>().ReverseMap();
-                c.CreateMap<CustomerService, CustomerServiceDTO>().ReverseMap();
-                c.CreateMap<CustomerService, CustomerServiceCreateDTO>().ReverseMap();
-                c.CreateMap<CustomerService, CustomerServiceUpdateDTO>().ReverseMap();
-                c.CreateMap<Vehicle, VehicleCreateDTO>().ReverseMap();
-                c.CreateMap<Vehicle, VehicleDTO>().ReverseMap();
-                c.CreateMap<Vehicle, VehicleUpdateDTO>().ReverseMap();
-
-                // Tests only
-                c.CreateMap<CustomerServiceCreateDTO, CustomerServiceUpdateDTO>().ReverseMap();
-                c.CreateMap<OrderCreateDTO, OrderUpdateDTO>().ReverseMap();
-                c.CreateMap<ManufacturerCreateDTO, ManufacturerUpdateDTO>().ReverseMap();
-                c.CreateMap<VehicleCreateDTO, VehicleUpdateDTO>().ReverseMap();
-                c.CreateMap<VehicleModelCreateDTO, VehicleModelUpdateDTO>().ReverseMap();
-                c.CreateMap<ServiceCreateDTO, ServiceUpdateDTO>().ReverseMap();
-
-                //MVC
-                c.CreateMap<ServiceCreateDTO, ServiceVM>().ReverseMap();
-                c.CreateMap<ServiceDTO, ServiceVM>().ReverseMap();
-                c.CreateMap<ServiceUpdateDTO, ServiceVM>().ReverseMap();
-            });
-
-            services.AddSingleton(config.CreateMapper());
+            
         }
 
         // This method gets called by the runtime. Use this method to add services to the Container.
         public void ConfigureServices(IServiceCollection services)
         {
-            AddAutomapper(services);
+            services.AddSingleton(new MapperConfiguration(cfg => {
+                cfg.AddProfile<AutoMapperProfile>();
+            }).CreateMapper());
+
             services.AddControllersWithViews().AddFluentValidation();
             var connectionString = Configuration.GetConnectionString("EntityString");
 
@@ -99,7 +68,7 @@ namespace GrandRepairAuto
                 options.Password.RequireUppercase = false;
                 options.User.RequireUniqueEmail = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(30);
-                options.SignIn.RequireConfirmedEmail = true;                
+                options.SignIn.RequireConfirmedEmail = true;
             })
                 .AddEntityFrameworkStores<GarageContext>()
                 .AddDefaultTokenProviders();
@@ -145,7 +114,7 @@ namespace GrandRepairAuto
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
-            services.AddScoped<IVehicleRepository, VehicleRepository>();            
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
 
 
             // Services
@@ -173,7 +142,7 @@ namespace GrandRepairAuto
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (!env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
             }

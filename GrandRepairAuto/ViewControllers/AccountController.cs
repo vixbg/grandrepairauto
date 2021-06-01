@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GrandRepairAuto.Data.Models;
+﻿using GrandRepairAuto.Data.Models;
 using GrandRepairAuto.Web.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace GrandRepairAuto.Web.ViewControllers
 {
@@ -38,20 +35,20 @@ namespace GrandRepairAuto.Web.ViewControllers
         {
             if (!ModelState.IsValid)
             {
-                return View(new LoginInputModel {ReturnUrl = model.ReturnUrl, Username = model.Username});
+                return View(new LoginInputModel { ReturnUrl = model.ReturnUrl, Username = model.Username });
             }
 
             var user = await userManager.FindByNameAsync(model.Username);
             if (user == null)
             {
                 ModelState.AddModelError("ErrorMessage", "Invalid username or password");
-                return View(new LoginInputModel {ReturnUrl = model.ReturnUrl, Username = model.Username});
+                return View(new LoginInputModel { ReturnUrl = model.ReturnUrl, Username = model.Username });
             }
 
             if (await userManager.IsLockedOutAsync(user))
             {
                 ModelState.AddModelError("ErrorMessage", "Account is locked, try again in 5 minutes");
-                return View(new LoginInputModel {ReturnUrl = model.ReturnUrl, Username = model.Username});
+                return View(new LoginInputModel { ReturnUrl = model.ReturnUrl, Username = model.Username });
             }
 
             var result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, true);
@@ -66,7 +63,7 @@ namespace GrandRepairAuto.Web.ViewControllers
             }
 
             ModelState.AddModelError("ErrorMessage", "Invalid username or password");
-            return View(new LoginInputModel {ReturnUrl = model.ReturnUrl, Username = model.Username});
+            return View(new LoginInputModel { ReturnUrl = model.ReturnUrl, Username = model.Username });
         }
 
         [HttpGet("Logout")]

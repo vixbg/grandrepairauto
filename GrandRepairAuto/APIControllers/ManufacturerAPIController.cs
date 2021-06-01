@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using GrandRepairAuto.Data.Filters;
+﻿using GrandRepairAuto.Data.Filters;
 using GrandRepairAuto.Data.Models;
-using GrandRepairAuto.Services;
 using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.ManufacturerDTOs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GrandRepairAuto.Web.APIControllers
 {
@@ -13,7 +12,6 @@ namespace GrandRepairAuto.Web.APIControllers
     {
         public ManufacturerAPIController(IManufacturerService service) : base(service)
         {
-
         }
     }
 }

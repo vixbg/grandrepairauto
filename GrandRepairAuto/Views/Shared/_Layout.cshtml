@@ -36,8 +36,6 @@
                 <nav id="navbar" class="navbar">
                     <ul>
                         <li><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-                        @*<li><a class="nav-link scrollto" href="#contact">Contact</a></li>*@
-                        @*<li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>*@
 
 
                         @if (User?.Identity.IsAuthenticated == true)
@@ -54,6 +52,8 @@
                         }
                         else
                         {
+                            <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
+                            <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
                             <li><a class="nav-link" asp-controller="Account" asp-action="Login">Login</a></li>
                         }
 

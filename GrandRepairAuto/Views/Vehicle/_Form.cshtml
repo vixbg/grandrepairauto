@@ -1,23 +1,40 @@
-﻿@model GrandRepairAuto.Web.Models.ServiceVM
+﻿@model GrandRepairAuto.Web.Models.VehicleVM
 @using GrandRepairAuto.Data.Enums
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="Name">Name</label>
-        <input asp-for="Name" class="form-control" placeholder="Name">
+        <label asp-for="RegPlate">Reg Plate</label>
+        <input asp-for="RegPlate" class="form-control" placeholder="Reg Plate">
     </div>
     <div class="form-group">
-        <label asp-for="PricePerHour">Price Per Hour</label>
-        <input asp-for="PricePerHour" type="number" class="form-control" placeholder="Price Per Hour">
+        <label asp-for="VehicleModelId">Vehicle Model</label>
+        <input asp-for="VehicleModelId" type="number" class="form-control" placeholder="Vehicle Model">
     </div>
     <div class="form-group">
-        <label asp-for="WorkHours">Work Hours</label>
-        <input asp-for="WorkHours" type="number" class="form-control" placeholder="Work Hours">
+        <label asp-for="Vin">VIN</label>
+        <input asp-for="Vin" type="number" class="form-control" placeholder="VIN">
     </div>
     <div class="form-group">
         <label asp-for="VehicleType">Vehicle Type</label>
-        <select asp-for="VehicleType" asp-items="Html.GetEnumSelectList<VehicleTypes>()" class="form-control" placeholder="Work Hours"></select>
+        <select asp-for="VehicleType" asp-items="Html.GetEnumSelectList<VehicleTypes>()" class="form-control" placeholder="Vehicle Type"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="EngineType">Engine Type</label>
+        <select asp-for="EngineType" asp-items="Html.GetEnumSelectList<EngineTypes>()" class="form-control" placeholder="Engine Type"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Mileage">Mileage</label>
+        <input asp-for="Mileage" type="number" class="form-control" placeholder="Mileage">
+    </div>
+    <div class="form-group">
+        <label asp-for="Color">Color</label>
+        <input asp-for="Color" type="number" class="form-control" placeholder="Color">
+    </div>
+    <div class="form-group">
+        <label asp-for="OwnerId">Owner</label>
+        <input asp-for="OwnerId" type="number" class="form-control" placeholder="Owner">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
+    <button asp-controller="Vehicle" asp-action="Index" class="btn btn-secondary">Cancel</button>
 </form>
 

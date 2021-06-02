@@ -5,51 +5,46 @@
 
         <h1>Vehicles</h1>
 
-        @if (Model == null)
-        {
-            <p> No data to display </p>
-        }
-        else{
-            <table class="table">
-                <thead>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Reg. Plate</th>
+                    <th>Vehicle Model</th>
+                    <th>VIN</th>
+                    <th>Vehicle Type</th>
+                    <th>Engine Type</th>
+                    <th>Mileage</th>
+                    <th>Color</th>
+                    <th>Owner</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                @foreach (var vehicle in Model)
+                {
                     <tr>
-                        <th>Reg. Plate</th>
-                        <th>Vehicle Model</th>
-                        <th>VIN</th>
-                        <th>Vehicle Type</th>
-                        <th>Engine Type</th>
-                        <th>Mileage</th>
-                        <th>Color</th>
-                        <th>Owner</th>
-                        <th>Update</th>
-                        <th>Delete</th>
+                        <td> @vehicle.RegPlate </td>
+                        <td> @vehicle.VehicleModelId </td>
+                        <td> @vehicle.Vin </td>
+                        <td> @vehicle.VehicleType </td>
+                        <td> @vehicle.EngineType </td>
+                        <td> @vehicle.Mileage </td>
+                        <td> @vehicle.Color </td>
+                        <td> @vehicle.OwnerId </td>
+                        <td> <a asp-action="Update" asp-route-id="@vehicle.Id"> Update </a></td>
+                        <td> <a asp-action="Delete" asp-route-id="@vehicle.Id"> Delete </a></td>
+
+
                     </tr>
-                </thead>
-                <tbody>
+                }
+            </tbody>
+        </table>
 
-
-                    @foreach (var vehicle in Model)
-                    {
-                        <tr>
-                            <td> @vehicle.RegPlate </td>
-                            <td> @vehicle.VehicleModelId </td>
-                            <td> @vehicle.Vin </td>
-                            <td> @vehicle.VehicleType </td>
-                            <td> @vehicle.EngineType </td>
-                            <td> @vehicle.Mileage </td>
-                            <td> @vehicle.Color </td>
-                            <td> @vehicle.OwnerId </td>
-                            
-
-                        </tr>
-                    }
-                    }
-                </tbody>
-            </table>
-        }
-        
         <a class="btn btn-primary" asp-action="Create">Create vehicle</a>
 
     </section>
 
-    </main>
+</main>

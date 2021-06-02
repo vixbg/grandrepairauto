@@ -5,6 +5,8 @@ namespace GrandRepairAuto.Web.Models
 {
     public class VehicleVM
     {
+        public int Id { get; set; }
+
         [Required]
         public string RegPlate { get; set; }
 

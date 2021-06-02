@@ -1,52 +1,7 @@
-﻿@model List<GrandRepairAuto.Web.Models.VehicleVM>
-<main id="main">
+﻿@model GrandRepairAuto.Web.Models.VehicleVM
 
-    <section id="vehicles" class="vehicles">
+<section>
+    <h1>Create new vehicle</h1>
 
-        <h1>Vehicles</h1>
-
-        @if (Model == null)
-        {
-            <p> No data to display </p>
-        }
-        else{
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Reg. Plate</th>
-                        <th>Vehicle Model</th>
-                        <th>VIN</th>
-                        <th>Vehicle Type</th>
-                        <th>Engine Type</th>
-                        <th>Mileage</th>
-                        <th>Color</th>
-                        <th>Owner</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-
-                    @foreach (var vehicle in Model)
-                    {
-                        <tr>
-                            <td> @vehicle.RegPlate </td>
-                            <td> @vehicle.VehicleModelId </td>
-                            <td> @vehicle.Vin </td>
-                            <td> @vehicle.VehicleType </td>
-                            <td> @vehicle.EngineType </td>
-                            <td> @vehicle.Mileage </td>
-                            <td> @vehicle.Color </td>
-                            <td> @vehicle.OwnerId </td>
-
-                        </tr>
-                    }
-                    }
-                </tbody>
-            </table>
-        }
-
-        </section>
-
-    </main>
+    <partial name="_Form" model="Model" />
+</section>

@@ -78,7 +78,7 @@ namespace GrandRepairAuto.Web.APIControllers
         {
             var toRestore = this.service.Restore(id);
 
-            if (toRestore == null)
+            if (toRestore == false)
             {
                 Response.StatusCode = StatusCodes.Status404NotFound;
             }

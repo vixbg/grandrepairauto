@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using GrandRepairAuto.Data.Enums;
+﻿using GrandRepairAuto.Data.Enums;
 using GrandRepairAuto.Data.Models;
-using GrandRepairAuto.Services.Abstract;
 using GrandRepairAuto.Services.Contracts;
 using Microsoft.VisualBasic;
 
@@ -15,6 +13,5 @@ namespace GrandRepairAuto.Services.Models.OrderDTOs
 
         public Vehicle VehicleId { get; set; }
 
-        
     }
 }

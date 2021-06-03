@@ -121,6 +121,7 @@ namespace GrandRepairAuto
             services.AddScoped<ICustomerServiceService, CustomerServiceService>();
             services.AddScoped<IManufacturerService, ManufacturerService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderWithCustomerServicesService, OrderWithCustomerServicesService>();
             services.AddScoped<IServiceService, ServiceService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IVehicleModelService, VehicleModelService>();

@@ -11,6 +11,7 @@ namespace GrandRepairAuto.Services.Contracts
     public interface IUserService
     {
         Task<IEnumerable<UserDTO>> GetAllAsync();
+        Task<IEnumerable<UserDTO>> GetCustomersAsync();
         Task<UserDTO> GetByIDAsync(int id);
         Task<UserDTO> CreateAsync(UserCreateDTO dto);
         Task<UserDTO> UpdateAsync(UserUpdateDTO dto, int id);

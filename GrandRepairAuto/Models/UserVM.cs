@@ -19,6 +19,8 @@ namespace GrandRepairAuto.Web.Models
 
         public string LastName { get; set; }
 
+        public string FullName => $"{FirstName} {LastName}";
+
         public string Email { get; set; }
 
         public string Username { get; set; }

@@ -1,18 +1,33 @@
 ﻿@model GrandRepairAuto.Web.Models.VehicleVM
 @using GrandRepairAuto.Data.Enums
+@using Newtonsoft.Json
 
 <form method="post">
     <div class="form-group">
         <label asp-for="RegPlate">Reg Plate</label>
         <input asp-for="RegPlate" class="form-control" placeholder="Reg Plate">
     </div>
-    <div class="form-group">
-        <label asp-for="VehicleModelId">Vehicle Model</label>
-        <input asp-for="VehicleModelId" type="number" class="form-control" placeholder="Vehicle Model">
+    <div class="form-group row">
+        <div class="col-6">
+            <label for="manufacturer">Manufacturer</label>
+            <select id="manufacturer" class="form-control" placeholder="Select manufacturer" onchange="onManufacturerChanged(this.value)">
+                <option value="0" selected>Select manufacturer</option>
+                @foreach (var m in ViewBag.Manufacturers)
+                {
+                    <option value="@m.Id">@m.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-6">
+            <label asp-for="VehicleModelId">Model</label>
+            <select asp-for="VehicleModelId" class="form-control" disabled="disabled">
+                <option value="0" selected>Select manufacturer</option>
+            </select>
+        </div>
     </div>
     <div class="form-group">
         <label asp-for="Vin">VIN</label>
-        <input asp-for="Vin" type="number" class="form-control" placeholder="VIN">
+        <input asp-for="Vin" type="text" class="form-control" placeholder="VIN">
     </div>
     <div class="form-group">
         <label asp-for="VehicleType">Vehicle Type</label>
@@ -28,13 +43,35 @@
     </div>
     <div class="form-group">
         <label asp-for="Color">Color</label>
-        <input asp-for="Color" type="number" class="form-control" placeholder="Color">
+        <input asp-for="Color" type="text" class="form-control" placeholder="Color">
     </div>
     <div class="form-group">
         <label asp-for="OwnerId">Owner</label>
-        <input asp-for="OwnerId" type="number" class="form-control" placeholder="Owner">
+        <select asp-for="OwnerId" type="number" class="form-control" placeholder="Owner">
+            <option value="0" selected>Select owner</option>
+            @foreach (var m in ViewBag.Owners)
+            {
+                <option value="@m.Id">@m.FullName</option>
+            }
+        </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     <button asp-controller="Vehicle" asp-action="Index" class="btn btn-secondary">Cancel</button>
 </form>
 
+<script type="text/javascript">
+    var models = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Models));
+    function onManufacturerChanged(man) {
+        var dd = $('#VehicleModelId');
+        dd.prop("disabled", man === 0);
+        dd.val(0);
+        dd.empty();
+        if( man === 0 ) {
+            dd.append(new Option("Select manufacturer", "0"));
+            return;
+        }
+
+        var data = models.filter(m => m.ManufacturerId == man);
+        data.forEach(m => dd.append(new Option(m.Name, m.Id)));
+    }
+</script>

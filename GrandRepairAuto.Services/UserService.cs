@@ -10,18 +10,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using GrandRepairAuto.Data.Enums;
 
 namespace GrandRepairAuto.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository repository;
+        private readonly IEmailService emailService;
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
 
-        public UserService(IUserRepository repository, IMapper mapper, UserManager<User> userManager)
+        public UserService(IUserRepository repository, IEmailService emailService, IMapper mapper, UserManager<User> userManager)
         {
             this.repository = repository;
+            this.emailService = emailService;
             this.mapper = mapper;
             this.userManager = userManager;
         }
@@ -32,6 +35,22 @@ namespace GrandRepairAuto.Services
             var userDTOs = new List<UserDTO>();
             foreach(var user in users)
             {
+                var userDTO = mapper.Map<UserDTO>(user);
+                userDTO.Roles.AddRange(await userManager.GetRolesAsync(user));
+                userDTOs.Add(userDTO);
+            }
+
+            return userDTOs;
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetCustomersAsync()
+        {
+            var users = this.repository.Get().ToList();
+            var userDTOs = new List<UserDTO>();
+            foreach(var user in users)
+            {
+                if (!(await userManager.IsInRoleAsync(user, Roles.Customer)))
+                    continue;
                 var userDTO = mapper.Map<UserDTO>(user);
                 userDTO.Roles.AddRange(await userManager.GetRolesAsync(user));
                 userDTOs.Add(userDTO);
@@ -57,8 +76,10 @@ namespace GrandRepairAuto.Services
         {
             var user = mapper.Map<User>(createDto);
             await userManager.CreateAsync(user);
-
             await userManager.AddToRolesAsync(user, createDto.Roles);
+
+            // TODO: Generate registration link
+            await emailService.SendNewUserRegistraionEmailAsync(user.UserName,  $"{user.FirstName} {user.LastName}", user.Email, "TODO");
 
             var userDto = mapper.Map<UserDTO>(user);
             userDto.Roles.AddRange(await userManager.GetRolesAsync(user));

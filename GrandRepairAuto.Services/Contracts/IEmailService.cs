@@ -8,5 +8,6 @@ namespace GrandRepairAuto.Services.Contracts
     public interface IEmailService
     {
         Task SendNewUserRegistraionEmailAsync(string username, string names, string email, string confirmationLink);
+        Task SendForgottenPasswordEmailAsync(string email, string names, string resetLink);
     }
 }

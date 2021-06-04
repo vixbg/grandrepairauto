@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace GrandRepairAuto.Web.ViewControllers
 {
-    [Authorize(Roles = Roles.All)]
+    [Authorize]
     public class SingleOrderController : Controller
     {
         private IVehicleService vehicleService;

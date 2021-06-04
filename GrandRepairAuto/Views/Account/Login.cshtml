@@ -54,7 +54,7 @@
                                 <div class="alert alert-danger" role="alert" id="alert" style="display: none">@Html.ValidationSummary()</div>
                                 <button class="btn btn-lg btn-block text-uppercase" style="background: #1bac91" type="submit">Sign in</button>
                                 <div style="width: max-content">
-                                    <a style="color: dimgray; vertical-align: sub; text-align: center" href="#">Forgot Password?</a>
+                                    <a style="color: dimgray; vertical-align: sub; text-align: center" asp-controller="Account" asp-action="ForgottenPassword">Forgot Password?</a>
                                 </div>
                                 </form>
                         </div>

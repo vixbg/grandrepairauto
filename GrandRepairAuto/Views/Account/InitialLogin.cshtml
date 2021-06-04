@@ -1,4 +1,4 @@
-﻿@model GrandRepairAuto.Web.Models.InitialPasswordVM
+﻿@model GrandRepairAuto.Web.Models.InitialPasswordInputVM
  
 @if (!Model.IsValid)
 {
@@ -10,7 +10,34 @@
 }
 else
 {
+<section>
     <div class="container">
-        <h1> Form to submit new passwords </h1>
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center" style="color: #1bac91">Sign In</h5>
+                        <form method="POST" class="form-signin">
+                            <input type="hidden" asp-for="Token" value="@Model.Token" />
+                            <input type="hidden" asp-for="Email" value="@Model.Email" />
+                            <div class="form-label-group">
+                                <input asp-for="Password" type="password" id="Password" class="form-control" placeholder="Password" required>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                                <label asp-for="Password">Password</label>
+                            </div>
+                            <div class="form-label-group">
+                                <input asp-for="RePassword" type="password" id="RePassword" class="form-control" placeholder="RePassword" required>
+                                <span asp-validation-for="RePassword" class="text-danger"></span>
+                                <label asp-for="RePassword">Re Password</label>
+                            </div>
+                            
+                            <div class="alert alert-danger" role="alert" id="alert" style="display: none">@Html.ValidationSummary()</div>
+                            <button class="btn btn-lg btn-block text-uppercase" style="background: #1bac91" type="submit">Sign in</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</section>
 }

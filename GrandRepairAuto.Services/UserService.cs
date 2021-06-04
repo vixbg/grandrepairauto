@@ -10,7 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Web;
+using GrandRepairAuto.Data;
 using GrandRepairAuto.Data.Enums;
+using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Http;
 
@@ -87,11 +90,10 @@ namespace GrandRepairAuto.Services
             }
             await userManager.AddToRolesAsync(user, createDto.Roles);
 
-            var token = await userManager.GeneratePasswordResetTokenAsync(user);
-            var link = $"http://{httpContextAccessor.HttpContext.Request.Host}/Account/InitialLogin?loginToken={token}&email={user.Email}";
+            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            var link = $"http://{httpContextAccessor.HttpContext.Request.Host}/Account/InitialLogin?loginToken={HttpUtility.UrlEncode(token)}&email={HttpUtility.UrlEncode(user.Email)}";
 
-            // TODO: Generate registration link
-            // await emailService.SendNewUserRegistraionEmailAsync(user.UserName,  $"{user.FirstName} {user.LastName}", user.Email, link);
+           await emailService.SendNewUserRegistraionEmailAsync(user.UserName,  $"{user.FirstName} {user.LastName}", user.Email, link);
 
             var userDto = mapper.Map<UserDTO>(user);
             userDto.Roles.AddRange(await userManager.GetRolesAsync(user));

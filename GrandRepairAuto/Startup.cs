@@ -92,9 +92,6 @@ namespace GrandRepairAuto
                 })
                 .AddAspNetIdentity<User>();
 
-            services.Configure<DataProtectionTokenProviderOptions>(opt =>
-                opt.TokenLifespan = TimeSpan.FromHours(24));
-
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             )

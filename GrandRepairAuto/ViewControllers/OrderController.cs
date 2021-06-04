@@ -10,6 +10,7 @@ namespace GrandRepairAuto.Web.ViewControllers
 {
 
     [Authorize]
+    [Route("Orders")]
     public class OrderController : Controller
     {
         private IOrderWithCustomerServicesService orderService;
@@ -21,11 +22,18 @@ namespace GrandRepairAuto.Web.ViewControllers
             this.mapper = mapper;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             IEnumerable<OrderWithCustomerServicesDTO> orders = orderService.GetAll();
             List<OrderVM> ordersVM = mapper.Map<List<OrderVM>>(orders);
             return View(ordersVM);
+        }
+
+        [HttpGet("Details/{orderId}")]
+        public IActionResult Details([FromRoute] int orderId)
+        {
+            return View();
         }
 
         public IActionResult Create()
@@ -42,8 +50,8 @@ namespace GrandRepairAuto.Web.ViewControllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult Update(int id)
+        [HttpGet("Edit/{id}")]
+        public IActionResult Update([FromRoute] int id)
         {
             OrderWithCustomerServicesDTO getDTO = orderService.GetByID(id);
             OrderVM viewModel = mapper.Map<OrderVM>(getDTO);
@@ -51,8 +59,8 @@ namespace GrandRepairAuto.Web.ViewControllers
             return View(viewModel);
         }
 
-        [HttpPost]
-        public IActionResult Update(OrderVM order, int id)
+        [HttpPost("Edit/{id}")]
+        public IActionResult Update([FromBody] OrderVM order, [FromRoute] int id)
         {
             OrderUpdateWithCustomerServicesDTO updateDTO = mapper.Map<OrderUpdateWithCustomerServicesDTO>(order);
             orderService.Update(updateDTO, id);
@@ -60,8 +68,8 @@ namespace GrandRepairAuto.Web.ViewControllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult Delete(int id)
+        [HttpGet("Delete/{id}")]
+        public IActionResult Delete([FromRoute] int id)
         {
             orderService.Delete(id);
 

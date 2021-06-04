@@ -21,7 +21,11 @@
             @foreach (var order in Model)
             {
                 <tr>
-                    <td>@order.Id</td>
+                    <td>
+                        <a asp-controller="Order"
+                           asp-action="Details"
+                           asp-route-id="@order.Id">@order.Id</a>
+                    </td>
                     <td>@order.Status.ToString()</td>
                     <td>@order.Date</td>
                     <td>@order.User</td>

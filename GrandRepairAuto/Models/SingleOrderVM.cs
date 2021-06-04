@@ -11,33 +11,11 @@ namespace GrandRepairAuto.Web.Models
 
         public OrderStatuses Status { get; set; }
 
-        public int OwnerId { get; set; }
+        public UserVM Owner { get; set; }
 
-        public string Owner { get; set; }
+        public VehicleVM Vehicle { get; set; }
 
-        public string Email { get; set; }
-
-        public string PhoneNumber { get; set; }
-
-        public int VehicleId { get; set; }
-
-        public string Vehicle { get; set; }
-
-        public string RegPlate { get; set; }
-
-        public string Vin { get; set; }
-
-        public string VehicleType { get; set; }
-
-        public string EngineType { get; set; }
-
-        public int Mileage { get; set; }
-
-        public string Color { get; set; }
-
-        public int VehicleModelId { get; set; }
-
-        public string VehicleModel { get; set; }
+        public VehicleModelVM VehicleModel { get; set; }
 
         public string Manufacturer { get;set; }
 

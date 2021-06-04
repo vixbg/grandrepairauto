@@ -3,6 +3,8 @@ using GrandRepairAuto.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using IdentityModel;
+using Microsoft.Extensions.Options;
 
 namespace GrandRepairAuto.Web.ViewControllers
 {
@@ -76,6 +78,25 @@ namespace GrandRepairAuto.Web.ViewControllers
 
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet("InitialLogin")]
+        public async Task<IActionResult> InitialLogin([FromQuery] string email, [FromQuery] string loginToken)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return View(new InitialPasswordVM { IsValid =  false });
+            }
+
+            if (!(await userManager.VerifyUserTokenAsync(user, "Default", "ResetPassword", loginToken)))
+            {
+                return View(new InitialPasswordVM { IsValid =  false });
+            }
+            
+            // userManager.ResetPasswordAsync()
+
+            return View(new InitialPasswordVM { IsValid = true, Email = email, Token = loginToken});
         }
     }
 }

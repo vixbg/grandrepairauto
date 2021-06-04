@@ -11,6 +11,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using GrandRepairAuto.Data.Enums;
+using IdentityServer4.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace GrandRepairAuto.Services
 {
@@ -20,13 +22,15 @@ namespace GrandRepairAuto.Services
         private readonly IEmailService emailService;
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public UserService(IUserRepository repository, IEmailService emailService, IMapper mapper, UserManager<User> userManager)
+        public UserService(IUserRepository repository, IEmailService emailService, IMapper mapper, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
         {
             this.repository = repository;
             this.emailService = emailService;
             this.mapper = mapper;
             this.userManager = userManager;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllAsync()
@@ -75,11 +79,19 @@ namespace GrandRepairAuto.Services
         public async Task<UserDTO> CreateAsync(UserCreateDTO createDto)
         {
             var user = mapper.Map<User>(createDto);
-            await userManager.CreateAsync(user);
+            user.UserName = user.Email;
+            var result = await userManager.CreateAsync(user);
+            if (!result.Succeeded)
+            {
+                return null;
+            }
             await userManager.AddToRolesAsync(user, createDto.Roles);
 
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+            var link = $"http://{httpContextAccessor.HttpContext.Request.Host}/Account/InitialLogin?loginToken={token}&email={user.Email}";
+
             // TODO: Generate registration link
-            await emailService.SendNewUserRegistraionEmailAsync(user.UserName,  $"{user.FirstName} {user.LastName}", user.Email, "TODO");
+            // await emailService.SendNewUserRegistraionEmailAsync(user.UserName,  $"{user.FirstName} {user.LastName}", user.Email, link);
 
             var userDto = mapper.Map<UserDTO>(user);
             userDto.Roles.AddRange(await userManager.GetRolesAsync(user));

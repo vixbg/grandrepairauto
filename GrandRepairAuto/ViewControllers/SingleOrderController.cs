@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using GrandRepairAuto.Data.Enums;
 using GrandRepairAuto.Services.Contracts;
@@ -50,20 +51,9 @@ namespace GrandRepairAuto.Web.ViewControllers
                 orderVM.CustomerServices.Add(cs);
             }
 
-            orderVM.Owner = owner.FullName;
-            orderVM.Email = owner.Email;
-            orderVM.PhoneNumber = owner.PhoneNumber;
+            orderVM.Owner = mapper.Map<UserVM>(owner);
 
-            orderVM.Manufacturer = manufacturer.Name;
-            orderVM.VehicleModel = vehicleModel.Name;
-            
-            orderVM.RegPlate = vehicle.RegPlate;
-            orderVM.Vin = vehicle.Vin;
-            orderVM.VehicleType = Enum.GetName(typeof(VehicleTypes), vehicle.VehicleType);
-            orderVM.EngineType = Enum.GetName(typeof(EngineTypes), vehicle.EngineType);
-            orderVM.Mileage = vehicle.Mileage;
-            orderVM.Color = vehicle.Color;
-            //orderVM.TotalPrice
+            // orderVM.TotalPrice = customerServices.Sum(c => c.Price);
 
             return View(orderVM);
         }

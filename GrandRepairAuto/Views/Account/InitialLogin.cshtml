@@ -1,0 +1,16 @@
+﻿@model GrandRepairAuto.Web.Models.InitialPasswordVM
+ 
+@if (!Model.IsValid)
+{
+    <div class="container">
+        <div class="alert alert-danger">
+            Invalid login link !
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <h1> Form to submit new passwords </h1>
+    </div>
+}

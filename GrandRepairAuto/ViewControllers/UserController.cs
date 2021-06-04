@@ -30,6 +30,7 @@ namespace GrandRepairAuto.Web.ViewControllers
             return View(usersVM);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View(new UserVM());

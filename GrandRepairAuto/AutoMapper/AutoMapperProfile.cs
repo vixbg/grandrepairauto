@@ -62,6 +62,7 @@ namespace GrandRepairAuto
             CreateMap<VehicleVM, VehicleCreateDTO>().ReverseMap();
             CreateMap<VehicleVM, VehicleDTO>().ReverseMap();
             CreateMap<VehicleVM, VehicleUpdateDTO>().ReverseMap();
+            CreateMap<SingleOrderVM, OrderDTO>().ReverseMap();
         }
 
         private List<string> MapUserRoles<TDTO>(UserVM vm, TDTO dto)

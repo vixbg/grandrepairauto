@@ -25,15 +25,15 @@ namespace GrandRepairAuto.Web.ViewControllers
 
         public async Task<IActionResult> Index()
         {
-            var users = await userService.GetAllAsync();
-            var usersVM = mapper.Map<List<UserVM>>(users);
+            IEnumerable<UserDTO> users = await userService.GetAllAsync();
+            List<UserVM> usersVM = mapper.Map<List<UserVM>>(users);
             return View(usersVM);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new UserVM());
+            return View(mapper.Map<UserVM>(new UserDTO()));
         }
 
         [HttpPost]
@@ -48,8 +48,8 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            var getDTO = await userService.GetByIDAsync(id);
-            var viewModel = mapper.Map<UserVM>(getDTO);
+            UserDTO getDTO = await userService.GetByIDAsync(id);
+            UserVM viewModel = mapper.Map<UserVM>(getDTO);
 
             return View(viewModel);
         }

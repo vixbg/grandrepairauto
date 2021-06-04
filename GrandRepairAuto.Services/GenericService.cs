@@ -16,8 +16,8 @@ namespace GrandRepairAuto.Services
         where TCreateDTO : class, IDTO
         where TUpdateDTO : class, IDTO
     {
-        private readonly IGenericRepository<TEntity, TPrimaryKey> repository;
-        private readonly IMapper mapper;
+        protected readonly IGenericRepository<TEntity, TPrimaryKey> repository;
+        protected readonly IMapper mapper;
 
         public GenericService(IGenericRepository<TEntity, TPrimaryKey> repository, IMapper mapper)
         {

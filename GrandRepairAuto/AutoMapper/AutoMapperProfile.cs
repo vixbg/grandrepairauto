@@ -20,6 +20,7 @@ namespace GrandRepairAuto
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<Order, OrderCreateDTO>().ReverseMap();
             CreateMap<Order, OrderUpdateDTO>().ReverseMap();
+            CreateMap<Order, OrderWithCustomerServicesDTO>().ReverseMap();
             CreateMap<Manufacturer, ManufacturerDTO>().ReverseMap();
             CreateMap<Manufacturer, ManufacturerCreateDTO>().ReverseMap();
             CreateMap<Manufacturer, ManufacturerUpdateDTO>().ReverseMap();
@@ -62,6 +63,10 @@ namespace GrandRepairAuto
             CreateMap<VehicleVM, VehicleCreateDTO>().ReverseMap();
             CreateMap<VehicleVM, VehicleDTO>().ReverseMap();
             CreateMap<VehicleVM, VehicleUpdateDTO>().ReverseMap();
+            CreateMap<OrderVM, OrderWithCustomerServicesDTO>().ReverseMap();
+            CreateMap<OrderVM, OrderCreateDTO>().ReverseMap();
+            CreateMap<OrderVM, OrderDTO>().ReverseMap();
+            CreateMap<OrderVM, OrderUpdateDTO>().ReverseMap();
             CreateMap<SingleOrderVM, OrderDTO>().ReverseMap();
         }
 

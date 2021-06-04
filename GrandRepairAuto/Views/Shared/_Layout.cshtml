@@ -42,12 +42,12 @@
                         {
                             if (User?.IsInRole(Roles.Employee) == true || User?.IsInRole(Roles.Admin) == true)
                             {
-                                <li><a class="nav-link" asp-controller="Service" asp-action="Index">Services</a></li>
-                                <li><a class="nav-link" asp-controller="User" asp-action="Index">Users</a></li>
-                                <li><a class="nav-link" asp-controller="Vehicle" asp-action="Index">Vehicles</a></li>
+                                <li><a class="nav-link" asp-controller="Services" asp-action="Index">Services</a></li>
+                                <li><a class="nav-link" asp-controller="Users" asp-action="Index">Users</a></li>
+                                <li><a class="nav-link" asp-controller="Vehicles" asp-action="Index">Vehicles</a></li>
                             }
 
-                            <li><a class="nav-link" asp-controller="Order" asp-action="Index">Orders</a></li>
+                            <li><a class="nav-link" asp-controller="Orders" asp-action="Index">Orders</a></li>
                             <li><a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a></li>
                         }
                         else

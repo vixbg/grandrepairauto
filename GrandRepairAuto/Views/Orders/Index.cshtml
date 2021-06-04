@@ -22,12 +22,12 @@
             {
                 <tr>
                     <td>
-                        <a asp-controller="Order"
+                        <a asp-controller="Orders"
                            asp-action="Details"
                            asp-route-id="@order.Id">@order.Id</a>
                     </td>
                     <td>@order.Status.ToString()</td>
-                    <td>@order.Date</td>
+                    <td>@order.Date.ToShortDateString()</td>
                     <td>@order.User</td>
                     <td>@order.Vehicle</td>
                     <td><a asp-action="Update" asp-route-id="@order.Id">Update</a></td>

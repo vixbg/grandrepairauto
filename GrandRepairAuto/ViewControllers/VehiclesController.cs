@@ -15,7 +15,7 @@ namespace GrandRepairAuto.Web.ViewControllers
 {
 
     [Authorize(Roles = Roles.AdminsAndEmployees)]
-    public class VehicleController : Controller
+    public class VehiclesController : Controller
     {
         private IVehicleService vehicleService;
         private readonly IVehicleModelService vehicleModelService;
@@ -23,7 +23,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         private readonly IUserService userService;
         private IMapper mapper;
 
-        public VehicleController(IVehicleService vehicleService, IVehicleModelService vehicleModelService, 
+        public VehiclesController(IVehicleService vehicleService, IVehicleModelService vehicleModelService, 
             IManufacturerService manufacturerService, IUserService userService, IMapper mapper)
         {
             this.vehicleService = vehicleService;

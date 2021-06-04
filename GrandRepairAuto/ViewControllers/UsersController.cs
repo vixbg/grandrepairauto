@@ -12,12 +12,12 @@ namespace GrandRepairAuto.Web.ViewControllers
 {
 
     [Authorize(Roles = Roles.AdminsAndEmployees)]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
         private IUserService userService;
         private IMapper mapper;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UsersController(IUserService userService, IMapper mapper)
         {
             this.userService = userService;
             this.mapper = mapper;

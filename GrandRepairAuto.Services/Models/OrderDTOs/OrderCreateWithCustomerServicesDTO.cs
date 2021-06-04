@@ -12,12 +12,12 @@ namespace GrandRepairAuto.Services.Models.OrderDTOs
 
         public int UserId { get; set; }
 
-        public DateTime Date { get; set; } = DateTime.Today;
+        public DateTime Date { get; set; } = DateTime.Now;
 
         public int VehicleId { get; set; }
 
         public virtual List<CustomerServiceCreateDTO> CustomerServices { get; set; } = new List<CustomerServiceCreateDTO>();
 
-        public double TotalPrice { get; set; }
+        public double TotalPrice { get; set; } 
     }
 }

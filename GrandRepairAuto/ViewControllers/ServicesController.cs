@@ -11,12 +11,12 @@ namespace GrandRepairAuto.Web.ViewControllers
 {
 
     [Authorize(Roles = Roles.AdminsAndEmployees)]
-    public class ServiceController : Controller
+    public class ServicesController : Controller
     {
         private IServiceService serviceService;
         private IMapper mapper;
 
-        public ServiceController(IServiceService serviceService, IMapper mapper)
+        public ServicesController(IServiceService serviceService, IMapper mapper)
         {
             this.serviceService = serviceService;
             this.mapper = mapper;

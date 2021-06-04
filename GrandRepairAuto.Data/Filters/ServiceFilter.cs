@@ -22,8 +22,7 @@ namespace GrandRepairAuto.Data.Filters
 
             if (this.FixedPrice > 0)
             {
-                //TODO: FIX IT.(fixed price)
-                entities = entities.Where(s => s.FixedPrice == this.FixedPrice);
+                entities = entities.Where(s => s.PricePerHour*s.WorkHours == this.FixedPrice);
             }
 
             return entities;

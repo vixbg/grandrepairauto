@@ -8,13 +8,7 @@ namespace GrandRepairAuto.Services.Models.OrderDTOs
 {
     public class OrderUpdateWithCustomerServicesDTO : IDTO
     {
-        public OrderStatuses Status { get; set; } = OrderStatuses.New;
-
-        public int UserId { get; set; }
-
-        public int VehicleId { get; set; }
-
-        public DateTime Date { get; set; } = DateTime.Now;
+        public OrderStatuses Status { get; set; } 
 
         public virtual List<CustomerServiceDTO> CustomerServices { get; set; } = new List<CustomerServiceDTO>();
 

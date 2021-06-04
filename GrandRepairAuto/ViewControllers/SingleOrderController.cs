@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using GrandRepairAuto.Services.Models.OrderDTOs;
 using GrandRepairAuto.Web.Models;
 using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
+using System.Collections.Generic;
 
 namespace GrandRepairAuto.Web.ViewControllers
 {
@@ -45,13 +46,14 @@ namespace GrandRepairAuto.Web.ViewControllers
             var vehicleModel = vehicleModelService.GetByID(vehicle.VehicleModelId);
             var manufacturer = manufacturerService.GetByID(vehicleModel.ManufacturerId);
             var customerServices = customerServiceService.GetAll(cs => cs.OrderID == order.Id);
+            var customerServicesVM = mapper.Map<List<CustomerServiceVM>>(customerServices);
             var orderVM = mapper.Map<SingleOrderVM>(order);
-            foreach (var cs in customerServices)
+            foreach (var cs in customerServicesVM)
             {
                 orderVM.CustomerServices.Add(cs);
             }
 
-            orderVM.Owner = mapper.Map<UserVM>(owner);
+            orderVM.User = mapper.Map<UserVM>(owner);
 
             // orderVM.TotalPrice = customerServices.Sum(c => c.Price);
 

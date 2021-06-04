@@ -14,7 +14,7 @@ namespace GrandRepairAuto.Web.Models
 
         public int UserId { get; set; }
 
-        public string User { get; set; } //fullname
+        public string User { get; set; } //fullname/email
 
         public int VehicleId { get; set; }
 

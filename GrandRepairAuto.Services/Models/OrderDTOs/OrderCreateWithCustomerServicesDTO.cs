@@ -1,6 +1,8 @@
 ﻿using GrandRepairAuto.Data.Enums;
 using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.CustomerServiceDTOs;
+using GrandRepairAuto.Services.Models.UserDTOs;
+using GrandRepairAuto.Services.Models.VehiclesDTOs;
 using System;
 using System.Collections.Generic;
 
@@ -12,11 +14,15 @@ namespace GrandRepairAuto.Services.Models.OrderDTOs
 
         public int UserId { get; set; }
 
-        public DateTime Date { get; set; } = DateTime.Now;
+        public UserDTO User { get; set; }
+
+        public DateTime Date { get; set; }
 
         public int VehicleId { get; set; }
 
-        public virtual List<CustomerServiceCreateDTO> CustomerServices { get; set; } = new List<CustomerServiceCreateDTO>();
+        public VehicleDTO Vehicle { get; set; }
+
+        public virtual List<CustomerServiceDTO> CustomerServices { get; set; } = new List<CustomerServiceDTO>();
 
         public double TotalPrice { get; set; } 
     }

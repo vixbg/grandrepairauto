@@ -13,9 +13,9 @@ namespace GrandRepairAuto.Web.Models
 
         public int VehicleModelId { get; set; }
 
-        public string VehicleModel { get; set; }
+        public string VehicleModelName { get; set; }
 
-        public string Manufacturer { get;set; }
+        public string VehicleModelManufacturerName { get;set; }
 
         [Required]
         public string Vin { get; set; }
@@ -29,7 +29,10 @@ namespace GrandRepairAuto.Web.Models
         public string Color { get; set; }
 
         public int OwnerId { get; set; }
-        public string Owner { get; set; }
+
+        public string OwnerFirstName { get; set; }
+
+        public string OwnerLastName { get; set; }
 
     }
 }

@@ -150,5 +150,11 @@ namespace GrandRepairAuto.Web.ViewControllers
             ViewBag.EmailSent = true;
             return View();
         }
+
+        [HttpGet("AccessDenied")]
+        public IActionResult AccessDenied()
+        {
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

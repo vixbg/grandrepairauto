@@ -2,26 +2,29 @@
 @using GrandRepairAuto.Data.Enums
 
 <form method="post">
-    <div class="form-group">
-        <label asp-for="FirstName">First Name</label>
-        <input asp-for="FirstName" class="form-control" placeholder="First Name">
+
+    <div class="form-group row">
+        <div class="col-6">
+            <label asp-for="FirstName">First Name</label>
+            <input asp-for="FirstName" class="form-control" placeholder="First Name">
+        </div>
+        <div class="col-6">
+            <label asp-for="LastName">Last Name</label>
+            <input asp-for="LastName" class="form-control" placeholder="Last Name">
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="LastName">Last Name</label>
-        <input asp-for="LastName" class="form-control" placeholder="Last Name">
+
+    <div class="form-group row">
+        <div class="col-6">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" type="email" class="form-control" placeholder="Email">
+        </div>
+        <div class="col-6">
+            <label asp-for="PhoneNumber">Phone Number</label>
+            <input asp-for="PhoneNumber" class="form-control" placeholder="PhoneNumber">
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Email">Email</label>
-        <input asp-for="Email" type="email" class="form-control" placeholder="Email">
-    </div>
-    <div class="form-group">
-        <label asp-for="Username">Username</label>
-        <input asp-for="Username" class="form-control" placeholder="Username">
-    </div>
-    <div class="form-group">
-        <label asp-for="PhoneNumber">Phone Number</label>
-        <input asp-for="PhoneNumber" class="form-control" placeholder="PhoneNumber">
-    </div>
+
     <div class="form-group">
         <label>Roles</label>
         @for (int i = 0; i < Model.RoleSelection.Count; i++)

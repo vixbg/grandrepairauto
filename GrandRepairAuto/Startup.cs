@@ -1,7 +1,17 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using GrandRepairAuto.Data;
+using GrandRepairAuto.Data.Models;
+using GrandRepairAuto.Repository;
+using GrandRepairAuto.Repository.Contracts;
+using GrandRepairAuto.Services;
+using GrandRepairAuto.Services.Contracts;
+using GrandRepairAuto.Validators;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,25 +21,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using GrandRepairAuto.Data;
-using GrandRepairAuto.Data.Models;
-using GrandRepairAuto.Repository;
-using GrandRepairAuto.Repository.Contracts;
-using GrandRepairAuto.Services;
-using GrandRepairAuto.Services.Contracts;
-using GrandRepairAuto.Services.Models.CustomerServiceDTOs;
-using GrandRepairAuto.Services.Models.ManufacturerDTOs;
-using GrandRepairAuto.Services.Models.OrderDTOs;
-using GrandRepairAuto.Services.Models.ServiceDTOs;
-using GrandRepairAuto.Services.Models.VehicleModelDTOs;
-using GrandRepairAuto.Services.Models.VehiclesDTOs;
-using GrandRepairAuto.Validators;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using GrandRepairAuto.Web.Models;
-using GrandRepairAuto.Services.Models.UserDTOs;
 
 namespace GrandRepairAuto
 {
@@ -44,7 +35,8 @@ namespace GrandRepairAuto
 
         public static void AddAutomapper(IServiceCollection services)
         {
-            services.AddSingleton(new MapperConfiguration(cfg => {
+            services.AddSingleton(new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile<AutoMapperProfile>();
             }).CreateMapper());
         }
@@ -57,7 +49,9 @@ namespace GrandRepairAuto
             services.AddControllersWithViews().AddFluentValidation();
             var connectionString = Configuration.GetConnectionString("EntityString");
 
-            services.AddDbContext<GarageContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<GarageContext>(options => options
+            .UseLazyLoadingProxies()
+            .UseSqlServer(connectionString));
 
             services.AddIdentity<User, UserRole>(options =>
             {
@@ -126,6 +120,7 @@ namespace GrandRepairAuto
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IVehicleModelService, VehicleModelService>();
             services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IVehicleWithModelAndMakeService, VehicleWithModelAndMakeService>();
             services.AddScoped<IEmailService, EmailService>();
 
 

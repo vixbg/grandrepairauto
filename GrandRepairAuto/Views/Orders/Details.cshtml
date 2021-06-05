@@ -1,9 +1,7 @@
 ﻿@model GrandRepairAuto.Web.Models.SingleOrderVM
 @using GrandRepairAuto.Data.Enums
 
-<section>
-
-    
+<section>    
 
     <div class="cardSO">
         <div class="title">Order Details</div>
@@ -23,9 +21,9 @@
                 <div class="col-6"> <span id="heading">Customer: </span> <span id="details">@Model.User.FullName</span> </div>
                 <div class="col-6 pull-right"> <span id="heading">Vehicle: </span> <span id="details">@Model.Vehicle.RegPlate</span> </div>
                 <div class="col-6"> <span id="heading">E-mail: </span> <span id="details">@Model.User.Email</span> </div>
-                <div class="col-6 pull-right"> <span id="heading">Vehicle Make: </span> <span id="details">@Model.Manufacturer.Name</span> </div>
+                <div class="col-6 pull-right"> <span id="heading">Vehicle Make: </span> <span id="details">@Model.VehicleManufacturerName</span> </div>
                 <div class="col-6"> <span id="heading">Phone Number: </span> <span id="details">@Model.User.PhoneNumber</span> </div>
-                <div class="col-6 pull-right"> <span id="heading">Vehicle Model: </span> <span id="details">@Model.VehicleModel.Name</span> </div>
+                <div class="col-6 pull-right"> <span id="heading">Vehicle Model: </span> <span id="details">@Model.VehicleModelName</span> </div>
 
             </div>
         </div>

@@ -14,43 +14,24 @@ namespace GrandRepairAuto.Web.ViewControllers
     [Authorize]
     public class OrdersController : Controller
     {
-        private IOrderWithCustomerServicesService orderService;
-        private readonly IVehicleModelService vehicleModelService;
-        private readonly IManufacturerService manufacturerService;
-        private readonly ICustomerServiceService customerServiceService;
-        private IUserService userService;
-        private IVehicleService vehicleService;
-        private IMapper mapper;
-        private readonly IServiceService serviceService;
+        private readonly IOrderWithCustomerServicesService orderService;
+        private readonly IUserService userService;
+        private readonly IVehicleService vehicleService;
+        private readonly IMapper mapper;
 
-        public OrdersController(IOrderWithCustomerServicesService orderService,IVehicleModelService vehicleModelService, IManufacturerService manufacturerService, ICustomerServiceService customerServiceService,   IUserService userService, IVehicleService vehicleService, IMapper mapper, IServiceService serviceService)
+        public OrdersController(IOrderWithCustomerServicesService orderService,  IUserService userService, IVehicleService vehicleService, IMapper mapper)
         {
             this.orderService = orderService;
-            this.vehicleModelService = vehicleModelService;
-            this.manufacturerService = manufacturerService;
-            this.customerServiceService = customerServiceService;
             this.userService = userService;
             this.vehicleService = vehicleService;
             this.mapper = mapper;
-            this.serviceService = serviceService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             IEnumerable<OrderWithCustomerServicesDTO> orders = orderService.GetAll();
-            var usersId = orders.Select(o => o.UserId).ToList();
-            var users = (await userService.GetAllAsync()).Where(u => usersId.Contains(u.Id));
-            var vehiclesIds = orders.Select(o => o.VehicleId).ToList();
-            var vehicles = vehicleService.GetAll(v => vehiclesIds.Contains(v.Id));
-                        
             List<OrderVM> ordersVM = mapper.Map<List<OrderVM>>(orders);
-
-            ordersVM.ForEach(o =>
-            {
-                o.User = users.First(u => u.Id == o.UserId).FullName;
-                o.Vehicle = vehicles.First(v => v.Id == o.VehicleId).RegPlate;
-            });
 
             return View(ordersVM);
         }
@@ -59,22 +40,8 @@ namespace GrandRepairAuto.Web.ViewControllers
         public async Task<IActionResult> Details([FromRoute] int Id)
         {
             var order = orderService.GetByID(Id);
-            var owner = (await userService.GetByIDAsync(order.UserId));
-            var vehicle = vehicleService.GetByID(order.VehicleId);
-            var vehicleModel = vehicleModelService.GetByID(vehicle.VehicleModelId);
-            var manufacturer = manufacturerService.GetByID(vehicleModel.ManufacturerId);
-            var customerServices = customerServiceService.GetAll(cs => cs.OrderID == order.Id);
-            var customerServicesVM = mapper.Map<List<CustomerServiceVM>>(customerServices);
             var orderVM = mapper.Map<SingleOrderVM>(order);
-            foreach (var cs in customerServicesVM)
-            {
-                orderVM.CustomerServices.Add(cs);
-            }
 
-            orderVM.User = mapper.Map<UserVM>(owner);
-            orderVM.VehicleModel = mapper.Map<VehicleModelVM>(vehicleModel);
-            orderVM.Vehicle = mapper.Map<VehicleVM>(vehicle);
-            orderVM.Manufacturer = mapper.Map<ManufacturerVM>(manufacturer);
             return View(orderVM);
         }
 

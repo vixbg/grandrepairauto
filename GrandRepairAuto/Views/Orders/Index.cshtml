@@ -28,10 +28,10 @@
                     </td>
                     <td>@order.Status.ToString()</td>
                     <td>@order.Date.ToShortDateString()</td>
-                    <td>@order.User</td>
-                    <td>@order.Vehicle</td>
+                    <td>@order.UserFullName</td>
+                    <td>@order.VehicleRegPlate</td>
                     <td><a asp-action="Update" asp-route-id="@order.Id">Update</a></td>
-                    <td><a asp-action="Delete" asp-route-id="@order.Id">Delete</a></td>
+                    <td><a class="click-warn" asp-action="Delete" asp-route-id="@order.Id">Delete</a></td>
                 </tr>
             }
         </tbody>

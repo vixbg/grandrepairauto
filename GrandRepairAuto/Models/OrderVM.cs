@@ -10,15 +10,15 @@ namespace GrandRepairAuto.Web.Models
 
         public OrderStatuses Status { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Today;
 
         public int UserId { get; set; }
 
-        public string User { get; set; } //fullname/email
+        public string UserFullName { get; set; } 
 
         public int VehicleId { get; set; }
 
-        public string Vehicle { get; set; } //reg plate
+        public string VehicleRegPlate { get; set; } 
 
         public virtual List<CustomerServiceVM> CustomerServices { get; set; } = new List<CustomerServiceVM>();
 

@@ -20,24 +20,35 @@ namespace GrandRepairAuto
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<Order, OrderCreateDTO>().ReverseMap();
             CreateMap<Order, OrderUpdateDTO>().ReverseMap();
+
             CreateMap<Order, OrderWithCustomerServicesDTO>().ReverseMap();
             CreateMap<Order, OrderCreateWithCustomerServicesDTO>().ReverseMap();
             CreateMap<Order, OrderUpdateWithCustomerServicesDTO>().ReverseMap();
+
             CreateMap<Manufacturer, ManufacturerDTO>().ReverseMap();
             CreateMap<Manufacturer, ManufacturerCreateDTO>().ReverseMap();
             CreateMap<Manufacturer, ManufacturerUpdateDTO>().ReverseMap();
+
             CreateMap<Service, ServiceCreateDTO>().ReverseMap();
             CreateMap<Service, ServiceDTO>().ReverseMap();
             CreateMap<Service, ServiceUpdateDTO>().ReverseMap();
+
             CreateMap<VehicleModel, VehicleModelDTO>().ReverseMap();
             CreateMap<VehicleModel, VehicleModelCreateDTO>().ReverseMap();
             CreateMap<VehicleModel, VehicleModelUpdateDTO>().ReverseMap();
+
             CreateMap<CustomerService, CustomerServiceDTO>().ReverseMap();
             CreateMap<CustomerService, CustomerServiceCreateDTO>().ReverseMap();
             CreateMap<CustomerService, CustomerServiceUpdateDTO>().ReverseMap();
+
             CreateMap<Vehicle, VehicleCreateDTO>().ReverseMap();
             CreateMap<Vehicle, VehicleDTO>().ReverseMap();
             CreateMap<Vehicle, VehicleUpdateDTO>().ReverseMap();
+
+            CreateMap<Vehicle, VehicleWithModelAndMakeCreateDTO>().ReverseMap();
+            CreateMap<Vehicle, VehicleWithModelAndMakeUpdateDTO>().ReverseMap();
+            CreateMap<Vehicle, VehicleWithModelAndMakeDTO>().ReverseMap();
+
             CreateMap<User, UserCreateDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, UserUpdateDTO>().ReverseMap();
@@ -57,17 +68,23 @@ namespace GrandRepairAuto
                 .ForMember(x => x.Roles, opt => opt.MapFrom(MapUserRoles));
             CreateMap<UserDTO, UserVM>()
                 .ForMember(x => x.RoleSelection, opt => opt.MapFrom(MapUserRoles));
+
             CreateMap<ServiceCreateDTO, ServiceVM>().ReverseMap();
             CreateMap<ServiceDTO, ServiceVM>().ReverseMap();
             CreateMap<ServiceUpdateDTO, ServiceVM>().ReverseMap();
+
             CreateMap<VehicleModelDTO, VehicleModelVM>().ReverseMap();
+
             CreateMap<ManufacturerDTO, ManufacturerVM>().ReverseMap();
-            CreateMap<VehicleVM, VehicleCreateDTO>().ReverseMap();
-            CreateMap<VehicleVM, VehicleDTO>().ReverseMap();
-            CreateMap<VehicleVM, VehicleUpdateDTO>().ReverseMap();
+
+            CreateMap<VehicleVM, VehicleWithModelAndMakeCreateDTO>().ReverseMap();
+            CreateMap<VehicleVM, VehicleWithModelAndMakeDTO>().ReverseMap();
+            CreateMap<VehicleVM, VehicleWithModelAndMakeUpdateDTO>().ReverseMap();
+
+            CreateMap<OrderVM, OrderCreateWithCustomerServicesDTO>();
             CreateMap<OrderVM, OrderWithCustomerServicesDTO>().ReverseMap();
-            CreateMap<OrderVM, OrderCreateWithCustomerServicesDTO>().ReverseMap();
             CreateMap<OrderVM, OrderUpdateWithCustomerServicesDTO>().ReverseMap();
+
             CreateMap<SingleOrderVM, OrderDTO>().ReverseMap();
             CreateMap<SingleOrderVM, OrderWithCustomerServicesDTO>().ReverseMap();
             CreateMap<SingleOrderVM, VehicleModelDTO>().ReverseMap();

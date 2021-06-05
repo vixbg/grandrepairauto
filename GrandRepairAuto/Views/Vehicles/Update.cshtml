@@ -1,6 +1,43 @@
 ﻿@model GrandRepairAuto.Web.Models.VehicleVM
+@using GrandRepairAuto.Data.Enums
+@using Newtonsoft.Json
+
 <section>
+
     <h1>Update "@Model.RegPlate"</h1>
 
-    <partial name="_Form" model="Model" />
+    <form method="post">
+        
+        <div class="form-group row">
+            <div class="col-6">
+                <label asp-for="OwnerId">Owner</label>
+                <select asp-for="OwnerId" type="number" class="form-control" placeholder="Owner">
+                    <option value="0" selected>Select owner</option>
+                    @foreach (var m in ViewBag.Owners)
+                    {
+                        <option value="@m.Id">@m.FullName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-6">
+                <label asp-for="RegPlate">Reg Plate</label>
+                <input asp-for="RegPlate" class="form-control" placeholder="Reg Plate">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-6">
+                <label asp-for="Mileage">Mileage</label>
+                <input asp-for="Mileage" type="number" class="form-control" placeholder="Mileage">
+            </div>
+            <div class="col-6">
+                <label asp-for="Color">Color</label>
+                <input asp-for="Color" type="text" class="form-control" placeholder="Color">
+            </div>
+        </div>        
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button asp-controller="Vehicles" asp-action="Index" class="btn btn-secondary">Cancel</button>
+    </form>
+
 </section>

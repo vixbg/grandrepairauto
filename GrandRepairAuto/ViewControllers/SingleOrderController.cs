@@ -1,15 +1,10 @@
-﻿using System;
-using System.Linq;
-using AutoMapper;
-using GrandRepairAuto.Data.Enums;
+﻿using AutoMapper;
 using GrandRepairAuto.Services.Contracts;
+using GrandRepairAuto.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using GrandRepairAuto.Services.Models.OrderDTOs;
-using GrandRepairAuto.Web.Models;
-using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GrandRepairAuto.Web.ViewControllers
 {
@@ -22,11 +17,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         private readonly IUserService userService;
         private IMapper mapper;
         private readonly ICustomerServiceService customerServiceService;
-        private readonly IOrderService orderService;
+        private readonly IOrderWithCustomerServicesService orderService;
         private readonly IServiceService serviceService;
 
         public SingleOrderController(IVehicleService vehicleService, IVehicleModelService vehicleModelService,
-            IManufacturerService manufacturerService, IUserService userService, IMapper mapper, ICustomerServiceService customerServiceService, IOrderService orderService, IServiceService serviceService)
+            IManufacturerService manufacturerService, IUserService userService, IMapper mapper, ICustomerServiceService customerServiceService, IOrderWithCustomerServicesService orderService, IServiceService serviceService)
         {
             this.vehicleService = vehicleService;
             this.vehicleModelService = vehicleModelService;
@@ -41,21 +36,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         public async Task<IActionResult> Index(int id)
         {
             var order = orderService.GetByID(id);
-            var owner = (await userService.GetByIDAsync(order.UserId));
-            var vehicle = vehicleService.GetByID(order.VehicleId);
-            var vehicleModel = vehicleModelService.GetByID(vehicle.VehicleModelId);
-            var manufacturer = manufacturerService.GetByID(vehicleModel.ManufacturerId);
-            var customerServices = customerServiceService.GetAll(cs => cs.OrderID == order.Id);
-            var customerServicesVM = mapper.Map<List<CustomerServiceVM>>(customerServices);
             var orderVM = mapper.Map<SingleOrderVM>(order);
-            foreach (var cs in customerServicesVM)
-            {
-                orderVM.CustomerServices.Add(cs);
-            }
-
-            orderVM.User = mapper.Map<UserVM>(owner);
-
-            // orderVM.TotalPrice = customerServices.Sum(c => c.Price);
 
             return View(orderVM);
         }

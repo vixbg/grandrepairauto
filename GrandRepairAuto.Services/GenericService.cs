@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using GrandRepairAuto.Data.Filters.Contracts;
 using GrandRepairAuto.Data.Models.Contracts;
 using GrandRepairAuto.Repository.Contracts;
@@ -37,7 +38,7 @@ namespace GrandRepairAuto.Services
 
         public IEnumerable<TPrimaryDTO> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
-            return this.repository.Get(filter).Select(e => mapper.Map<TPrimaryDTO>(e));
+            return this.repository.Get(filter).ProjectTo<TPrimaryDTO>(mapper.ConfigurationProvider).ToList();
         }
 
         public TPrimaryDTO GetByID(TPrimaryKey id)

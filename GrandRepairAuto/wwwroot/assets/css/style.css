@@ -446,11 +446,14 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 section {
   padding: 60px 0;
-  overflow: hidden;
+}
+
+.dataTables_wrapper .row:nth-child(2) {
+    overflow: auto;
 }
 
 .section-bg {
-  background-color: whitesmoke;
+    background-color: whitesmoke;
 }
 
 .section-title {

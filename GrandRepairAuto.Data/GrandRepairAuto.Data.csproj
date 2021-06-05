@@ -6,11 +6,15 @@
 
   <ItemGroup>
     <None Remove="Seed\ManufacturersAndModels.json" />
+    <None Remove="Seed\Services.json" />
     <None Remove="Seed\Users.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Seed\ManufacturersAndModels.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Seed\Services.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Seed\Users.json">

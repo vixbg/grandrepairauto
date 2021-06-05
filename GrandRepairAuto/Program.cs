@@ -117,6 +117,31 @@ namespace GrandRepairAuto
                         }
                     } 
                 }
+            } 
+            
+            var servicesFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Seed", "Services.json");
+
+            if (!await dbContext.Services.AnyAsync() && File.Exists(servicesFile))
+            {
+                
+                var extracts = JsonConvert.DeserializeObject<List<ServiceSeedModel>>(File.ReadAllText(servicesFile));
+
+                foreach (var e in extracts)
+                {
+                    var service = new Service()
+                    {
+                        Name = e.Name,
+                        PricePerHour = e.PricePerHour,
+                        VehicleType = e.VehicleType,
+                        WorkHours = e.WorkHours,
+                    };
+
+                    await dbContext.Services.AddAsync(service);
+                }
+
+                dbContext.SaveChanges();
+
+                SetIdentityInsert<Service>(dbContext, false);
             }            
         }
 

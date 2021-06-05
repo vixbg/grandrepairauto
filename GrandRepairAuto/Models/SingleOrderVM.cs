@@ -6,6 +6,8 @@ namespace GrandRepairAuto.Web.Models
 {
     public class SingleOrderVM
     {
+        public int Id { get; set; }
+
         public OrderStatuses Status { get; set; }
 
         public DateTime Date { get; set; }
@@ -16,7 +18,7 @@ namespace GrandRepairAuto.Web.Models
 
         public VehicleModelVM VehicleModel { get; set; }
 
-        public string Manufacturer { get; set; }
+        public ManufacturerVM Manufacturer { get; set; }
 
         public int ServiceId { get; set; }
 

@@ -14,5 +14,7 @@ namespace GrandRepairAuto.Web.Models
 
         public double WorkHours { get; set; }
 
+        public double TotalPrice { get; set; }
+
     }
 }

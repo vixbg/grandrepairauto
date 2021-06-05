@@ -15,16 +15,24 @@ namespace GrandRepairAuto.Web.ViewControllers
     public class OrdersController : Controller
     {
         private IOrderWithCustomerServicesService orderService;
+        private readonly IVehicleModelService vehicleModelService;
+        private readonly IManufacturerService manufacturerService;
+        private readonly ICustomerServiceService customerServiceService;
         private IUserService userService;
         private IVehicleService vehicleService;
         private IMapper mapper;
+        private readonly IServiceService serviceService;
 
-        public OrdersController(IOrderWithCustomerServicesService orderService, IUserService userService, IVehicleService vehicleService, IMapper mapper)
+        public OrdersController(IOrderWithCustomerServicesService orderService,IVehicleModelService vehicleModelService, IManufacturerService manufacturerService, ICustomerServiceService customerServiceService,   IUserService userService, IVehicleService vehicleService, IMapper mapper, IServiceService serviceService)
         {
             this.orderService = orderService;
+            this.vehicleModelService = vehicleModelService;
+            this.manufacturerService = manufacturerService;
+            this.customerServiceService = customerServiceService;
             this.userService = userService;
             this.vehicleService = vehicleService;
             this.mapper = mapper;
+            this.serviceService = serviceService;
         }
 
         [HttpGet]
@@ -48,9 +56,26 @@ namespace GrandRepairAuto.Web.ViewControllers
         }
 
         [HttpGet]
-        public IActionResult Details([FromRoute] int orderId)
+        public async Task<IActionResult> Details([FromRoute] int Id)
         {
-            return View();
+            var order = orderService.GetByID(Id);
+            var owner = (await userService.GetByIDAsync(order.UserId));
+            var vehicle = vehicleService.GetByID(order.VehicleId);
+            var vehicleModel = vehicleModelService.GetByID(vehicle.VehicleModelId);
+            var manufacturer = manufacturerService.GetByID(vehicleModel.ManufacturerId);
+            var customerServices = customerServiceService.GetAll(cs => cs.OrderID == order.Id);
+            var customerServicesVM = mapper.Map<List<CustomerServiceVM>>(customerServices);
+            var orderVM = mapper.Map<SingleOrderVM>(order);
+            foreach (var cs in customerServicesVM)
+            {
+                orderVM.CustomerServices.Add(cs);
+            }
+
+            orderVM.User = mapper.Map<UserVM>(owner);
+            orderVM.VehicleModel = mapper.Map<VehicleModelVM>(vehicleModel);
+            orderVM.Vehicle = mapper.Map<VehicleVM>(vehicle);
+            orderVM.Manufacturer = mapper.Map<ManufacturerVM>(manufacturer);
+            return View(orderVM);
         }
 
         public async Task<IActionResult> Create()

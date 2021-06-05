@@ -23,6 +23,10 @@ namespace GrandRepairAuto.Services.Models.OrderDTOs
 
         public VehicleDTO Vehicle { get; set; }
 
+        public string VehicleVehicleModelName { get; set; }
+
+        public string VehicleVehicleModelManufacturerName { get; set; }
+
         public virtual List<CustomerServiceDTO> CustomerServices { get; set; }
 
         public double TotalPrice { get; set; }

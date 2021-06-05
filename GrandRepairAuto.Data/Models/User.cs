@@ -1,8 +1,6 @@
 ﻿using GrandRepairAuto.Data.Models.Contracts;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GrandRepairAuto.Data.Models
 {

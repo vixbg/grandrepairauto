@@ -12,13 +12,25 @@ namespace GrandRepairAuto.Web.Models
 
         public DateTime Date { get; set; }
 
-        public UserVM User { get; set; }
+        public string UserFirstName { get; set; }
 
-        public VehicleVM Vehicle { get; set; }
+        public string UserLastName { get; set; }
 
-        public string VehicleModelName { get; set; }
+        public string UserEmail { get; set; }
 
-        public string VehicleManufacturerName { get; set; }
+        public string UserPhoneNumber { get; set; }
+
+        public string VehicleVehicleModelName { get; set; }
+
+        public string VehicleVehicleModelManufacturerName { get; set; }
+
+        public string VehicleRegPlate { get; set; }
+
+        public string VehicleVehicleType { get; set; }
+
+        public string VehicleEngineType { get; set; }
+
+        public string VehicleVin { get; set; }
 
         public int ServiceId { get; set; }
 

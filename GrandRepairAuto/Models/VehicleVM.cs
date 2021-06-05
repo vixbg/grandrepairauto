@@ -33,6 +33,5 @@ namespace GrandRepairAuto.Web.Models
         public string OwnerFirstName { get; set; }
 
         public string OwnerLastName { get; set; }
-
     }
 }

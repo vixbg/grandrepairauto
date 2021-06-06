@@ -35,8 +35,24 @@ namespace GrandRepairAuto.Web.ViewControllers
 
         public IActionResult Index()
         {
-            IEnumerable<OrderWithCustomerServicesDTO> orders = orderService.GetAll();
-            List<OrderVM> ordersVM = mapper.Map<List<OrderVM>>(orders);
+            List<OrderWithCustomerServicesDTO> orders = new List<OrderWithCustomerServicesDTO>();
+            
+            if (!User.IsInRole("Customer") && (User.IsInRole("Administrator") || User.IsInRole("Employee")))
+            {
+               orders = orderService.GetAll().ToList();
+            }
+            else if (User.IsInRole("Customer") && (!User.IsInRole("Administrator") || !User.IsInRole("Employee")))
+            { 
+                orders = orderService
+                    .GetAll()
+                    .Where( o=> o.User.Username == User.Identity.Name).ToList();
+            }
+            else
+            {
+                orders = orderService.GetAll().ToList();
+            }
+           
+            var ordersVM = mapper.Map<List<OrderVM>>(orders);
 
             return View(ordersVM);
         }

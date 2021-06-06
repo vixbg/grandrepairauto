@@ -127,7 +127,7 @@ namespace GrandRepairAuto
             services.AddSwaggerGen(c =>
             {
                 c.ResolveConflictingActions(a => a.First());
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SmartGarage13", Version = "V1", Description = "This is Swagger documentation about SmartGarage13" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GrandRepairAuto", Version = "V1", Description = "This is Swagger documentation about GrandRepairAuto" });
 
                 var fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var filePath = Path.Combine(AppContext.BaseDirectory, fileName);

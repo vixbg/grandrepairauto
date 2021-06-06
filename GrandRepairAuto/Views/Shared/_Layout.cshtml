@@ -1,5 +1,6 @@
 ﻿@using GrandRepairAuto.Data.Enums;
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +31,7 @@
                 <div class="logo">
                     <!--<h1><a href="/">Grand Repair Auto</a></h1>-->
                     <!-- Uncomment below if you prefer to use an image logo -->
-                    <a asp-controller="Home" asp-action="Index"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>
+                    <a asp-controller="Home" asp-action="Index"><img src="~/assets/img/logo.png" alt="" class="img-fluid"></a>
                 </div>
 
                 <nav id="navbar" class="navbar">
@@ -50,6 +51,16 @@
 
                             <li><a class="nav-link" asp-controller="Orders" asp-action="Index">Orders</a></li>
                             <li><a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                            <li>
+                                <a href="javascript:void(0);" class="btn-user media align-items-center" data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
+                                    <img class="mr-2" src="~/assets/img/usericon.png" width="40" height="40" alt="avatar">
+                                    <div class="media-body">
+                                        @User.Identity.Name
+                                    </div>
+
+                                </a>
+
+                            </li>
                         }
                         else
                         {

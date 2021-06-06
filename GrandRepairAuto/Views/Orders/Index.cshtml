@@ -1,4 +1,5 @@
 ﻿@model List<GrandRepairAuto.Web.Models.OrderVM>
+@using GrandRepairAuto.Data.Enums
 
 
 <section id="orders" class="order">
@@ -36,7 +37,7 @@
             }
         </tbody>
     </table>
-    @if (!User.IsInRole("Customer"))
+    @if (!User.IsInRole(Roles.Customer))
     {
         <a class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px" asp-action="Create">Create order</a>
     }

@@ -48,6 +48,7 @@
 
   <ItemGroup>
     <Folder Include="Helpers\" />
+    <Folder Include="Views\MakeAndModel\" />
   </ItemGroup>
 
   <ItemGroup>

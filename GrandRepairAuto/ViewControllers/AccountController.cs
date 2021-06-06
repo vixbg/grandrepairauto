@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Web;
+using GrandRepairAuto.Controllers;
 using GrandRepairAuto.Services.Contracts;
 using IdentityModel;
 using Microsoft.Extensions.Options;
@@ -154,7 +155,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpGet("AccessDenied")]
         public IActionResult AccessDenied()
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction( "Forbidden", "Errors");
         }
     }
 }

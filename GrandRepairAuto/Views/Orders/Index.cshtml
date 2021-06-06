@@ -36,8 +36,11 @@
             }
         </tbody>
     </table>
+    @if (!User.IsInRole("Customer"))
+    {
+        <a class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px" asp-action="Create">Create order</a>
+    }
 
-    <a class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px" asp-action="Create">Create order</a>
 
 </section>
 

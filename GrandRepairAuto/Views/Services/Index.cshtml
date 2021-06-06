@@ -10,7 +10,6 @@
                 <th>Price per hour</th>
                 <th>Work hours</th>
                 <th>Vehicle type</th>
-                <th>Update</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -18,11 +17,10 @@
             @foreach (var service in Model)
             {
                 <tr>
-                    <td> @service.Name </td>
+                    <td> <a asp-action="Update" asp-route-id="@service.Id"> @service.Name </a></td>
                     <td> @service.PricePerHour </td>
                     <td> @service.WorkHours </td>
                     <td> @service.VehicleType.ToString() </td>
-                    <td> <a asp-action="Update" asp-route-id="@service.Id"> Update </a></td>
                     <td> <a class="click-warn" asp-action="Delete" asp-route-id="@service.Id"> Delete </a></td>
                 </tr>
             }

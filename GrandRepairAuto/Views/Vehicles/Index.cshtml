@@ -17,26 +17,24 @@
                 <th>Mileage</th>
                 <th>Color</th>
                 <th>Owner</th>
-                <th>Update</th>
                 <th>Delete</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var vehicle in Model)
             {
-                <tr>
-                    <td> <a href="#"> @vehicle.RegPlate </a> </td>
-                    <td> @vehicle.VehicleModelManufacturerName </td>
-                    <td> @vehicle.VehicleModelName </td>
-                    <td> @vehicle.Vin </td>
-                    <td> @vehicle.VehicleType </td>
-                    <td> @vehicle.EngineType </td>
-                    <td> @vehicle.Mileage </td>
-                    <td> @vehicle.Color </td>
-                    <td> @vehicle.OwnerFirstName @vehicle.OwnerLastName </td>
-                    <td> <a asp-action="Update" asp-route-id="@vehicle.Id"> Update </a></td>
-                    <td> <a class="click-warn" asp-action="Delete" asp-route-id="@vehicle.Id"> Delete </a></td>
-                </tr>
+            <tr>
+                <td> <a asp-action="Update" asp-route-id="@vehicle.Id"> @vehicle.RegPlate </a> </td>
+                <td> @vehicle.VehicleModelManufacturerName </td>
+                <td> @vehicle.VehicleModelName </td>
+                <td> @vehicle.Vin </td>
+                <td> @vehicle.VehicleType </td>
+                <td> @vehicle.EngineType </td>
+                <td> @vehicle.Mileage </td>
+                <td> @vehicle.Color </td>
+                <td> @vehicle.OwnerFirstName @vehicle.OwnerLastName </td>
+                <td> <a class="click-warn" asp-action="Delete" asp-route-id="@vehicle.Id"> Delete </a></td>
+            </tr>
             }
         </tbody>
     </table>

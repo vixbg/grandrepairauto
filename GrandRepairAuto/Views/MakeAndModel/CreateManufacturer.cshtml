@@ -1,0 +1,16 @@
+﻿@model GrandRepairAuto.Web.Models.ManufacturerVM
+
+<section>
+    <h1>Create Manufacturer</h1>
+
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Name">Name</label>
+            <input asp-for="Name" class="form-control" maxlength="30" required="required" placeholder="Manufacturer Name" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a asp-controller="Vehicles" asp-action="Create" class="btn btn-secondary" formnovalidate="formnovalidate">Cancel</a>
+    </form>
+
+</section>

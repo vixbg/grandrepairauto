@@ -29,14 +29,14 @@
                         <option value="@m.Id">@m.Name</option>
                     }
                 </select>
-                <small class="form-text"><a href="#">Can't find yours? Add manufacturer</a></small>
+                <small class="form-text"><a asp-controller="MakeAndModel" asp-action="CreateManufacturer">Can't find yours? Add manufacturer</a></small>
             </div>
             <div class="col-6">
                 <label asp-for="VehicleModelId">Model</label>
                 <select asp-for="VehicleModelId" required="required" class="form-control" disabled="disabled">
                     <option value="" selected>Select manufacturer</option>
                 </select>
-                <small class="form-text"><a href="#">Can't find yours? Add model</a></small>
+                <small class="form-text"><a asp-controller="MakeAndModel" asp-action="CreateVehicleModel">Can't find yours? Add model</a></small>
             </div>
         </div>
 

@@ -1,0 +1,48 @@
+﻿@model GrandRepairAuto.Web.Models.VehicleModelVM
+@using Newtonsoft.Json
+
+<section>
+
+    <h1>Create Vehicle Model</h1>
+
+    <form method="post">
+        <div class="form-group row">
+            <div class="col-6">
+                <label asp-for="ManufacturerId">Manufacturer</label>
+                <select id="manufacturer" asp-for="ManufacturerId" class="form-control" required="required" placeholder="Select manufacturer">
+                    <option value="" selected>Select manufacturer</option>
+                    @foreach (var m in ViewBag.Manufacturers)
+                    {
+                        <option value="@m.Id">@m.Name</option>
+                    }
+                </select>
+                <small class="form-text"><a asp-controller="MakeAndModel" asp-action="CreateManufacturer">Can't find yours? Add manufacturer</a></small>
+            </div>
+            <div class="col-6">
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" class="form-control" maxlength="30" required="required" placeholder="Model Name" />
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a asp-controller="Vehicles" asp-action="Create" class="btn btn-secondary" formnovalidate="formnovalidate">Cancel</a>
+    </form>
+
+</section>
+
+<script type="text/javascript">
+    var models = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Manufacturers));
+    function onManufacturerChanged(man) {
+        var dd = $('#VehicleModelId');
+        dd.prop("disabled", man === 0);
+        dd.val(0);
+        dd.empty();
+        if( man === 0 ) {
+            dd.append(new Option("Select manufacturer", "0"));
+            return;
+        }
+
+        var data = models.filter(m => m.ManufacturerId == man);
+        data.forEach(m => dd.append(new Option(m.Name, m.Id)));
+    }
+</script>

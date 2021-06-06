@@ -144,8 +144,9 @@ namespace GrandRepairAuto
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Errors/Status/500");
             }
+            app.UseStatusCodePagesWithReExecute("/Errors/Status/{0}");
             app.UseStaticFiles();
             app.UseIdentityServer();
             app.UseCookiePolicy(new CookiePolicyOptions

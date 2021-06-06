@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Web;
 using GrandRepairAuto.Controllers;
+using GrandRepairAuto.Models;
 using GrandRepairAuto.Services.Contracts;
 using IdentityModel;
 using Microsoft.Extensions.Options;
@@ -155,7 +156,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpGet("AccessDenied")]
         public IActionResult AccessDenied()
         {
-            return RedirectToAction( "Forbidden", "Errors");
+            return View("~/Views/Errors/Status.cshtml", new ErrorStatusVM(403));
         }
     }
 }

@@ -27,8 +27,7 @@ namespace GrandRepairAuto.Web.ViewControllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             IEnumerable<OrderWithCustomerServicesDTO> orders = orderService.GetAll();
             List<OrderVM> ordersVM = mapper.Map<List<OrderVM>>(orders);

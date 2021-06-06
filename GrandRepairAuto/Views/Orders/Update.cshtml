@@ -3,11 +3,13 @@
 <section>
     <h1>Update Order #@Model.Id</h1>
 
-    <form method="post">
-         
+    <form method="post">         
         
+
+
         <button type="submit" class="btn btn-primary">Submit</button>
-        <button asp-controller="Orders" asp-action="Update" class="btn btn-secondary">Cancel</button>
+        
+        <button asp-controller="Orders" asp-action="Index" class="btn btn-secondary" formnovalidate="formnovalidate">Cancel</button>
 
     </form>
 

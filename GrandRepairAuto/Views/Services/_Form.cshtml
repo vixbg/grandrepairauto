@@ -6,7 +6,7 @@
     <div class="form-group row">
         <div class="col-6">
             <label asp-for="Name">Name</label>
-            <input asp-for="Name" class="form-control" pattern="^[A-Za-z]{5,100}$" required="required" title="Service name must be between 5 and 100 characters" placeholder="Name">
+            <input asp-for="Name" class="form-control" pattern="^[A-Za-z_ ]{5,100}$" required="required" title="Service name must be between 5 and 100 characters" placeholder="Name">
         </div>
         <div class="col-6">
             <label asp-for="VehicleType">Vehicle Type</label>
@@ -17,11 +17,11 @@
     <div class="form-group row">
         <div class="col-6">
             <label asp-for="PricePerHour">Price Per Hour</label>
-            <input asp-for="PricePerHour" type="number" min="0" required="required" class="form-control" placeholder="Price Per Hour">
+            <input asp-for="PricePerHour" type="number" min="1" required="required" class="form-control" placeholder="Price Per Hour">
         </div>
         <div class="col-6">
             <label asp-for="WorkHours">Work Hours</label>
-            <input asp-for="WorkHours" type="number" min="0" required="required" class="form-control" placeholder="Work Hours">
+            <input asp-for="WorkHours" type="number" min="1" required="required" class="form-control" placeholder="Work Hours">
         </div>
     </div>
 

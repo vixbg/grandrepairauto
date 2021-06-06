@@ -21,12 +21,11 @@ namespace GrandRepairAuto.Controllers
             return View();
         }
 
-        
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult NotFound()
         {
-            return View(new ErrorVM { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
+
     }
 }

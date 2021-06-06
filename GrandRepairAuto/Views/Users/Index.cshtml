@@ -18,7 +18,7 @@
             @foreach (var user in Model)
             {
                 <tr>
-                    <td> <a asp-action="Update" asp-route-id="@user.Id"> @user.FirstName @user.LastName </a> </td>
+                    <td> <img src="@Html.AvatarUrlForEmail(user.Email, 30)" style="border-radius: 50%" /> <a asp-action="Update" asp-route-id="@user.Id"> @user.FirstName @user.LastName </a> </td>
                     <td> @user.Email </td>
                     <td> @user.PhoneNumber </td>
                     <td> @user.RolesString </td>

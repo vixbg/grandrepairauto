@@ -10,8 +10,8 @@
 
         <div class="form-group">
             <label asp-for="OwnerId">Owner</label>
-            <select asp-for="OwnerId" type="number" class="form-control" placeholder="Owner">
-                <option value="0" selected>Select owner</option>
+            <select asp-for="OwnerId" type="number" required="required" class="form-control" placeholder="Owner">
+                <option value="" selected>Select owner</option>
                 @foreach (var m in ViewBag.Owners)
                 {
                     <option value="@m.Id">@m.FullName</option>
@@ -22,8 +22,8 @@
         <div class="form-group row">
             <div class="col-6">
                 <label for="manufacturer">Manufacturer</label>
-                <select id="manufacturer" class="form-control" placeholder="Select manufacturer" onchange="onManufacturerChanged(this.value)">
-                    <option value="0" selected>Select manufacturer</option>
+                <select id="manufacturer" class="form-control" required="required" placeholder="Select manufacturer" onchange="onManufacturerChanged(this.value)">
+                    <option value="" selected>Select manufacturer</option>
                     @foreach (var m in ViewBag.Manufacturers)
                     {
                         <option value="@m.Id">@m.Name</option>
@@ -32,8 +32,8 @@
             </div>
             <div class="col-6">
                 <label asp-for="VehicleModelId">Model</label>
-                <select asp-for="VehicleModelId" class="form-control" disabled="disabled">
-                    <option value="0" selected>Select manufacturer</option>
+                <select asp-for="VehicleModelId" required="required" class="form-control" disabled="disabled">
+                    <option value="" selected>Select manufacturer</option>
                 </select>
             </div>
         </div>
@@ -41,40 +41,40 @@
         <div class="form-group row">
             <div class="col-6">
                 <label asp-for="VehicleType">Vehicle Type</label>
-                <select asp-for="VehicleType" asp-items="Html.GetEnumSelectList<VehicleTypes>()" class="form-control" placeholder="Vehicle Type"></select>
+                <select asp-for="VehicleType" asp-items="Html.GetEnumSelectList<VehicleTypes>()" required="required" class="form-control" placeholder="Vehicle Type"></select>
             </div>
             <div class="col-6">
                 <label asp-for="EngineType">Engine Type</label>
-                <select asp-for="EngineType" asp-items="Html.GetEnumSelectList<EngineTypes>()" class="form-control" placeholder="Engine Type"></select>
+                <select asp-for="EngineType" asp-items="Html.GetEnumSelectList<EngineTypes>()" required="required" class="form-control" placeholder="Engine Type"></select>
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-6">
                 <label asp-for="Mileage">Mileage</label>
-                <input asp-for="Mileage" type="number" class="form-control" placeholder="Mileage">
+                <input asp-for="Mileage" type="number" min="0" max="2000000" required="required" class="form-control" placeholder="Mileage">
             </div>
             <div class="col-6">
                 <label asp-for="Color">Color</label>
-                <input asp-for="Color" type="text" class="form-control" placeholder="Color">
+                <input asp-for="Color" type="text" maxlength="30" required="required" class="form-control" placeholder="Color">
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-6">
                 <label asp-for="Vin">VIN</label>
-                <input asp-for="Vin" type="text" class="form-control" placeholder="VIN">
+                <input asp-for="Vin" pattern="[A-Za-z0-9]{17}" title="VIN must be 17 characters long" required="required" class="form-control" placeholder="VIN">
             </div>
             <div class="col-6">
-                <label asp-for="RegPlate" >Reg Plate</label>
+                <label asp-for="RegPlate">Reg Plate</label>
                 <input asp-for="RegPlate" pattern="^[ABCEKMHOPTYX]{1,2}[0-9]{4}[ABCEKMHOPTYX]{1,2}$" title="Registration plate must be in format X(X)0000XX" required="required" class="form-control" placeholder="Reg Plate">
             </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
-        <button asp-controller="Vehicles" asp-action="Index" class="btn btn-secondary">Cancel</button>
+        <button asp-controller="Vehicles" asp-action="Index" class="btn btn-secondary" formnovalidate="formnovalidate">Cancel</button>
     </form>
-    
+
 </section>
 
 <script type="text/javascript">

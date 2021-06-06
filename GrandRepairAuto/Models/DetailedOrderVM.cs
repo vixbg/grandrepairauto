@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GrandRepairAuto.Web.Models
 {
-    public class SingleOrderVM
+    public class DetailedOrderVM
     {
         public int Id { get; set; }
 
@@ -39,6 +39,5 @@ namespace GrandRepairAuto.Web.Models
         public List<CustomerServiceVM> CustomerServices { get; set; }
 
         public double TotalPrice { get; set; }
-
     }
 }

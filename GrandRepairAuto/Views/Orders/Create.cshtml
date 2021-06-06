@@ -10,8 +10,8 @@
         <div class="form-group row">
             <div class="col-6">
                 <label asp-for="UserId">User</label>
-                <select asp-for="UserId" class="form-control" placeholder="Select User" onchange="onUserChanged(this.value)">
-                    <option value="0" selected>Select User</option>
+                <select asp-for="UserId" class="form-control" placeholder="Select User" required="required" onchange="onUserChanged(this.value)">
+                    <option value="" selected>Select User</option>
                     @foreach (var u in ViewBag.Users)
                     {
                         <option value="@u.Id">@u.FullName</option>
@@ -20,14 +20,14 @@
             </div>
             <div class="col-6">
                 <label asp-for="VehicleId">Vehicle</label>
-                <select asp-for="VehicleId" class="form-control" disabled="disabled">
-                    <option value="0" selected>Select vehicle</option>
+                <select asp-for="VehicleId" class="form-control" required="required" disabled="disabled">
+                    <option value="" selected>Select vehicle</option>
                 </select>
             </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
-        <button asp-controller="Orders" asp-action="Index" class="btn btn-secondary">Cancel</button>
+        <button asp-controller="Orders" asp-action="Index" class="btn btn-secondary" formnovalidate="formnovalidate">Cancel</button>
 
     </form>
 

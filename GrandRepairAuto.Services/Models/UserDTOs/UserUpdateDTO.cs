@@ -11,7 +11,7 @@ namespace GrandRepairAuto.Services.Models.UserDTOs
 
         public string Email { get; set; }
 
-        public string Username { get; set; }
+        public string Username { get => Email; }
 
         public string Password { get; set; }
 

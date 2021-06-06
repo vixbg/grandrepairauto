@@ -40,7 +40,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         public async Task<IActionResult> Details([FromRoute] int Id)
         {
             var order = orderService.GetByID(Id);
-            var orderVM = mapper.Map<SingleOrderVM>(order);
+            var orderVM = mapper.Map<DetailedOrderVM>(order);
 
             return View(orderVM);
         }

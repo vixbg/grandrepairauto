@@ -6,28 +6,27 @@
     <div class="form-group row">
         <div class="col-6">
             <label asp-for="Name">Name</label>
-            <input asp-for="Name" class="form-control" placeholder="Name">
+            <input asp-for="Name" class="form-control" pattern="^[A-Za-z]{5,100}$" required="required" title="Service name must be between 5 and 100 characters" placeholder="Name">
         </div>
         <div class="col-6">
             <label asp-for="VehicleType">Vehicle Type</label>
-            <select asp-for="VehicleType" asp-items="Html.GetEnumSelectList<VehicleTypes>()" class="form-control" placeholder="Vehicle Type"></select>
+            <select asp-for="VehicleType" asp-items="Html.GetEnumSelectList<VehicleTypes>()" required="required" class="form-control" placeholder="Vehicle Type"></select>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-6">
             <label asp-for="PricePerHour">Price Per Hour</label>
-            <input asp-for="PricePerHour" type="number" class="form-control" placeholder="Price Per Hour">
+            <input asp-for="PricePerHour" type="number" min="0" required="required" class="form-control" placeholder="Price Per Hour">
         </div>
         <div class="col-6">
             <label asp-for="WorkHours">Work Hours</label>
-            <input asp-for="WorkHours" type="number" class="form-control" placeholder="Work Hours">
+            <input asp-for="WorkHours" type="number" min="0" required="required" class="form-control" placeholder="Work Hours">
         </div>
     </div>
 
-
     <button type="submit" class="btn btn-primary">Submit</button>
-    <button asp-controller="Services" asp-action="Index" class="btn btn-secondary">Cancel</button>
+    <button asp-controller="Services" asp-action="Index" class="btn btn-secondary" formnovalidate="formnovalidate">Cancel</button>
 
 </form>
 

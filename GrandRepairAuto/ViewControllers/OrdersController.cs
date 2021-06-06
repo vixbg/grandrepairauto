@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GrandRepairAuto.Data.Enums;
 using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.CustomerServiceDTOs;
 using GrandRepairAuto.Services.Models.OrderDTOs;
@@ -19,46 +20,41 @@ namespace GrandRepairAuto.Web.ViewControllers
         private readonly IUserService userService;
         private readonly IVehicleService vehicleService;
         private readonly ICustomerServiceService customerServiceService;
+        private readonly IServiceService serviceService;
         private readonly IMapper mapper;
 
-        public OrdersController(IOrderWithCustomerServicesService orderService, IUserService userService, IVehicleService vehicleService, ICustomerServiceService customerServiceService, IMapper mapper)
+        public OrdersController(IOrderWithCustomerServicesService orderService, IUserService userService, IVehicleService vehicleService, ICustomerServiceService customerServiceService, IServiceService serviceService, IMapper mapper)
         {
             this.orderService = orderService;
             this.userService = userService;
             this.vehicleService = vehicleService;
             this.customerServiceService = customerServiceService;
+            this.serviceService = serviceService;
             this.mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            List<OrderWithCustomerServicesDTO> orders = new List<OrderWithCustomerServicesDTO>();
-            
-            if (!User.IsInRole("Customer") && (User.IsInRole("Administrator") || User.IsInRole("Employee")))
-            {
-               orders = orderService.GetAll().ToList();
-            }
-            else if (User.IsInRole("Customer") && (!User.IsInRole("Administrator") || !User.IsInRole("Employee")))
-            { 
-                orders = orderService
-                    .GetAll()
-                    .Where( o=> o.User.Username == User.Identity.Name).ToList();
-            }
-            else
-            {
-                orders = orderService.GetAll().ToList();
-            }
-           
+            var orders = User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee)
+                ? orderService.GetAll()
+                : orderService.GetAll(x => x.User.Email == User.Identity.Name);
+
             var ordersVM = mapper.Map<List<OrderVM>>(orders);
 
             return View(ordersVM);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details([FromRoute] int Id)
+        public async Task<IActionResult> Details([FromRoute] int id)
         {
-            var order = orderService.GetByID(Id);
-            var orderVM = mapper.Map<DetailedOrderVM>(order);
+            OrderWithCustomerServicesDTO order = orderService.GetByID(id);
+            if (order==null)
+            {
+                return NotFound();
+            }
+
+            DetailedOrderVM orderVM = mapper.Map<DetailedOrderVM>(order);
+            ViewBag.Services = this.serviceService.GetAll(s => s.VehicleType == order.Vehicle.VehicleType).Select(s => mapper.Map<ServiceVM>(s));
 
             return View(orderVM);
         }
@@ -95,7 +91,18 @@ namespace GrandRepairAuto.Web.ViewControllers
             orderService.Update(updateDTO, id);
 
             return RedirectToAction("Index");
-        }        
+        }
+
+        [HttpPost]
+        public IActionResult AddService(int serviceId, int id)
+        {            
+            CustomerServiceCreateDTO customerService = mapper.Map<CustomerServiceCreateDTO>(this.serviceService.GetByID(serviceId));
+            customerService.OrderID = id;
+            customerService.ServiceId = serviceId;
+            this.customerServiceService.Create(customerService);
+
+            return RedirectToAction("Details", new { id });
+        }
 
         [HttpGet]
         public IActionResult Delete([FromRoute] int id)

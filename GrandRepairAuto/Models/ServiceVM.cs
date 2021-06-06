@@ -8,6 +8,7 @@ namespace GrandRepairAuto.Web.Models
     {
         public int Id { get; set; }
 
+        [Required]
         public VehicleTypes VehicleType { get; set; }
 
         [Required]

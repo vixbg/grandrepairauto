@@ -21,7 +21,7 @@ namespace GrandRepairAuto.Web.Models
         [Range(0, Double.MaxValue, ErrorMessage = "Time cannot be negative.")]
         public double WorkHours { get; set; }
 
-        public ServiceStatuses Status { get; set; }
+        public ServiceStatuses Status { get; set; } = ServiceStatuses.NotStarted;
 
         [Range(0, Double.MaxValue, ErrorMessage = "Price cannot be negative.")]
         public double TotalPrice { get => this.PricePerHour * this.WorkHours; }

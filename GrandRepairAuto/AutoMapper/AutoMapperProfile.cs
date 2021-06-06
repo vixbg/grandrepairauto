@@ -73,9 +73,17 @@ namespace GrandRepairAuto
             CreateMap<ServiceDTO, ServiceVM>().ReverseMap();
             CreateMap<ServiceUpdateDTO, ServiceVM>().ReverseMap();
 
+            CreateMap<ServiceDTO, CustomerServiceCreateDTO>().ReverseMap();
+
             CreateMap<VehicleModelDTO, VehicleModelVM>().ReverseMap();
 
-            CreateMap<ManufacturerDTO, ManufacturerVM>().ReverseMap();
+            CreateMap<ManufacturerVM, ManufacturerCreateDTO>().ReverseMap();
+            CreateMap<ManufacturerVM, ManufacturerDTO>().ReverseMap();
+            CreateMap<ManufacturerVM, ManufacturerUpdateDTO>().ReverseMap();
+
+            CreateMap<VehicleModelVM, VehicleModelCreateDTO>().ReverseMap();
+            CreateMap<VehicleModelVM, VehicleModelDTO>().ReverseMap();
+            CreateMap<VehicleModelVM, VehicleModelUpdateDTO>().ReverseMap();
 
             CreateMap<VehicleVM, VehicleWithModelAndMakeCreateDTO>().ReverseMap();
             CreateMap<VehicleVM, VehicleWithModelAndMakeDTO>().ReverseMap();
@@ -85,9 +93,13 @@ namespace GrandRepairAuto
             CreateMap<VehicleVM, VehicleCreateDTO>().ReverseMap();
             CreateMap<VehicleVM, VehicleUpdateDTO>().ReverseMap();
 
-            CreateMap<OrderVM, OrderCreateWithCustomerServicesDTO>();
+            CreateMap<OrderVM, OrderCreateWithCustomerServicesDTO>().ReverseMap();
             CreateMap<OrderVM, OrderWithCustomerServicesDTO>().ReverseMap();
             CreateMap<OrderVM, OrderUpdateWithCustomerServicesDTO>().ReverseMap();
+
+            CreateMap<CustomerServiceVM, CustomerServiceCreateDTO>().ReverseMap();
+            CreateMap<CustomerServiceVM, CustomerServiceDTO>().ReverseMap();
+            CreateMap<CustomerServiceVM, CustomerServiceUpdateDTO>().ReverseMap();
 
             CreateMap<DetailedOrderVM, OrderDTO>().ReverseMap();
             CreateMap<DetailedOrderVM, OrderWithCustomerServicesDTO>().ReverseMap();

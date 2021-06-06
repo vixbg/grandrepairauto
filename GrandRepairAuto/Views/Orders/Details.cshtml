@@ -1,23 +1,23 @@
 ﻿@model GrandRepairAuto.Web.Models.DetailedOrderVM
 @using GrandRepairAuto.Data.Enums
 
-<section>    
+<section>
 
     <div class="cardSO">
         <div class="title">Order Details</div>
         @*<div class="info">
 
-            <div class="row">
-                <div class="col-5" style="margin-left:10px" > <span id="heading">Order No: </span>  <span id="details">@Model.Id</span> </div>
-                <div class="col-5" style="margin-left:1px"> <span id="heading">Date: </span>  <span id="details">@Model.Date.ToShortDateString()</span> </div>
-            </div>
-        </div>*@
+                <div class="row">
+                    <div class="col-5" style="margin-left:10px" > <span id="heading">Order No: </span>  <span id="details">@Model.Id</span> </div>
+                    <div class="col-5" style="margin-left:1px"> <span id="heading">Date: </span>  <span id="details">@Model.Date.ToShortDateString()</span> </div>
+                </div>
+            </div>*@
         <div class="info">
 
             <div class="row col-12">
                 <div class="col-6"> <span id="heading">Order No: </span>  <span id="details">@Model.Id</span> </div>
                 <div class="col-6 pull-right"> <span id="heading">Date: </span>  <span id="details">@Model.Date.ToShortDateString()</span> </div>
-                <hr style="margin-bottom: 11px"/>
+                <hr style="margin-bottom: 11px" />
                 <div class="col-6"> <span id="heading">Customer: </span> <span id="details">@Model.UserFirstName @Model.UserLastName</span> </div>
                 <div class="col-6 pull-right"> <span id="heading">Vehicle: </span> <span id="details">@Model.VehicleRegPlate</span> </div>
                 <div class="col-6"> <span id="heading">E-mail: </span> <span id="details">@Model.UserEmail</span> </div>
@@ -28,24 +28,19 @@
             </div>
         </div>
         <div class="pricing">
-            
-            <div class="row">
-                @*<div class="col-9"> <span id="name">BEATS Solo 3 Wireless Headphones</span> </div>
-                <div class="col-3"> <span id="price">£299.99</span> </div>*@
-            </div>
             @foreach (var modelCustomerService in Model.CustomerServices)
             {
                 <div class="row">
-                    @*<div class="col-9"> <span id="name">@modelCustomerService.</span> </div>
-                    <div class="col-3"> <span id="price">£299.99</span> </div>*@
+                    <div class="col-9"> <span id="name">@modelCustomerService.Name</span></div>
+                    <div class="col-3"> <span id="price">@modelCustomerService.TotalPrice</span></div>
                 </div>
             }
 
         </div>
         <div class="total">
             <div class="row">
-                <div class="col-9"></div>
-                <div class="col-3"><big>£262.99</big></div>
+                <div class="col-9">Total Price:</div>
+                <div class="col-3"><big>@Model.TotalPrice</big></div>
             </div>
         </div>
         <div class="tracking">
@@ -53,22 +48,31 @@
         </div>
         <div class="progress-track">
             <ul id="progressbar">
-                <li class="step0 active " id="step1">@OrderStatuses.New</li>
+                <li class="step0 active text-left" id="step1">@OrderStatuses.New</li>
                 <li class="step0 active text-center" id="step2">@OrderStatuses.InProgress</li>
                 <li class="step0 active text-right" id="step3">@OrderStatuses.ReadyForPickup</li>
                 <li class="step0 active text-right" id="step4">@OrderStatuses.Closed</li>
             </ul>
         </div>
-        
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <a class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px; margin-left: 50px" asp-action="Create">Create Service</a>
+
+        <div class="container" style="padding: 0 50px">
+            <form method="post" asp-action="AddService" asp-route-id="@Model.Id">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ServiceId">Service</label>
+                        <select asp-for="ServiceId" class="form-control" placeholder="Select Service" required="required">
+                            <option value="" selected>Select Service</option>
+                            @foreach (var s in ViewBag.Services)
+                            {
+                                <option value="@s.Id">@s.Name</option>
+                            }
+                        </select>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <a asp-controller="Orders" asp-action="Index" style="margin-top: 10px; margin-bottom: 10px; float: right; margin-right: 50px" class="btn btn-secondary">Close</a>
-                </div>
-            </div>
+
+                <button type="submit" class="btn btn-primary">Add Service</button>
+                <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary float-right">Close</a>
+            </form>
         </div>
     </div>
 </section>

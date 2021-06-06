@@ -82,7 +82,6 @@ namespace GrandRepairAuto.Services
         public async Task<UserDTO> CreateAsync(UserCreateDTO createDto)
         {
             var user = mapper.Map<User>(createDto);
-            user.UserName = user.Email;
             var result = await userManager.CreateAsync(user);
             if (!result.Succeeded)
             {

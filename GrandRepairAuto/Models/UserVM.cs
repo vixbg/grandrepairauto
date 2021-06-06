@@ -30,9 +30,6 @@ namespace GrandRepairAuto.Web.Models
         public string Email { get; set; }
 
         [Required]
-        public string Username { get; set; }
-
-        [Required]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Phone number must be 10 digits")]
         public string PhoneNumber { get; set; }
 

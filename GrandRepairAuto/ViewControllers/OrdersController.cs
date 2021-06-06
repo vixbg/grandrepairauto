@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GrandRepairAuto.Services.Contracts;
+using GrandRepairAuto.Services.Models.CustomerServiceDTOs;
 using GrandRepairAuto.Services.Models.OrderDTOs;
 using GrandRepairAuto.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -17,13 +18,15 @@ namespace GrandRepairAuto.Web.ViewControllers
         private readonly IOrderWithCustomerServicesService orderService;
         private readonly IUserService userService;
         private readonly IVehicleService vehicleService;
+        private readonly ICustomerServiceService customerServiceService;
         private readonly IMapper mapper;
 
-        public OrdersController(IOrderWithCustomerServicesService orderService,  IUserService userService, IVehicleService vehicleService, IMapper mapper)
+        public OrdersController(IOrderWithCustomerServicesService orderService, IUserService userService, IVehicleService vehicleService, ICustomerServiceService customerServiceService, IMapper mapper)
         {
             this.orderService = orderService;
             this.userService = userService;
             this.vehicleService = vehicleService;
+            this.customerServiceService = customerServiceService;
             this.mapper = mapper;
         }
 
@@ -76,7 +79,7 @@ namespace GrandRepairAuto.Web.ViewControllers
             orderService.Update(updateDTO, id);
 
             return RedirectToAction("Index");
-        }
+        }        
 
         [HttpGet]
         public IActionResult Delete([FromRoute] int id)

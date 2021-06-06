@@ -1,6 +1,7 @@
 ﻿using GrandRepairAuto.Data.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GrandRepairAuto.Web.Models
 {
@@ -38,6 +39,6 @@ namespace GrandRepairAuto.Web.Models
 
         public List<CustomerServiceVM> CustomerServices { get; set; }
 
-        public double TotalPrice { get; set; }
+        public double TotalPrice { get => CustomerServices.Select(x => x.TotalPrice).Sum(); }
     }
 }

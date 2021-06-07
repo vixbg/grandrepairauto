@@ -74,6 +74,8 @@ namespace GrandRepairAuto
             CreateMap<ServiceUpdateDTO, ServiceVM>().ReverseMap();
 
             CreateMap<ServiceDTO, CustomerServiceCreateDTO>().ReverseMap();
+            CreateMap<OrderDTO, OrderUpdateDTO>().ReverseMap();
+
 
             CreateMap<VehicleModelDTO, VehicleModelVM>().ReverseMap();
 

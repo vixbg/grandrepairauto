@@ -7,7 +7,7 @@ namespace GrandRepairAuto.Helpers
 {
     public static class AvatarHelper
     {
-        private const string GravatarTemplate = "https://www.gravatar.com/avatar/{0}?d=retro&s={1}";
+        private const string GravatarTemplate = "https://www.gravatar.com/avatar/{0}?d=robohash&s={1}";
 
         public static string AvatarUrlForEmail(this IHtmlHelper _, string email, int size = 80)
         {

@@ -7,11 +7,11 @@
         <div class="title">Order Details</div>
         @*<div class="info">
 
-                <div class="row">
-                    <div class="col-5" style="margin-left:10px" > <span id="heading">Order No: </span>  <span id="details">@Model.Id</span> </div>
-                    <div class="col-5" style="margin-left:1px"> <span id="heading">Date: </span>  <span id="details">@Model.Date.ToShortDateString()</span> </div>
-                </div>
-            </div>*@
+            <div class="row">
+                <div class="col-5" style="margin-left:10px" > <span id="heading">Order No: </span>  <span id="details">@Model.Id</span> </div>
+                <div class="col-5" style="margin-left:1px"> <span id="heading">Date: </span>  <span id="details">@Model.Date.ToShortDateString()</span> </div>
+            </div>
+        </div>*@
         <div class="info">
 
             <div class="row col-12">
@@ -37,6 +37,7 @@
             }
 
         </div>
+
         <div class="total">
             <div>
                 <select style="float:right" class="form-control-sm" onchange="changeCurrency(this.value)">
@@ -51,9 +52,11 @@
                 <div class="col-3"><big>@Model.TotalPrice @Model.Currency</big></div>
             </div>
         </div>
+
         <div class="tracking">
             <div class="title">Tracking Order</div>
         </div>
+
         <div class="progress-track">
             <ul id="progressbar">
                 <li class="step0 @if (Model.Status >= OrderStatuses.New) { @Html.Raw("active") } text-left" id="step1">@OrderStatuses.New</li>
@@ -61,10 +64,18 @@
                 <li class="step2 @if (Model.Status >= OrderStatuses.ReadyForPickup) { @Html.Raw("active") } text-right" id="step3">@OrderStatuses.ReadyForPickup</li>
                 <li class="step3 @if (Model.Status >= OrderStatuses.Closed) { @Html.Raw("active") } text-right" id="step4">@OrderStatuses.Closed</li>
             </ul>
+
+            @if (User.IsInRole(Roles.Employee) && Model.Status < OrderStatuses.Closed)
+            {
+                <a asp-controller="Orders" asp-action="ChangeStatus" asp-route-id="@Model.Id">Change status to @Model.NextStatus.ToString()</a>
+            }
+
         </div>
-        @if (User.IsInRole(Roles.Employee))
+       
+
+        @if (User.IsInRole(Roles.Employee) && Model.Status < OrderStatuses.ReadyForPickup)
         {
-            <div class="container" style="padding: 0 50px">
+            <div class="container" style="padding: 25px 50px">
                 <form method="post" asp-action="AddService" asp-route-id="@Model.Id">
                     <div class="form-group row">
                         <div class="col-4">
@@ -80,22 +91,16 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Add Service</button>
-                    <button type="submit" class="btn btn-primary">Update Order</button>
 
-
-                    <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary float-right">Close</a>
                 </form>
             </div>
         }
-        else
-        {
-            <div class="container" style="padding: 0px 70px 50px 0px">
 
+        <div class="container" style="padding: 0px 70px 50px 0px">
 
-                <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary float-right">Close</a>
+            <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary float-right">Close</a>
 
-            </div>
-        }
+        </div>
     </div>
 </section>
 

@@ -11,6 +11,8 @@ namespace GrandRepairAuto.Web.Models
 
         public OrderStatuses Status { get; set; }
 
+        public OrderStatuses NextStatus { get => (OrderStatuses)(((int)this.Status) + 1); }
+
         public DateTime Date { get; set; }
 
         public string UserFirstName { get; set; }

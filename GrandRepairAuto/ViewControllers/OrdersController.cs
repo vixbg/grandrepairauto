@@ -17,7 +17,8 @@ namespace GrandRepairAuto.Web.ViewControllers
     [Authorize]
     public class OrdersController : Controller
     {
-        private readonly IOrderWithCustomerServicesService orderService;
+        private readonly IOrderWithCustomerServicesService orderWithCustomerServicesService;
+        private readonly IOrderService orderservice;
         private readonly IUserService userService;
         private readonly IVehicleService vehicleService;
         private readonly ICustomerServiceService customerServiceService;
@@ -25,9 +26,17 @@ namespace GrandRepairAuto.Web.ViewControllers
         private readonly IMapper mapper;
         static HttpClient client = new HttpClient();
 
-        public OrdersController(IOrderWithCustomerServicesService orderService, IUserService userService, IVehicleService vehicleService, ICustomerServiceService customerServiceService, IServiceService serviceService, IMapper mapper)
+        public OrdersController(
+            IOrderWithCustomerServicesService orderWithCustomerServicesService, 
+            IOrderService orderService, 
+            IUserService userService, 
+            IVehicleService vehicleService, 
+            ICustomerServiceService customerServiceService, 
+            IServiceService serviceService, 
+            IMapper mapper)
         {
-            this.orderService = orderService;
+            this.orderWithCustomerServicesService = orderWithCustomerServicesService;
+            this.orderservice = orderService;
             this.userService = userService;
             this.vehicleService = vehicleService;
             this.customerServiceService = customerServiceService;
@@ -38,8 +47,8 @@ namespace GrandRepairAuto.Web.ViewControllers
         public IActionResult Index()
         {
             var orders = User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Employee)
-                ? orderService.GetAll()
-                : orderService.GetAll(x => x.User.Email == User.Identity.Name);
+                ? orderWithCustomerServicesService.GetAll()
+                : orderWithCustomerServicesService.GetAll(x => x.User.Email == User.Identity.Name);
 
             var ordersVM = mapper.Map<List<OrderVM>>(orders);
 
@@ -49,19 +58,19 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpGet]
         public async Task<IActionResult> Details([FromRoute] int id, [FromQuery] string currency = "BGN")
         {
-            OrderWithCustomerServicesDTO order = orderService.GetByID(id);
-            if (order==null)
+            OrderWithCustomerServicesDTO order = orderWithCustomerServicesService.GetByID(id);
+            if (order == null)
             {
                 return NotFound();
             }
 
-            
+
             //HttpResponseMessage response = await client.GetAsync($"https://free.currconv.com/api/v7/convert?apiKey=5d363582e0f1d27c708c&q=BGN_{currency}&compact=ultra");
             //if (response.IsSuccessStatusCode)
             //{
             //    var result = await response.Content.ReadAsAsync<result>();
             //}
-            ViewBag.Currencies = new List<string> {"BGN", "USD", "EUR", "PLN"};
+            ViewBag.Currencies = new List<string> { "BGN", "USD", "EUR", "PLN" };
 
             DetailedOrderVM orderVM = mapper.Map<DetailedOrderVM>(order);
             orderVM.Currency = currency;
@@ -84,7 +93,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         public IActionResult Create(OrderVM order)
         {
             OrderCreateWithCustomerServicesDTO createDTO = mapper.Map<OrderCreateWithCustomerServicesDTO>(order);
-            orderService.Create(createDTO);
+            orderWithCustomerServicesService.Create(createDTO);
 
             return RedirectToAction("Index");
         }
@@ -92,7 +101,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpGet]
         public IActionResult Update([FromRoute] int id)
         {
-            OrderWithCustomerServicesDTO getDTO = orderService.GetByID(id);
+            OrderWithCustomerServicesDTO getDTO = orderWithCustomerServicesService.GetByID(id);
             OrderVM viewModel = mapper.Map<OrderVM>(getDTO);
 
             return View(viewModel);
@@ -102,14 +111,14 @@ namespace GrandRepairAuto.Web.ViewControllers
         public IActionResult Update([FromBody] OrderVM order, [FromRoute] int id)
         {
             OrderUpdateWithCustomerServicesDTO updateDTO = mapper.Map<OrderUpdateWithCustomerServicesDTO>(order);
-            orderService.Update(updateDTO, id);
+            orderWithCustomerServicesService.Update(updateDTO, id);
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult AddService(int serviceId, int id)
-        {            
+        {
             CustomerServiceCreateDTO customerService = mapper.Map<CustomerServiceCreateDTO>(this.serviceService.GetByID(serviceId));
             customerService.OrderID = id;
             customerService.ServiceId = serviceId;
@@ -119,9 +128,20 @@ namespace GrandRepairAuto.Web.ViewControllers
         }
 
         [HttpGet]
+        public IActionResult ChangeStatus(int id)
+        {
+            OrderDTO orderDTO = orderservice.GetByID(id);
+            OrderUpdateDTO orderUpdateDTO = mapper.Map<OrderUpdateDTO>(orderDTO);
+            orderUpdateDTO.Status = orderDTO.Status + 1;
+            orderservice.Update(orderUpdateDTO, id);
+
+            return RedirectToAction("Details", new { id });
+        }
+
+        [HttpGet]
         public IActionResult Delete([FromRoute] int id)
         {
-            orderService.Delete(id);
+            orderWithCustomerServicesService.Delete(id);
 
             return RedirectToAction("Index");
         }

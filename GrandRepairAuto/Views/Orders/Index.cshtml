@@ -30,8 +30,13 @@
                     <td>@order.Date.ToShortDateString()</td>
                     <td>@order.UserFullName</td>
                     <td>@order.VehicleRegPlate</td>
-                    <td><a asp-action="Update" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-edit'></i></a>
-                    <a class="click-warn" asp-action="Delete" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-trash'></i></a></td>
+                    @if (User.IsInRole(Roles.Employee) || User.IsInRole(Roles.Admin))
+                    {
+                        <td>
+                            <a asp-action="Update" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-edit'></i></a>
+                            <a class="click-warn" asp-action="Delete" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-trash'></i></a>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
@@ -46,12 +51,12 @@
 
 @section Scripts
 {
-    <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#ordersTable').dataTable({
                 "autoWidth": true
             });

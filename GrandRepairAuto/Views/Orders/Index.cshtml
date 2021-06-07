@@ -30,8 +30,9 @@
                     <td>@order.Date.ToShortDateString()</td>
                     <td>@order.UserFullName</td>
                     <td>@order.VehicleRegPlate</td>
-                    <td><a asp-action="Update" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-edit'></i></a>
-                    <a class="click-warn" asp-action="Delete" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-trash'></i></a></td>
+                    <td>
+                        <a class="click-warn" asp-action="Delete" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-trash'></i></a>
+                    </td>
                 </tr>
             }
         </tbody>

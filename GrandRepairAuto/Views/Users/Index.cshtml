@@ -11,18 +11,21 @@
                 <th>Email/Username</th>
                 <th>Phone Number</th>
                 <th>Roles</th>
-                <th>Delete</th>
+                <th>Options</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var user in Model)
             {
                 <tr>
-                    <td> <img src="@Html.AvatarUrlForEmail(user.Email, 30)" style="border-radius: 50%" /> <a asp-action="Update" asp-route-id="@user.Id"> @user.FirstName @user.LastName </a> </td>
+                    <td> <img src="@Html.AvatarUrlForEmail(user.Email, 30)" style="border-radius: 50%" /> @user.FirstName @user.LastName </td>
                     <td> @user.Email </td>
                     <td> @user.PhoneNumber </td>
                     <td> @user.RolesString </td>
-                    <td> <a class="click-warn" asp-action="Delete" asp-route-id="@user.Id"> Delete </a></td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@user.Id"><i style="font-size: x-large" class='bx bx-edit'></i> </a>
+                        <a class="click-warn" asp-action="Delete" asp-route-id="@user.Id"> <i style="font-size: x-large" class='bx bx-trash'></i> </a>
+                    </td>
                 </tr>
             }
         </tbody>

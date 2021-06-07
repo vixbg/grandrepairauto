@@ -1,11 +1,11 @@
 ﻿@model GrandRepairAuto.Web.Models.OrderVM
 
 <section>
-    <h1>Update Order #@Model.Id</h1>    
+    <h1>Update Order #@Model.Id</h1>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-        
-        <button asp-controller="Orders" asp-action="Index" class="btn btn-secondary" formnovalidate="formnovalidate">Cancel</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary">Cancel</a>
 
 
 </section>

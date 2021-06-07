@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using GrandRepairAuto.Web.Services;
 
 namespace GrandRepairAuto
 {
@@ -84,6 +85,7 @@ namespace GrandRepairAuto
                     options.ConfigureDbContext = c => c.UseSqlServer(connectionString,
                         sql => sql.MigrationsAssembly(typeof(GarageContext).Assembly.GetName().Name));
                 })
+                .AddProfileService<GrandRepairProfileService>()
                 .AddAspNetIdentity<User>();
 
             services.AddControllers().AddNewtonsoftJson(options =>

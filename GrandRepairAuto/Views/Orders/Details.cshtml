@@ -32,15 +32,23 @@
             {
                 <div class="row">
                     <div class="col-9"> <span id="name">@modelCustomerService.Name</span></div>
-                    <div class="col-3"> <span id="price">@modelCustomerService.TotalPrice</span></div>
+                    <div class="col-3"> <span id="price">@modelCustomerService.TotalPrice @Model.Currency</span></div>
                 </div>
             }
 
         </div>
         <div class="total">
+            <div>
+                <select style="float:right" class="form-control-sm" onchange="changeCurrency(this.value)">
+                    @foreach (var currency in ViewBag.Currencies)
+                    {
+                        <option value="@currency" selected="@(Model.Currency == currency ? "selected" : null)">@currency</option>
+                    }
+                </select>
+            </div>
             <div class="row">
                 <div class="col-9">Total Price:</div>
-                <div class="col-3"><big>@Model.TotalPrice</big></div>
+                <div class="col-3"><big>@Model.TotalPrice @Model.Currency</big></div>
             </div>
         </div>
         <div class="tracking">
@@ -48,31 +56,54 @@
         </div>
         <div class="progress-track">
             <ul id="progressbar">
-                <li class="step0 active text-left" id="step1">@OrderStatuses.New</li>
-                <li class="step0 active text-center" id="step2">@OrderStatuses.InProgress</li>
-                <li class="step0 active text-right" id="step3">@OrderStatuses.ReadyForPickup</li>
-                <li class="step0 active text-right" id="step4">@OrderStatuses.Closed</li>
+                <li class="step0 @if (Model.Status >= OrderStatuses.New) { @Html.Raw("active") } text-left" id="step1">@OrderStatuses.New</li>
+                <li class="step1 @if (Model.Status >= OrderStatuses.InProgress) { @Html.Raw("active") } text-center" id="step2">@OrderStatuses.InProgress</li>
+                <li class="step2 @if (Model.Status >= OrderStatuses.ReadyForPickup) { @Html.Raw("active") } text-right" id="step3">@OrderStatuses.ReadyForPickup</li>
+                <li class="step3 @if (Model.Status >= OrderStatuses.Closed) { @Html.Raw("active") } text-right" id="step4">@OrderStatuses.Closed</li>
             </ul>
         </div>
-
-        <div class="container" style="padding: 0 50px">
-            <form method="post" asp-action="AddService" asp-route-id="@Model.Id">
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="ServiceId">Service</label>
-                        <select asp-for="ServiceId" class="form-control" placeholder="Select Service" required="required">
-                            <option value="" selected>Select Service</option>
-                            @foreach (var s in ViewBag.Services)
-                            {
-                                <option value="@s.Id">@s.Name</option>
-                            }
-                        </select>
+        @if (User.IsInRole(Roles.Employee))
+        {
+            <div class="container" style="padding: 0 50px">
+                <form method="post" asp-action="AddService" asp-route-id="@Model.Id">
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="ServiceId">Service</label>
+                            <select asp-for="ServiceId" class="form-control" placeholder="Select Service" required="required">
+                                <option value="" selected>Select Service</option>
+                                @foreach (var s in ViewBag.Services)
+                                {
+                                    <option value="@s.Id">@s.Name</option>
+                                }
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary">Add Service</button>
+                    <button type="submit" class="btn btn-primary">Add Service</button>
+                    <button type="submit" class="btn btn-primary">Update Order</button>
+
+
+                    <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary float-right">Close</a>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div class="container" style="padding: 0px 70px 50px 0px">
+
+
                 <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary float-right">Close</a>
-            </form>
-        </div>
+
+            </div>
+        }
     </div>
 </section>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function changeCurrency(value) {
+            window.location='/Orders/Details/@Model.Id?currency=' + value;
+        }
+    </script>
+}

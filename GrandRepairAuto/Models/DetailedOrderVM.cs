@@ -37,6 +37,8 @@ namespace GrandRepairAuto.Web.Models
 
         public ServiceVM Service { get; set; }
 
+        public string Currency { get; set; }
+
         public List<CustomerServiceVM> CustomerServices { get; set; }
 
         public double TotalPrice { get => CustomerServices.Select(x => x.TotalPrice).Sum(); }

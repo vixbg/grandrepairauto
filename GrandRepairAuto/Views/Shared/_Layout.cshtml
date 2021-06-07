@@ -55,7 +55,7 @@
                                 <a href="javascript:void(0);" class="btn-user media align-items-center" data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
                                     <img class="mr-2" src="@Html.AvatarUrlForEmail(User.Identity.Name, 30)" style="border-radius:50%" alt="avatar">
                                     <span class="media-body">
-                                        @User.Identity.Name
+                                        @User.FindFirst(c => c.Type == "GrandRepair_Names")?.Value
                                     </span>
                                 </a>
                             </li>

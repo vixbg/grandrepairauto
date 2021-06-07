@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace GrandRepairAuto.Web.ViewControllers
@@ -22,6 +23,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         private readonly ICustomerServiceService customerServiceService;
         private readonly IServiceService serviceService;
         private readonly IMapper mapper;
+        static HttpClient client = new HttpClient();
 
         public OrdersController(IOrderWithCustomerServicesService orderService, IUserService userService, IVehicleService vehicleService, ICustomerServiceService customerServiceService, IServiceService serviceService, IMapper mapper)
         {
@@ -45,7 +47,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details([FromRoute] int id)
+        public async Task<IActionResult> Details([FromRoute] int id, [FromQuery] string currency = "BGN")
         {
             OrderWithCustomerServicesDTO order = orderService.GetByID(id);
             if (order==null)
@@ -53,7 +55,19 @@ namespace GrandRepairAuto.Web.ViewControllers
                 return NotFound();
             }
 
+            
+            //HttpResponseMessage response = await client.GetAsync($"https://free.currconv.com/api/v7/convert?apiKey=5d363582e0f1d27c708c&q=BGN_{currency}&compact=ultra");
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    var result = await response.Content.ReadAsAsync<result>();
+            //}
+            ViewBag.Currencies = new List<string> {"BGN", "USD", "EUR", "PLN"};
+
             DetailedOrderVM orderVM = mapper.Map<DetailedOrderVM>(order);
+            orderVM.Currency = currency;
+
+            // TODO: If Curency != BGN -> Call API for conversion rate
+            // Multiply all prices with conversion rate
             ViewBag.Services = this.serviceService.GetAll(s => s.VehicleType == order.Vehicle.VehicleType).Select(s => mapper.Map<ServiceVM>(s));
 
             return View(orderVM);

@@ -1,4 +1,5 @@
-﻿using GrandRepairAuto.Data.Models;
+﻿using System.Security.Claims;
+using GrandRepairAuto.Data.Models;
 using GrandRepairAuto.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -59,9 +60,14 @@ namespace GrandRepairAuto.Web.ViewControllers
                 return View(new LoginInputModel { ReturnUrl = model.ReturnUrl, Username = model.Username });
             }
 
-            var result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, true);
+            var result = await signInManager.CheckPasswordSignInAsync(user, model.Password, true);
             if (result.Succeeded)
             {
+                await signInManager.SignInWithClaimsAsync(user, model.RememberMe, new Claim[]
+                {
+                    new Claim("amr", "pwd"),
+                    new Claim("GrandRepair_Names", $"{user.FirstName} {user.LastName}"),
+                });
                 if (!string.IsNullOrEmpty(model.ReturnUrl))
                 {
                     return Redirect(model.ReturnUrl);

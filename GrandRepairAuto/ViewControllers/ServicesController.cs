@@ -22,10 +22,13 @@ namespace GrandRepairAuto.Web.ViewControllers
             this.mapper = mapper;
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] string currency = "BGN")
         {
+            ViewBag.Currencies = new List<string> {"BGN", "USD", "EUR", "PLN"};
             var services = serviceService.GetAll();
             var servicesVMs = mapper.Map<List<ServiceVM>>(services);
+            servicesVMs.ForEach(vm => vm.Currency = currency);
+
 
             return View(servicesVMs);
         }

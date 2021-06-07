@@ -23,6 +23,8 @@ namespace GrandRepairAuto.Web.Models
         [Range(0, Double.MaxValue, ErrorMessage = "Time cannot be negative.")]
         public double WorkHours { get; set; }
 
+        public string Currency { get; set; }
+
         public double TotalPrice { get; set; }
 
     }

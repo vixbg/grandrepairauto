@@ -14,8 +14,7 @@
                 <th>Date</th>
                 <th>Customer</th>
                 <th>Vehicle</th>
-                <th>Update</th>
-                <th>Delete</th>
+                <th>Options</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +22,7 @@
             {
                 <tr>
                     <td>
-                        <a asp-controller="Orders"
+                        <a style="font-weight: bold" asp-controller="Orders"
                            asp-action="Details"
                            asp-route-id="@order.Id">Order @order.Id</a>
                     </td>
@@ -31,13 +30,13 @@
                     <td>@order.Date.ToShortDateString()</td>
                     <td>@order.UserFullName</td>
                     <td>@order.VehicleRegPlate</td>
-                    <td><a asp-action="Update" asp-route-id="@order.Id">Update</a></td>
-                    <td><a class="click-warn" asp-action="Delete" asp-route-id="@order.Id">Delete</a></td>
+                    <td><a asp-action="Update" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-edit'></i></a>
+                    <a class="click-warn" asp-action="Delete" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-trash'></i></a></td>
                 </tr>
             }
         </tbody>
     </table>
-    @if (!User.IsInRole(Roles.Customer))
+    @if (User.IsInRole(Roles.Employee))
     {
         <a class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px" asp-action="Create">Create order</a>
     }
@@ -47,13 +46,15 @@
 
 @section Scripts
 {
-    <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
     <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#ordersTable').dataTable();
+        $(document).ready(function() {
+            $('#ordersTable').dataTable({
+                "autoWidth": true
+            });
         });
     </script>
 }

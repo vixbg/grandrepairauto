@@ -10,6 +10,8 @@ using GrandRepairAuto.Models;
 using GrandRepairAuto.Services.Contracts;
 using IdentityModel;
 using Microsoft.Extensions.Options;
+using GrandRepairAuto.Services.Models.UserDTOs;
+using AutoMapper;
 
 namespace GrandRepairAuto.Web.ViewControllers
 {
@@ -19,12 +21,16 @@ namespace GrandRepairAuto.Web.ViewControllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly IEmailService emailService;
+        private readonly IUserService userService;
+        private readonly IMapper mapper;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailService emailService)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailService emailService, IUserService userService, IMapper mapper)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.emailService = emailService;
+            this.userService = userService;
+            this.mapper = mapper;
         }
 
         [HttpGet("Login")]
@@ -56,7 +62,7 @@ namespace GrandRepairAuto.Web.ViewControllers
 
             if (await userManager.IsLockedOutAsync(user))
             {
-                ModelState.AddModelError("ErrorMessage", "Account is locked, try again in 5 minutes");
+                ModelState.AddModelError("ErrorMessage", "Account is locked, try again later");
                 return View(new LoginInputModel { ReturnUrl = model.ReturnUrl, Username = model.Username });
             }
 
@@ -163,6 +169,15 @@ namespace GrandRepairAuto.Web.ViewControllers
         public IActionResult AccessDenied()
         {
             return View("~/Views/Errors/Status.cshtml", new ErrorStatusVM(403));
+        }
+
+        [HttpGet("Profile/{email}")]
+        public async Task<IActionResult> Profile(string email)
+        {
+            UserDTO user = await userService.GetByEmailAsync(email);
+            UserVM userVM = mapper.Map<UserVM>(user);
+
+            return View(userVM);
         }
     }
 }

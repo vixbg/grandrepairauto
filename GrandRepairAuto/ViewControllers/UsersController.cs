@@ -61,22 +61,12 @@ namespace GrandRepairAuto.Web.ViewControllers
             await userService.UpdateAsync(updateDTO, id);
 
             return RedirectToAction("Index");
-        }
+        }        
 
         [HttpGet]
-        public async Task<IActionResult> Profile(string email)
+        public async Task<IActionResult> Delete(int id)
         {
-            UserDTO user = await userService.GetByEmailAsync(email);
-            UserVM userVM = mapper.Map<UserVM>(user);
-
-            return View(userVM);
-        }
-
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            userService.Delete(id);
-
+            await userService.Delete(id);
             return RedirectToAction("Index");
         }
     }

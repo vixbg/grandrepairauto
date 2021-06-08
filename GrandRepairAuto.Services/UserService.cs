@@ -133,13 +133,17 @@ namespace GrandRepairAuto.Services
             return mapper.Map<UserDTO>(user);
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            await userManager.SetLockoutEndDateAsync(user, DateTime.MaxValue);
             return this.repository.Delete(id);
         }
 
-        public bool Restore(int id)
+        public async Task<bool> Restore(int id)
         {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            await userManager.SetLockoutEndDateAsync(user, null);
             return this.repository.Restore(id);
         }
     }

@@ -12,7 +12,7 @@ namespace GrandRepairAuto.Services.Contracts
         Task<UserDTO> GetByEmailAsync(string email);
         Task<UserDTO> CreateAsync(UserCreateDTO dto);
         Task<UserDTO> UpdateAsync(UserUpdateDTO dto, int id);
-        bool Delete(int id);
-        bool Restore(int id);
+        Task<bool> Delete(int id);
+        Task<bool> Restore(int id);
     }
 }

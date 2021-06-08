@@ -11,9 +11,5 @@ namespace GrandRepairAuto.Services.Models.VehiclesDTOs
         public string Color { get; set; }
 
         public int OwnerId { get; set; }
-
-        public string OwnerFirstName { get; set; }
-
-        public string OwnerLastName { get; set; }
     }
 }

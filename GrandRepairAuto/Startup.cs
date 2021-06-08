@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using GrandRepairAuto.Web.Services;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace GrandRepairAuto
 {
@@ -94,6 +95,10 @@ namespace GrandRepairAuto
                 .AddFluentValidation(v => v.RegisterValidatorsFromAssemblyContaining<VehicleValidator>());
 
             services.AddAuthentication()
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                })
                 .AddCookie(cfg =>
                 {
                     cfg.Cookie.SameSite = SameSiteMode.Strict;
@@ -124,12 +129,26 @@ namespace GrandRepairAuto
             services.AddScoped<IVehicleService, VehicleService>();
             services.AddScoped<IVehicleWithModelAndMakeService, VehicleWithModelAndMakeService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ICurrencyConverter, CurrencyConverter>();
 
 
             services.AddSwaggerGen(c =>
             {
                 c.ResolveConflictingActions(a => a.First());
+                
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GrandRepairAuto", Version = "V1", Description = "This is Swagger documentation about GrandRepairAuto" });
+                c.AddSecurityDefinition("v1", new OpenApiSecurityScheme() {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        ClientCredentials = new OpenApiOAuthFlow {
+                            AuthorizationUrl = new Uri(Configuration.GetValue<string>("Authorization") + "/connect/authorize"),
+                            TokenUrl = new Uri(Configuration.GetValue<string>("Authorization") + "/connect/token")
+                        }
+                    }
+                });
+
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
 
                 var fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
@@ -166,6 +185,7 @@ namespace GrandRepairAuto
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "SmartGarage13");
+                c.OAuthConfigObject.ClientId = "api";
             });
 
             app.UseEndpoints(endpoints =>

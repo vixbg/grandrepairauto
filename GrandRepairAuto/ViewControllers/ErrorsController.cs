@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GrandRepairAuto.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class ErrorsController : Controller
     {
         [Route("/Errors/Status/{code}")]

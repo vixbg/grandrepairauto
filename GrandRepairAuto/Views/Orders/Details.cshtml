@@ -32,7 +32,7 @@
             {
                 <div class="row">
                     <div class="col-9"> <span id="name">@modelCustomerService.Name</span></div>
-                    <div class="col-3"> <span id="price">@modelCustomerService.TotalPrice @Model.Currency</span></div>
+                    <div class="col-3"> <span id="price">@($"{modelCustomerService.TotalPrice:# ### ##0.00}") @Model.Currency</span></div>
                 </div>
             }
 
@@ -49,7 +49,7 @@
             </div>
             <div class="row">
                 <div class="col-9">Total Price:</div>
-                <div class="col-3"><big>@Model.TotalPrice @Model.Currency</big></div>
+                <div class="col-3"><big>@($"{Model.TotalPrice:# ### ##0.00}") @Model.Currency</big></div>
             </div>
         </div>
 

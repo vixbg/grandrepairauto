@@ -16,7 +16,7 @@ namespace GrandRepairAuto.Services.Models.OrderDTOs
 
         public UserDTO User { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Today;
 
         public int VehicleId { get; set; }
 

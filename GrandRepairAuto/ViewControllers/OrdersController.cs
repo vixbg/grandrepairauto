@@ -23,6 +23,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         private readonly IVehicleService vehicleService;
         private readonly ICustomerServiceService customerServiceService;
         private readonly IServiceService serviceService;
+        private readonly ICurrencyConverter currencyConverter;
         private readonly IMapper mapper;
         static HttpClient client = new HttpClient();
 
@@ -33,6 +34,7 @@ namespace GrandRepairAuto.Web.ViewControllers
             IVehicleService vehicleService, 
             ICustomerServiceService customerServiceService, 
             IServiceService serviceService, 
+            ICurrencyConverter currencyConverter,
             IMapper mapper)
         {
             this.orderWithCustomerServicesService = orderWithCustomerServicesService;
@@ -41,6 +43,7 @@ namespace GrandRepairAuto.Web.ViewControllers
             this.vehicleService = vehicleService;
             this.customerServiceService = customerServiceService;
             this.serviceService = serviceService;
+            this.currencyConverter = currencyConverter;
             this.mapper = mapper;
         }
 
@@ -65,19 +68,18 @@ namespace GrandRepairAuto.Web.ViewControllers
             }
 
 
-            //HttpResponseMessage response = await client.GetAsync($"https://free.currconv.com/api/v7/convert?apiKey=5d363582e0f1d27c708c&q=BGN_{currency}&compact=ultra");
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    var result = await response.Content.ReadAsAsync<result>();
-            //}
             ViewBag.Currencies = new List<string> { "BGN", "USD", "EUR", "PLN" };
 
             DetailedOrderVM orderVM = mapper.Map<DetailedOrderVM>(order);
             orderVM.Currency = currency;
 
-            // TODO: If Curency != BGN -> Call API for conversion rate
-            // Multiply all prices with conversion rate
             ViewBag.Services = this.serviceService.GetAll(s => s.VehicleType == order.Vehicle.VehicleType).Select(s => mapper.Map<ServiceVM>(s));
+
+            if (currency != "BGN")
+            {
+                var rate = currencyConverter.GetCurrencyExchange(currency, "BGN");
+                orderVM.CustomerServices.ForEach(cs => cs.PricePerHour *= rate);
+            }
 
             return View(orderVM);
         }

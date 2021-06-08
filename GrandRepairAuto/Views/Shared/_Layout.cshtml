@@ -53,11 +53,11 @@
                             <li><a class="nav-link" asp-controller="Orders" asp-action="Index">Orders</a></li>
 
                             <li class="dropdown">
-                                <a href="#">
+                                <a asp-controller="Users" asp-action="Profile" asp-route-email="@User.Identity.Name">
                                     <span class="media-body">
                                         @User.FindFirst(c => c.Type == "GrandRepair_Names")?.Value 
                                     </span>
-                                    <img class="mr-2" src="@Html.AvatarUrlForEmail(User.Identity.Name, 30)" style="border-radius:50%" alt="avatar">
+                                    <img class="mr-2" src="@Html.AvatarUrlForEmail(User.Identity.Name, 30)" style="border-radius:50%; padding-left: 10px" alt="avatar">
                                     <i class="bi bi-chevron-down"></i>
                                 </a>
                                 <ul>

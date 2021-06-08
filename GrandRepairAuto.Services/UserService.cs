@@ -79,6 +79,19 @@ namespace GrandRepairAuto.Services
             return userDTO;
         }
 
+        public async Task<UserDTO> GetByEmailAsync(string email)
+        {
+            var user = this.repository.Get(x => x.Email.Equals(email)).FirstOrDefault();
+            if (user == null)
+            {
+                return null;
+            }
+            var userDTO = mapper.Map<UserDTO>(user);
+            userDTO.Roles.AddRange(await userManager.GetRolesAsync(user));
+
+            return userDTO;
+        }
+
         public async Task<UserDTO> CreateAsync(UserCreateDTO createDto)
         {
             var user = mapper.Map<User>(createDto);

@@ -64,6 +64,15 @@ namespace GrandRepairAuto.Web.ViewControllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Profile(string email)
+        {
+            UserDTO user = await userService.GetByEmailAsync(email);
+            UserVM userVM = mapper.Map<UserVM>(user);
+
+            return View(userVM);
+        }
+
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             userService.Delete(id);

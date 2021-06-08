@@ -1,9 +1,5 @@
-﻿using GrandRepairAuto.Data.Filters.Contracts;
-using GrandRepairAuto.Data.Models;
-using GrandRepairAuto.Services.Models.UserDTOs;
-using System;
+﻿using GrandRepairAuto.Services.Models.UserDTOs;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace GrandRepairAuto.Services.Contracts
@@ -13,6 +9,7 @@ namespace GrandRepairAuto.Services.Contracts
         Task<IEnumerable<UserDTO>> GetAllAsync();
         Task<IEnumerable<UserDTO>> GetCustomersAsync();
         Task<UserDTO> GetByIDAsync(int id);
+        Task<UserDTO> GetByEmailAsync(string email);
         Task<UserDTO> CreateAsync(UserCreateDTO dto);
         Task<UserDTO> UpdateAsync(UserUpdateDTO dto, int id);
         bool Delete(int id);

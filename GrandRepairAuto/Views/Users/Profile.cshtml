@@ -1,0 +1,50 @@
+﻿@model GrandRepairAuto.Web.Models.UserVM
+
+<section>
+
+    <h1>Your profile</h1>
+
+    <div class="container bootstrap snippets bootdey">
+        <div class="panel-body inf-content">
+            <div class="row">
+                <div class="col-md-4">
+                    <img class="mr-2" src="@Html.AvatarUrlForEmail(User.Identity.Name, 220)" alt="avatar">
+                </div>
+                <div class="col-md-7">
+                    <h5><strong>Information</strong></h5><br>
+                    <div class="table-responsive">
+                        <table class="table table-user-information">
+                            <tbody>
+                                <tr>
+                                    <td><strong>First Name</strong></td>
+                                    <td class="text-secondary">@Model.FirstName</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Last Name</strong></td>
+                                    <td class="text-secondary">@Model.LastName</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Username/Email</strong></td>
+                                    <td class="text-secondary">@Model.Email</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Phone Number</strong></td>
+                                    <td class="text-secondary">@Model.PhoneNumber</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="text-secondary">
+                        How to add your personal avatar:<br />
+                        Click <a href="https://en.gravatar.com/">here</a> to register and simply add your desired photo.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

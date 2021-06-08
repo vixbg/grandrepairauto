@@ -21,6 +21,10 @@
     {
       "library": "jquery-validation-unobtrusive@3.2.11",
       "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "library": "limonte-sweetalert2@11.0.1",
+      "destination": "wwwroot/lib/limonte-sweetalert2/"
     }
   ]
 }

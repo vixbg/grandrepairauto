@@ -8,9 +8,6 @@ a.navbar-brand {
 }
 
 /* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
-}
 
 .btn-primary {
   color: #fff;
@@ -276,4 +273,7 @@ bodySO {
     #progressbar li.active:after {
         background: #1bac91
     }
-    
+
+div.dataTables_wrapper div.dataTables_length select {
+    width: 65px;
+}

@@ -1,4 +1,4 @@
-﻿$(document).on("click", ".click-warn", function (e) {
+﻿$(document).on("click", ".delete-warn", function (e) {
     e.preventDefault();
     Swal.fire({
         title: 'Are you sure?',
@@ -13,5 +13,10 @@
             window.location = e.currentTarget.href;
         }
     });
-    // return confirm("Are you sure you want to perform this action?");
-})
+});
+
+$(document).ready(function () {
+    $('.datatable').dataTable({
+        autoWidth: true,
+    });
+});

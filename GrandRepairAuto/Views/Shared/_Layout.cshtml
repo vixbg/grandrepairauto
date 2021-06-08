@@ -9,19 +9,24 @@
     <title>@ViewData["Title"] - GrandRepairAuto</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    <link href="~/assets/img/favicon.png" rel="icon">
-    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="~/assets/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/sweetalert2.min.css">
+    <link rel="icon" href="~/assets/img/favicon.png">
+    <link rel="apple-touch-icon" href="~/assets/img/apple-touch-icon.png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i">
+    <!-- Libs -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/limonte-sweetalert2/sweetalert2.css">
+    <!-- Themes -->
+    <link rel="stylesheet" href="~/assets/vendor/aos/aos.css">
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/assets/vendor/boxicons/css/boxicons.min.css">
+    <link rel="stylesheet" href="~/assets/vendor/glightbox/css/glightbox.min.css">
+    <link rel="stylesheet" href="~/assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <!-- Custom -->
+    <link rel="stylesheet" href="~/css/site.css">
     @RenderSection("Head", required: false)
 </head>
 <body>
@@ -55,7 +60,7 @@
                             <li class="dropdown">
                                 <a asp-controller="Users" asp-action="Profile" asp-route-email="@User.Identity.Name">
                                     <span class="media-body">
-                                        @User.FindFirst(c => c.Type == "GrandRepair_Names")?.Value 
+                                        @User.FindFirst(c => c.Type == "GrandRepair_Names")?.Value
                                     </span>
                                     <img class="mr-2" src="@Html.AvatarUrlForEmail(User.Identity.Name, 30)" style="border-radius:50%; padding-left: 10px" alt="avatar">
                                     <i class="bi bi-chevron-down"></i>
@@ -99,18 +104,21 @@
         </footer>
     </div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Libs -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
+    <!-- Themes -->
     <script src="~/assets/vendor/aos/aos.js"></script>
-    @*<script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>*@
     <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
     <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="~/assets/vendor/php-email-form/validate.js"></script>
     <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    @*<script src="~/lib/jquery/dist/js/bootstrap.bundle.min.js"></script>*@
-    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/assets/js/main.js"></script>
-    <script src="~/js/sweetalert2.all.min.js"></script>
+    <!-- Custom -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

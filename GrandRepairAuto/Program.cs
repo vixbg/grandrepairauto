@@ -13,6 +13,14 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using GrandRepairAuto.Data.Models.SeedModels;
 using System;
+using IdentityServer4;
+using IdentityServer4.EntityFramework.Entities;
+using IdentityServer4.EntityFramework.Mappers;
+using IdentityServer4.Models;
+using ApiResource = IdentityServer4.Models.ApiResource;
+using ApiScope = IdentityServer4.Models.ApiScope;
+using Client = IdentityServer4.Models.Client;
+using Secret = IdentityServer4.Models.Secret;
 
 namespace GrandRepairAuto
 {
@@ -29,7 +37,56 @@ namespace GrandRepairAuto
         {
             using var scope = host.Services.CreateScope();
             await scope.ServiceProvider.GetService<PersistedGrantDbContext>().Database.MigrateAsync();
-            await scope.ServiceProvider.GetService<ConfigurationDbContext>().Database.MigrateAsync();
+            var configContext = scope.ServiceProvider.GetService<ConfigurationDbContext>();
+            await configContext.Database.MigrateAsync();
+
+            if (!await configContext.Clients.AnyAsync())
+            {
+                configContext.Clients.Add(new Client
+                {
+                    ClientName = "API",
+                    ClientId = "api",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    ClientSecrets = { new Secret("api".Sha256()) },
+                    RedirectUris = new List<string>
+                    {
+                        "http://localhost:5000/swagger/oauth2-redirect.html"
+                    },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        "api"
+                    },
+                    RequirePkce = false,
+                    AllowAccessTokensViaBrowser = true,
+                    RequireClientSecret = false,
+                    RequireConsent = false
+                }.ToEntity());
+                await configContext.SaveChangesAsync();
+            }
+
+            if (!await configContext.ApiScopes.AnyAsync())
+            {
+                configContext.ApiScopes.Add(new ApiScope
+                {
+                    Name = "api",
+                    Enabled = true
+                }.ToEntity());
+                await configContext.SaveChangesAsync();
+            }
+
+            if (!await configContext.ApiResources.AnyAsync())
+            {
+                configContext.ApiResources.Add(new ApiResource
+                {
+                    Name = "api",
+                    Scopes = { "api"}
+                }.ToEntity());
+                await configContext.SaveChangesAsync();
+            }
+
             await using var dbContext = scope.ServiceProvider.GetService<GarageContext>();
             await dbContext.Database.MigrateAsync();
 

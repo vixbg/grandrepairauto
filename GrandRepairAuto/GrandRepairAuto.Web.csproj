@@ -3,9 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <UserSecretsId>48953938-cab1-44d2-9078-6241f9dd65ee</UserSecretsId>
     <DocumentationFile>.\GrandRepairAuto.Web.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -40,8 +38,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="6.1.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.10" />
   </ItemGroup>
 

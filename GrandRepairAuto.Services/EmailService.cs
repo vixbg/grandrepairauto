@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using GrandRepairAuto.Services.Models.OrderDTOs;
 
 namespace GrandRepairAuto.Services
 {
@@ -46,6 +47,19 @@ namespace GrandRepairAuto.Services
                 names = names,
                 link = resetLink
             });
+            var result = await client.SendEmailAsync(msg);
+            return;
+        }
+
+        public async Task SendOrderDetailsEmailAsync(string email, string names, OrderWithCustomerServicesDTO order) 
+            
+        {
+            var client = new SendGridClient(config.GetValue<string>("SendGrid:Key"));
+            var msg = new SendGridMessage();
+            msg.SetFrom("grandrepairautobulgaria@gmail.com", "Grand Repair Auto");
+            msg.AddTo(email, names);
+            msg.SetTemplateId(config.GetValue<string>("SendGrid:OrderDetails"));
+            msg.SetTemplateData(order);
             var result = await client.SendEmailAsync(msg);
             return;
         }

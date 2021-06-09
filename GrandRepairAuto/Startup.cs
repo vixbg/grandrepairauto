@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -98,6 +99,8 @@ namespace GrandRepairAuto
                 .AddJwtBearer("Bearer", options =>
                 {
                     options.RequireHttpsMetadata = false;
+                    options.Audience = "api";
+
                 })
                 .AddCookie(cfg =>
                 {
@@ -106,7 +109,14 @@ namespace GrandRepairAuto
                     cfg.LoginPath = "/Account/Login";
                 });
 
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("api", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "api");
+                });
+            });
 
             // Repositories
             services.AddScoped<ICustomerServiceRepository, CustomerServiceRepository>();
@@ -141,14 +151,19 @@ namespace GrandRepairAuto
                     Type = SecuritySchemeType.OAuth2,
                     Flows = new OpenApiOAuthFlows
                     {
-                        ClientCredentials = new OpenApiOAuthFlow {
+                        AuthorizationCode = new OpenApiOAuthFlow {
                             AuthorizationUrl = new Uri(Configuration.GetValue<string>("Authorization") + "/connect/authorize"),
-                            TokenUrl = new Uri(Configuration.GetValue<string>("Authorization") + "/connect/token")
+                            TokenUrl = new Uri(Configuration.GetValue<string>("Authorization") + "/connect/token"),
+                            Scopes = new Dictionary<string, string>()
+                            {
+                                { "api", "API" }
+                            }
                         }
                     }
                 });
 
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
+                c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
 
                 var fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
@@ -185,7 +200,9 @@ namespace GrandRepairAuto
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "SmartGarage13");
-                c.OAuthConfigObject.ClientId = "api";
+                c.OAuthClientId("api");
+                c.OAuthClientSecret("api");
+                c.OAuthScopes("api");
             });
 
             app.UseEndpoints(endpoints =>

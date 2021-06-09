@@ -70,6 +70,7 @@ namespace GrandRepairAuto.Web.ViewControllers
                 return NotFound();
             }
 
+            order.CustomerServices = order.CustomerServices.Where(cs => cs.DeletedOn == null).ToList();
 
             ViewBag.Currencies = new List<string> { "BGN", "USD", "EUR", "PLN" };
 
@@ -145,6 +146,24 @@ namespace GrandRepairAuto.Web.ViewControllers
                 await emailService.SendOrderDetailsEmailAsync(User.Identity.Name,  User.FindFirst(c => c.Type == "GrandRepair_Names")?.Value, order);
             }
 
+            return RedirectToAction("Details", new { id });
+        }
+
+        [HttpGet]
+        public IActionResult RevertStatus(int id)
+        {
+            OrderDTO orderDTO = orderservice.GetByID(id);
+            OrderUpdateDTO orderUpdateDTO = mapper.Map<OrderUpdateDTO>(orderDTO);
+            orderUpdateDTO.Status = orderDTO.Status - 1;
+            orderservice.Update(orderUpdateDTO, id);
+
+            return RedirectToAction("Details", new { id });
+        }
+
+        [HttpGet]
+        public IActionResult RemoveCustomerService(int id, int customerServiceId)
+        {
+            _ = customerServiceService.Delete(customerServiceId);
             return RedirectToAction("Details", new { id });
         }
 

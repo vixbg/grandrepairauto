@@ -14,7 +14,10 @@
                 <th>Date</th>
                 <th>Customer</th>
                 <th>Vehicle</th>
-                <th>Options</th>
+                @if (User.IsInRole(Roles.Admin))
+                {
+                    <th>Options</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -30,7 +33,7 @@
                     <td>@order.Date.ToShortDateString()</td>
                     <td>@order.UserFullName</td>
                     <td>@order.VehicleRegPlate</td>
-                    @if (User.IsInRole(Roles.Employee) || User.IsInRole(Roles.Admin))
+                    @if (User.IsInRole(Roles.Admin))
                     {
                         <td>
                             <a asp-action="Update" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-edit'></i></a>
@@ -41,7 +44,7 @@
             }
         </tbody>
     </table>
-    @if (User.IsInRole(Roles.Employee))
+    @if (User.IsInRole(Roles.Employee) || User.IsInRole(Roles.Admin))
     {
         <a class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px" asp-action="Create">Create order</a>
     }

@@ -4,35 +4,61 @@
 <section>
 
     <div class="cardSO">
+
         <div class="title">Order Details</div>
-        @*<div class="info">
 
-                <div class="row">
-                    <div class="col-5" style="margin-left:10px" > <span id="heading">Order No: </span>  <span id="details">@Model.Id</span> </div>
-                    <div class="col-5" style="margin-left:1px"> <span id="heading">Date: </span>  <span id="details">@Model.Date.ToShortDateString()</span> </div>
-                </div>
-            </div>*@
         <div class="info">
-
-            <div class="row col-12">
-                <div class="col-6"> <span id="heading">Order No: </span>  <span id="details">@Model.Id</span> </div>
-                <div class="col-6 pull-right"> <span id="heading">Date: </span>  <span id="details">@Model.Date.ToShortDateString()</span> </div>
+            <div class="row">
+                <div class="col-7"> <span id="heading">Order No: </span>  <span id="details">@Model.Id</span> </div>
+                <div class="col-5 pull-right"> <span id="heading">Date: </span>  <span id="details">@Model.Date.ToShortDateString()</span> </div>
                 <hr style="margin-bottom: 11px" />
-                <div class="col-6"> <span id="heading">Customer: </span> <span id="details">@Model.UserFirstName @Model.UserLastName</span> </div>
-                <div class="col-6 pull-right"> <span id="heading">Vehicle: </span> <span id="details">@Model.VehicleRegPlate</span> </div>
-                <div class="col-6"> <span id="heading">E-mail: </span> <span id="details">@Model.UserEmail</span> </div>
-                <div class="col-6 pull-right"> <span id="heading">Vehicle Make: </span> <span id="details">@Model.VehicleVehicleModelManufacturerName</span> </div>
-                <div class="col-6"> <span id="heading">Phone Number: </span> <span id="details">@Model.UserPhoneNumber</span> </div>
-                <div class="col-6 pull-right"> <span id="heading">Vehicle Model: </span> <span id="details">@Model.VehicleVehicleModelName</span> </div>
+                <div class="col-7"> <span id="heading">Customer: </span> <span id="details">@Model.UserFirstName @Model.UserLastName</span> </div>
+                <div class="col-5 pull-right"> <span id="heading">Vehicle: </span> <span id="details">@Model.VehicleRegPlate</span> </div>
+                <div class="col-7"> <span id="heading">E-mail: </span> <span id="details">@Model.UserEmail</span> </div>
+                <div class="col-5 pull-right"> <span id="heading">Vehicle Make: </span> <span id="details">@Model.VehicleVehicleModelManufacturerName</span> </div>
+                <div class="col-7"> <span id="heading">Phone Number: </span> <span id="details">@Model.UserPhoneNumber</span> </div>
+                <div class="col-5 pull-right"> <span id="heading">Vehicle Model: </span> <span id="details">@Model.VehicleVehicleModelName</span> </div>
 
             </div>
         </div>
+
+        <div class="title" style="padding-top:25px; padding-left:55px; font-size:initial">Services</div>
+
         <div class="pricing">
+            
             @foreach (var modelCustomerService in Model.CustomerServices)
             {
                 <div class="row">
-                    <div class="col-9"> <span id="name">@modelCustomerService.Name</span></div>
+                    <div class="col-7"> <span id="name">@modelCustomerService.Name</span></div>
                     <div class="col-3"> <span id="price">@($"{modelCustomerService.TotalPrice:# ### ##0.00}") @Model.Currency</span></div>
+                    @if (User.IsInRole(Roles.Admin))
+                    {
+                        <div class="col-1 pull-right" style="font-size:medium">
+                            <a asp-controller="Orders" asp-action="RemoveCustomerService" asp-route-id="@Model.Id" asp-route-customerServiceId="@modelCustomerService.Id">Remove</a>
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (User.IsInRole(Roles.Employee) || User.IsInRole(Roles.Admin) && Model.Status < OrderStatuses.ReadyForPickup)
+            {
+                <div class="container" style="padding-top:15px">
+                    <form method="post" asp-action="AddService" asp-route-id="@Model.Id">
+                        <div class="form-group row">
+                            <div class="col-7" style="padding-top:2px">
+                                <select asp-for="ServiceId" class="form-control" placeholder="Select Service" required="required">
+                                    <option value="" selected>Select Service</option>
+                                    @foreach (var s in ViewBag.Services)
+                                    {
+                                        <option value="@s.Id">@s.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-4 pull-right">
+                                <button type="submit" class="btn btn-outline-secondary">Add Service</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             }
 
@@ -54,10 +80,10 @@
         </div>
 
         <div class="tracking">
-            <div class="title">Tracking Order</div>
+            <div class="title" style="padding-left:55px; padding-top:15px;font-size:initial">Tracking Order</div>
         </div>
 
-        <div class="progress-track">
+        <div class="progress-track" style="padding-bottom:20px">
             <ul id="progressbar">
                 <li class="step0 @if (Model.Status >= OrderStatuses.New) { @Html.Raw("active") } text-left" id="step1">@OrderStatuses.New</li>
                 <li class="step1 @if (Model.Status >= OrderStatuses.InProgress) { @Html.Raw("active") } text-center" id="step2">@OrderStatuses.InProgress</li>
@@ -65,37 +91,21 @@
                 <li class="step3 @if (Model.Status >= OrderStatuses.Closed) { @Html.Raw("active") } text-right" id="step4">@OrderStatuses.Closed</li>
             </ul>
 
-            @if (User.IsInRole(Roles.Employee) && Model.Status < OrderStatuses.Closed)
+
+            @if (User.IsInRole(Roles.Employee) || User.IsInRole(Roles.Admin) && Model.Status < OrderStatuses.Closed)
             {
-                <button class="btn btn-outline-secondary" asp-controller="Orders" asp-action="ChangeStatus" asp-route-id="@Model.Id">Change status to <b>@Model.NextStatus.ToString()</b></button>
+                <a class="btn btn-outline-secondary" asp-controller="Orders" asp-action="ChangeStatus" asp-route-id="@Model.Id">Advance Status</a>
+
+                @if (User.IsInRole(Roles.Admin) && Model.Status != OrderStatuses.New)
+                {
+                    <a class="btn btn-outline-secondary" asp-controller="Orders" asp-action="RevertStatus" asp-route-id="@Model.Id">Revert Status</a>
+                }
+
             }
 
+            <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary float-right" formnovalidate="formnovalidate">Close</a>
+
         </div>
-
-
-        @if (User.IsInRole(Roles.Employee) && Model.Status < OrderStatuses.ReadyForPickup)
-        {
-            <div class="container" style="padding: 25px 50px">
-                <form method="post" asp-action="AddService" asp-route-id="@Model.Id">
-                    <div class="form-group row">
-                        <div class="col-4">
-                            <select asp-for="ServiceId" class="form-control" placeholder="Select Service" required="required">
-                                <option value="" selected>Select Service</option>
-                                @foreach (var s in ViewBag.Services)
-                                {
-                                    <option value="@s.Id">@s.Name</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-outline-secondary">Add Service</button>
-
-                    <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary float-right" formnovalidate="formnovalidate">Close</a>
-
-                </form>
-            </div>
-        }
     </div>
 </section>
 

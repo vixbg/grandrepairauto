@@ -23,5 +23,7 @@ namespace GrandRepairAuto.Services.Models.CustomerServiceDTOs
         public ServiceStatuses Status { get; set; }
         
         public DateTime Date { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         private readonly IServiceService serviceService;
         private readonly ICurrencyConverter currencyConverter;
         private readonly IMapper mapper;
+        private readonly IEmailService emailService;
         static HttpClient client = new HttpClient();
 
         public OrdersController(
@@ -35,7 +36,8 @@ namespace GrandRepairAuto.Web.ViewControllers
             ICustomerServiceService customerServiceService, 
             IServiceService serviceService, 
             ICurrencyConverter currencyConverter,
-            IMapper mapper)
+            IMapper mapper,
+            IEmailService emailService)
         {
             this.orderWithCustomerServicesService = orderWithCustomerServicesService;
             this.orderservice = orderService;
@@ -45,6 +47,7 @@ namespace GrandRepairAuto.Web.ViewControllers
             this.serviceService = serviceService;
             this.currencyConverter = currencyConverter;
             this.mapper = mapper;
+            this.emailService = emailService;
         }
 
         public IActionResult Index()
@@ -130,12 +133,17 @@ namespace GrandRepairAuto.Web.ViewControllers
         }
 
         [HttpGet]
-        public IActionResult ChangeStatus(int id)
+        public async Task<IActionResult> ChangeStatus(int id)
         {
             OrderDTO orderDTO = orderservice.GetByID(id);
             OrderUpdateDTO orderUpdateDTO = mapper.Map<OrderUpdateDTO>(orderDTO);
             orderUpdateDTO.Status = orderDTO.Status + 1;
             orderservice.Update(orderUpdateDTO, id);
+            if (orderUpdateDTO.Status == OrderStatuses.InProgress)
+            {
+                var order = orderWithCustomerServicesService.GetByID(id);
+                await emailService.SendOrderDetailsEmailAsync(User.Identity.Name,  User.FindFirst(c => c.Type == "GrandRepair_Names")?.Value, order);
+            }
 
             return RedirectToAction("Details", new { id });
         }

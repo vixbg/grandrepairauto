@@ -94,7 +94,7 @@
 
             @if ((User.IsInRole(Roles.Employee) || User.IsInRole(Roles.Admin)) && Model.Status < OrderStatuses.Closed)
             {
-                <a class="btn btn-outline-secondary" asp-controller="Orders" asp-action="ChangeStatus" asp-route-id="@Model.Id">Advance Status</a>
+                <a class="btn btn-outline-secondary" asp-controller="Orders" asp-action="AdvanceStatus" asp-route-id="@Model.Id">Advance Status</a>
             }
 
             @if (User.IsInRole(Roles.Admin) && Model.Status > OrderStatuses.New)

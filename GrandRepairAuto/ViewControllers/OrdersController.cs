@@ -159,7 +159,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangeStatus(int id)
+        public async Task<IActionResult> AdvanceStatus(int id)
         {
             OrderDTO orderDTO = orderservice.GetByID(id);
             if (orderDTO == null)
@@ -181,16 +181,16 @@ namespace GrandRepairAuto.Web.ViewControllers
                 BadRequest();
             }
 
-            if (orderUpdateDTO.Status == OrderStatuses.InProgress)
-            {
-                OrderWithCustomerServicesDTO order = orderWithCustomerServicesService.GetByID(id);
-                if (order == null)
-                {
-                    return NotFound();
-                }
+            //if (orderUpdateDTO.Status == OrderStatuses.InProgress)
+            //{
+            //    OrderWithCustomerServicesDTO order = orderWithCustomerServicesService.GetByID(id);
+            //    if (order == null)
+            //    {
+            //        return NotFound();
+            //    }
 
-                await emailService.SendOrderDetailsEmailAsync(User.Identity.Name, User.FindFirst(c => c.Type == "GrandRepair_Names")?.Value, order);
-            }
+            //    //await emailService.SendOrderDetailsEmailAsync(User.Identity.Name, User.FindFirst(c => c.Type == "GrandRepair_Names")?.Value, order);
+            //}
 
             return RedirectToAction("Details", new { id });
         }

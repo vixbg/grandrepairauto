@@ -1,0 +1,51 @@
+﻿@model GrandRepairAuto.Web.Models.OrderVM
+@using Newtonsoft.Json
+
+<section>
+
+    <h1>Create new order</h1>
+
+    <form method="post">
+
+        <div class="form-group row">
+            <div class="col-6">
+                <label asp-for="UserId">User</label>
+                <select asp-for="UserId" class="form-control" placeholder="Select User" required="required" onchange="onUserChanged(this.value)">
+                    <option value="" selected>Select User</option>
+                    @foreach (var u in ViewBag.Users)
+                    {
+                        <option value="@u.Id">@u.FullName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-6">
+                <label asp-for="VehicleId">Vehicle</label>
+                <select asp-for="VehicleId" class="form-control" required="required" disabled="disabled">
+                    <option value="" selected>Select vehicle</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button asp-controller="Orders" asp-action="Index" class="btn btn-secondary" formnovalidate="formnovalidate">Cancel</button>
+
+    </form>
+
+</section>
+
+<script type="text/javascript">
+    var vehicles = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Vehicles));
+    function onUserChanged(user) {
+        var dd = $('#VehicleId');
+        dd.prop("disabled", user === 0);
+        dd.val(0);
+        dd.empty();
+        if ( user === 0 ) {
+            dd.append(new Option("Select User", "0"));
+            return;
+        }
+
+        var data = vehicles.filter(v => v.OwnerId == user);
+        data.forEach(v => dd.append(new Option(v.RegPlate, v.Id)));
+    }
+</script>

@@ -15,7 +15,7 @@ namespace GrandRepairAuto.Tests.ServiceTests
         { Color = "blue", EngineType = EngineTypes.Electric, Mileage = 200000, OwnerId = 1, RegPlate = "CB0987BP", VehicleModelId = 1, VehicleType = VehicleTypes.Motorcycle, Vin = "WBAHN83528DT86934"};
 
         private VehicleUpdateDTO _updateInput = new VehicleUpdateDTO()
-        { EngineType = EngineTypes.Diesel};
+        { Mileage = 191919};
         public override VehicleCreateDTO CreateInput => _createInput;
 
         public override VehicleUpdateDTO UpdateInput => _updateInput;

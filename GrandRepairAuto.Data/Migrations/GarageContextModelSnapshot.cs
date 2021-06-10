@@ -32,14 +32,30 @@ namespace GrandRepairAuto.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
                     b.Property<int>("OrderID")
                         .HasColumnType("int");
+
+                    b.Property<double>("PricePerHour")
+                        .HasColumnType("float");
 
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int>("VehicleType")
+                        .HasColumnType("int");
+
+                    b.Property<double>("WorkHours")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -114,9 +130,6 @@ namespace GrandRepairAuto.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("FixedPrice")
-                        .HasColumnType("float");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
@@ -158,6 +171,12 @@ namespace GrandRepairAuto.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");

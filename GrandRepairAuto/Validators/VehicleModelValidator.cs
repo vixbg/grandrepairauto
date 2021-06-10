@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using GrandRepairAuto.Services.Models.VehicleModelDTOs;
-using GrandRepairAuto.Services.Models.VehiclesDTOs;
 
 namespace GrandRepairAuto.Web.Validators
 {

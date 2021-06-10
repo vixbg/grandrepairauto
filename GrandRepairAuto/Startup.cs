@@ -1,33 +1,29 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using GrandRepairAuto.Data;
 using GrandRepairAuto.Data.Models;
 using GrandRepairAuto.Repository;
 using GrandRepairAuto.Repository.Contracts;
 using GrandRepairAuto.Services;
 using GrandRepairAuto.Services.Contracts;
-using GrandRepairAuto.Services.Models.CustomerServiceDTOs;
-using GrandRepairAuto.Services.Models.ManufacturerDTOs;
-using GrandRepairAuto.Services.Models.OrderDTOs;
-using GrandRepairAuto.Services.Models.ServiceDTOs;
-using GrandRepairAuto.Services.Models.VehicleModelDTOs;
-using GrandRepairAuto.Services.Models.VehiclesDTOs;
 using GrandRepairAuto.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using GrandRepairAuto.Web.Services;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace GrandRepairAuto
 {
@@ -42,47 +38,23 @@ namespace GrandRepairAuto
 
         public static void AddAutomapper(IServiceCollection services)
         {
-            var config = new MapperConfiguration(c =>
+            services.AddSingleton(new MapperConfiguration(cfg =>
             {
-                c.CreateMap<Order, OrderDTO>().ReverseMap();
-                c.CreateMap<Order, OrderCreateDTO>().ReverseMap();
-                c.CreateMap<Order, OrderUpdateDTO>().ReverseMap();
-                c.CreateMap<Manufacturer, ManufacturerDTO>().ReverseMap();
-                c.CreateMap<Manufacturer, ManufacturerCreateDTO>().ReverseMap();
-                c.CreateMap<Manufacturer, ManufacturerUpdateDTO>().ReverseMap();
-                c.CreateMap<Service, ServiceCreateDTO>().ReverseMap();
-                c.CreateMap<Service, ServiceDTO>().ReverseMap();
-                c.CreateMap<Service, ServiceUpdateDTO>().ReverseMap();
-                c.CreateMap<VehicleModel, VehicleModelDTO>().ReverseMap();
-                c.CreateMap<VehicleModel, VehicleModelCreateDTO>().ReverseMap();
-                c.CreateMap<VehicleModel, VehicleModelUpdateDTO>().ReverseMap();
-                c.CreateMap<CustomerService, CustomerServiceDTO>().ReverseMap();
-                c.CreateMap<CustomerService, CustomerServiceCreateDTO>().ReverseMap();
-                c.CreateMap<CustomerService, CustomerServiceUpdateDTO>().ReverseMap();
-                c.CreateMap<Vehicle, VehicleCreateDTO>().ReverseMap();
-                c.CreateMap<Vehicle, VehicleDTO>().ReverseMap();
-                c.CreateMap<Vehicle, VehicleUpdateDTO>().ReverseMap();
-
-                // Tests only
-                c.CreateMap<CustomerServiceCreateDTO, CustomerServiceUpdateDTO>().ReverseMap();
-                c.CreateMap<OrderCreateDTO, OrderUpdateDTO>().ReverseMap();
-                c.CreateMap<ManufacturerCreateDTO, ManufacturerUpdateDTO>().ReverseMap();
-                c.CreateMap<VehicleCreateDTO, VehicleUpdateDTO>().ReverseMap();
-                c.CreateMap<VehicleModelCreateDTO, VehicleModelUpdateDTO>().ReverseMap();
-                c.CreateMap<ServiceCreateDTO, ServiceUpdateDTO>().ReverseMap();
-            });
-
-            services.AddSingleton(config.CreateMapper());
+                cfg.AddProfile<AutoMapperProfile>();
+            }).CreateMapper());
         }
 
         // This method gets called by the runtime. Use this method to add services to the Container.
         public void ConfigureServices(IServiceCollection services)
         {
             AddAutomapper(services);
+
             services.AddControllersWithViews().AddFluentValidation();
             var connectionString = Configuration.GetConnectionString("EntityString");
 
-            services.AddDbContext<GarageContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<GarageContext>(options => options
+            .UseLazyLoadingProxies()
+            .UseSqlServer(connectionString));
 
             services.AddIdentity<User, UserRole>(options =>
             {
@@ -115,6 +87,7 @@ namespace GrandRepairAuto
                     options.ConfigureDbContext = c => c.UseSqlServer(connectionString,
                         sql => sql.MigrationsAssembly(typeof(GarageContext).Assembly.GetName().Name));
                 })
+                .AddProfileService<GrandRepairProfileService>()
                 .AddAspNetIdentity<User>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -123,12 +96,27 @@ namespace GrandRepairAuto
                 .AddFluentValidation(v => v.RegisterValidatorsFromAssemblyContaining<VehicleValidator>());
 
             services.AddAuthentication()
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.Audience = "api";
+                    options.Authority = Configuration.GetValue<string>("Authorization");
+                })
                 .AddCookie(cfg =>
                 {
                     cfg.Cookie.SameSite = SameSiteMode.Strict;
+                    cfg.AccessDeniedPath = "/Account/Login";
+                    cfg.LoginPath = "/Account/Login";
                 });
 
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("api", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "api");
+                });
+            });
 
             // Repositories
             services.AddScoped<ICustomerServiceRepository, CustomerServiceRepository>();
@@ -138,23 +126,44 @@ namespace GrandRepairAuto
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
             services.AddScoped<IVehicleRepository, VehicleRepository>();
-            
 
 
             // Services
             services.AddScoped<ICustomerServiceService, CustomerServiceService>();
             services.AddScoped<IManufacturerService, ManufacturerService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderWithCustomerServicesService, OrderWithCustomerServicesService>();
             services.AddScoped<IServiceService, ServiceService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IVehicleModelService, VehicleModelService>();
             services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IVehicleWithModelAndMakeService, VehicleWithModelAndMakeService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ICurrencyConverter, CurrencyConverter>();
 
 
             services.AddSwaggerGen(c =>
             {
                 c.ResolveConflictingActions(a => a.First());
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SmartGarage13", Version = "V1", Description = "This is Swagger documentation about SmartGarage13" });
+                
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GrandRepairAuto", Version = "V1", Description = "This is Swagger documentation about GrandRepairAuto" });
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme() {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        AuthorizationCode = new OpenApiOAuthFlow {
+                            AuthorizationUrl = new Uri(Configuration.GetValue<string>("Authorization") + "/connect/authorize"),
+                            TokenUrl = new Uri(Configuration.GetValue<string>("Authorization") + "/connect/token"),
+                            Scopes = new Dictionary<string, string>()
+                            {
+                                { "api", "API" }
+                            }
+                        }
+                    }
+                });
+
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
+                c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
 
                 var fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
@@ -165,14 +174,15 @@ namespace GrandRepairAuto
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (!env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-            }
+                app.UseExceptionHandler("/Errors/Status/500");
+            } 
+            app.UseStatusCodePagesWithReExecute("/Errors/Status/{0}");
             app.UseStaticFiles();
             app.UseIdentityServer();
             app.UseCookiePolicy(new CookiePolicyOptions
@@ -190,6 +200,9 @@ namespace GrandRepairAuto
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "SmartGarage13");
+                c.OAuthClientId("api");
+                c.OAuthClientSecret("api");
+                c.OAuthScopes("api");
             });
 
             app.UseEndpoints(endpoints =>

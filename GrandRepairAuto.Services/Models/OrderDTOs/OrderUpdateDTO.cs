@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using GrandRepairAuto.Data.Enums;
+﻿using GrandRepairAuto.Data.Enums;
 using GrandRepairAuto.Data.Models;
-using GrandRepairAuto.Services.Abstract;
 using GrandRepairAuto.Services.Contracts;
-using Microsoft.VisualBasic;
+using System;
 
 namespace GrandRepairAuto.Services.Models.OrderDTOs
 {
@@ -11,10 +9,9 @@ namespace GrandRepairAuto.Services.Models.OrderDTOs
     {
         public OrderStatuses Status { get; set; }
 
-        public DateAndTime Date { get; set; }
+        public DateTime Date { get; set; }
 
-        public Vehicle VehicleId { get; set; }
+        public int VehicleId { get; set; }
 
-        
     }
 }

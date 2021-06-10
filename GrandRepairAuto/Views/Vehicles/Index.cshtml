@@ -1,0 +1,47 @@
+﻿@model List<GrandRepairAuto.Web.Models.VehicleVM>
+
+
+<section id="vehicles" class="vehicles">
+
+    <h1>Vehicles</h1>
+
+    <table id="vehicleDatatable" class="table table-striped table-bordered dt-responsive nowrap datatable" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Reg. Plate</th>
+                <th>Make</th>
+                <th>Vehicle Model</th>
+                <th>VIN</th>
+                <th>Vehicle Type</th>
+                <th>Engine Type</th>
+                <th>Mileage</th>
+                <th>Color</th>
+                <th>Owner</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vehicle in Model)
+            {
+                <tr>
+                    <td> @vehicle.RegPlate </td>
+                    <td> @vehicle.VehicleModelManufacturerName </td>
+                    <td> @vehicle.VehicleModelName </td>
+                    <td> @vehicle.Vin </td>
+                    <td> @vehicle.VehicleType </td>
+                    <td> @vehicle.EngineType </td>
+                    <td> @vehicle.Mileage </td>
+                    <td> @vehicle.Color </td>
+                    <td> @vehicle.OwnerFirstName @vehicle.OwnerLastName </td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@vehicle.Id"> <i style="font-size: x-large" class='bx bx-edit'></i> </a>
+                        <a class="delete-warn" asp-action="Delete" asp-route-id="@vehicle.Id"> <i style="font-size: x-large" class='bx bx-trash'></i> </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px" asp-action="Create">Create vehicle</a>
+
+</section>

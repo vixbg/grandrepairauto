@@ -13,7 +13,7 @@ namespace GrandRepairAuto.Validators
 
             RuleFor(v => v.RegPlate)
                 .NotEmpty()
-                .Matches(@"^[ABCEKMHOPTYX]{1,2}\s?[0-9]{4}\s?[ABCEKMHOPTYX]{1,2}$")
+                .Matches(@"^[ABCEKMHOPTYX]{1,2}[0-9]{4}[ABCEKMHOPTYX]{1,2}$")
                 .WithMessage("The specified registration number is not valid.");
 
             RuleFor(v => v.Mileage)

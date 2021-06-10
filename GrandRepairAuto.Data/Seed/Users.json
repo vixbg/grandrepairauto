@@ -1,0 +1,56 @@
+﻿[
+  {
+    "firstname": "admin",
+    "lastname": "admin",
+    "email": "admin@grandrepair.com",
+    "username": "admin@grandrepair.com",
+    "password": "12345678",
+    "phonenumber": "0812345678",
+    "roles": [ "Administrator", "Employee" ]
+  },
+  {
+    "FirstName": "Rumyana",
+    "LastName": "Damyanova",
+    "Email": "rumyanadamyanova@grandrepair.com",
+    "UserName": "rumyanadamyanova@grandrepair.com",
+    "Password": "12345678",
+    "PhoneNumber": "0812345678",
+    "Roles": [ "Administrator", "Employee" ]
+  },
+  {
+    "FirstName": "Victor",
+    "LastName": "Vassilev",
+    "Email": "victorvassilev@grandrepair.com",
+    "UserName": "victorvassilev@grandrepair.com",
+    "Password": "12345678",
+    "PhoneNumber": "0812345678",
+    "Roles": [ "Administrator", "Employee" ]
+  },
+  {
+    "FirstName": "Radko",
+    "LastName": "Stanev",
+    "Email": "radkostanev@grandrepair.com",
+    "UserName": "radkostanev@grandrepair.com",
+    "Password": "12345678",
+    "PhoneNumber": "0812345678",
+    "Roles": [ "Customer" ]
+  },
+  {
+    "FirstName": "Kiril",
+    "LastName": "Stanoev",
+    "Email": "kirilstanoev@grandrepair.com",
+    "UserName": "kirilstanoev@grandrepair.com",
+    "Password": "12345678",
+    "PhoneNumber": "0812345678",
+    "Roles": [ "Customer" ]
+  },
+  {
+    "FirstName": "Boyan",
+    "LastName": "Hadzhiev",
+    "Email": "boyanhadzhiev@grandrepair.com",
+    "UserName": "boyanhadzhiev@grandrepair.com",
+    "Password": "12345678",
+    "PhoneNumber": "0812345678",
+    "Roles": [ "Customer" ]
+  }
+]

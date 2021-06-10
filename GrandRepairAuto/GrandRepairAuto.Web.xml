@@ -4,5 +4,13 @@
         <name>GrandRepairAuto.Web</name>
     </assembly>
     <members>
+        <member name="M:GrandRepairAuto.Program.SetIdentityInsert``1(Microsoft.EntityFrameworkCore.DbContext,System.Boolean)">
+            <summary>
+            Turns ON and OFF IDENTITY INSERT for specific database table.
+            </summary>
+            <typeparam name="TEntity">Generic that takes the form of the Model that will show which table to be used.</typeparam>
+            <param name="dbContext">Database Instance</param>
+            <param name="on">Boolean to change ON or OFF of the parameter.</param>
+        </member>
     </members>
 </doc>

@@ -1,0 +1,28 @@
+﻿@model GrandRepairAuto.Web.Models.CustomerServiceVM
+
+<section>
+
+    <h1>Select Service</h1>
+
+    <form method="post">
+
+        <div class="form-group row">
+            <div class="col-6">
+                <label asp-for="ServiceId">Service</label>
+                <select asp-for="ServiceId" class="form-control" placeholder="Select Service" required="required" onchange="onUserChanged(this.value)">
+                    <option value="" selected>Select Service</option>
+                    @foreach (var s in ViewBag.Services)
+                    {
+                        <option value="@s.Id">@s.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button asp-controller="Orders" asp-action="Index" class="btn btn-secondary" formnovalidate="formnovalidate">Cancel</button>
+
+    </form>
+
+</section>
+

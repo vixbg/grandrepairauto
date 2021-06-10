@@ -1,0 +1,105 @@
+﻿[
+  {
+    "vehicletype": 0,
+    "name": "Oil Change",
+    "priceperhour": 30,
+    "workhours": 2
+  },
+  {
+    "vehicletype": 0,
+    "name": "Break Pads Change",
+    "priceperhour": 65,
+    "workhours": 1
+  },
+  {
+    "vehicletype": 0,
+    "name": "Fluids Check",
+    "priceperhour": 25,
+    "workhours": 1
+  },
+  {
+    "vehicletype": 0,
+    "name": "Car Wash",
+    "priceperhour": 28,
+    "workhours": 1
+  },
+  {
+    "vehicletype": 0,
+    "name": "Tuning",
+    "priceperhour": 70,
+    "workhours": 8
+  },
+  {
+    "vehicletype": 1,
+    "name": "Oil Change",
+    "priceperhour": 35,
+    "workhours": 2
+  },
+  {
+    "vehicletype": 1,
+    "name": "Break Pads Change",
+    "priceperhour": 65,
+    "workhours": 1
+  },
+  {
+    "vehicletype": 1,
+    "name": "Fluids Check",
+    "priceperhour": 25,
+    "workhours": 1
+  },
+  {
+    "vehicletype": 1,
+    "name": "Car Wash",
+    "priceperhour": 30,
+    "workhours": 1
+  },
+  {
+    "vehicletype": 2,
+    "name": "Oil Change",
+    "priceperhour": 40,
+    "workhours": 3
+  },
+  {
+    "vehicletype": 2,
+    "name": "Break Pads Change",
+    "priceperhour": 65,
+    "workhours": 3
+  },
+  {
+    "vehicletype": 2,
+    "name": "Fluids Check",
+    "priceperhour": 40,
+    "workhours": 1
+  },
+  {
+    "vehicletype": 2,
+    "name": "Car Wash",
+    "priceperhour": 30,
+    "workhours": 2
+  },
+  {
+    "vehicletype": 3,
+    "name": "Oil Change",
+    "priceperhour": 20,
+    "workhours": 1
+  },
+  {
+    "vehicletype": 3,
+    "name": "Break Pads Change",
+    "priceperhour": 35,
+    "workhours": 1
+  },
+  {
+    "vehicletype": 3,
+    "name": "Fluids Check",
+    "priceperhour": 15,
+    "workhours": 1
+  },
+  {
+    "vehicletype": 3,
+    "name": "Car Wash",
+    "priceperhour": 12,
+    "workhours": 1
+  }
+
+]

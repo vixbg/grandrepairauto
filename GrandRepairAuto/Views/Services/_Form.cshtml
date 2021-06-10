@@ -6,7 +6,7 @@
     <div class="form-group row">
         <div class="col-6">
             <label asp-for="Name">Name</label>
-            <input asp-for="Name" class="form-control" pattern="^[A-Za-z_ ]{5,100}$" required="required" title="Service name must be between 5 and 100 characters" placeholder="Name">
+            <input asp-for="Name" class="form-control" pattern="^[A-Za-z0-9()_ ]{5,100}$" required="required" title="Service name must be between 5 and 100 characters" placeholder="Name">
         </div>
         <div class="col-6">
             <label asp-for="VehicleType">Vehicle Type</label>

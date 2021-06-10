@@ -6,6 +6,7 @@ namespace GrandRepairAuto.Web.Models
 {
     public class CustomerServiceVM
     {
+        public int Id { get; set; }
         public int ServiceId { get; set; }
 
         [Required]

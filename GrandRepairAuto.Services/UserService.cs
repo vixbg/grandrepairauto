@@ -1,21 +1,16 @@
 ﻿using AutoMapper;
-using GrandRepairAuto.Data.Filters.Contracts;
+using GrandRepairAuto.Data.Enums;
 using GrandRepairAuto.Data.Models;
 using GrandRepairAuto.Repository.Contracts;
 using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.UserDTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web;
-using GrandRepairAuto.Data;
-using GrandRepairAuto.Data.Enums;
-using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.Extensions;
-using Microsoft.AspNetCore.Http;
 
 namespace GrandRepairAuto.Services
 {
@@ -40,7 +35,7 @@ namespace GrandRepairAuto.Services
         {
             var users = this.repository.Get().ToList();
             var userDTOs = new List<UserDTO>();
-            foreach(var user in users)
+            foreach (var user in users)
             {
                 var userDTO = mapper.Map<UserDTO>(user);
                 userDTO.Roles.AddRange(await userManager.GetRolesAsync(user));
@@ -54,7 +49,7 @@ namespace GrandRepairAuto.Services
         {
             var users = this.repository.Get().ToList();
             var userDTOs = new List<UserDTO>();
-            foreach(var user in users)
+            foreach (var user in users)
             {
                 if (!(await userManager.IsInRoleAsync(user, Roles.Customer)))
                     continue;
@@ -105,7 +100,7 @@ namespace GrandRepairAuto.Services
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
             var link = $"http://{httpContextAccessor.HttpContext.Request.Host}/Account/InitialLogin?loginToken={HttpUtility.UrlEncode(token)}&email={HttpUtility.UrlEncode(user.Email)}";
 
-           await emailService.SendNewUserRegistraionEmailAsync(user.UserName,  $"{user.FirstName} {user.LastName}", user.Email, link);
+            await emailService.SendNewUserRegistraionEmailAsync(user.UserName, $"{user.FirstName} {user.LastName}", user.Email, link);
 
             var userDto = mapper.Map<UserDTO>(user);
             userDto.Roles.AddRange(await userManager.GetRolesAsync(user));

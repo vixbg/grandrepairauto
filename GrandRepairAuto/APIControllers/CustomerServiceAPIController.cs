@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using GrandRepairAuto.Data.Filters;
+﻿using GrandRepairAuto.Data.Filters;
 using GrandRepairAuto.Data.Models;
-using GrandRepairAuto.Services;
 using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.CustomerServiceDTOs;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace GrandRepairAuto.Web.APIControllers
 {

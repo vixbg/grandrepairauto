@@ -110,8 +110,6 @@ namespace GrandRepairAuto.Web.ViewControllers
                 return View(new InitialPasswordInputVM { IsValid = false });
             }
 
-            // userManager.ResetPasswordAsync()
-
             return View(new InitialPasswordInputVM { IsValid = true, Email = email, Token = loginToken });
         }
 
@@ -155,7 +153,7 @@ namespace GrandRepairAuto.Web.ViewControllers
         public async Task<IActionResult> ForgottenPassword(PasswordResetVM model)
         {
             var user = await userManager.FindByEmailAsync(model.Email);
-            if (user==null)
+            if (user == null)
             {
                 return BadRequest();
             }

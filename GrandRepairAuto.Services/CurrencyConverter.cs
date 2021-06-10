@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GrandRepairAuto.Services.Contracts;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net;
-using GrandRepairAuto.Services.Contracts;
-using Newtonsoft.Json;
 
 namespace GrandRepairAuto.Services
 {
@@ -11,8 +11,8 @@ namespace GrandRepairAuto.Services
         private readonly String BASE_URI = "https://free.currconv.com";
         private readonly String API_VERSION = "v7";
         private readonly String API_KEY = "5d363582e0f1d27c708c";
-        
-        public CurrencyConverter() {}
+
+        public CurrencyConverter() { }
 
         public double GetCurrencyExchange(String localCurrency, String foreignCurrency)
         {
@@ -34,7 +34,7 @@ namespace GrandRepairAuto.Services
                 var jsonObject = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, double>>>(jsonData);
                 var result = jsonObject[code];
                 conversionRate = result["val"];
-                
+
             }
             catch (Exception) { }
 

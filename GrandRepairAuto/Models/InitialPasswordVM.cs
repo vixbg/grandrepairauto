@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace GrandRepairAuto.Web.Models
+﻿namespace GrandRepairAuto.Web.Models
 {
     public class InitialPasswordVM
     {
@@ -16,7 +11,7 @@ namespace GrandRepairAuto.Web.Models
 
     public class InitialPasswordInputVM : InitialPasswordVM
     {
-        public string Password { get;set; }
+        public string Password { get; set; }
         public string RePassword { get; set; }
     }
 }

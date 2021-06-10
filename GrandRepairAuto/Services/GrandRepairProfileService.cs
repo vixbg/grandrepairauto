@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using GrandRepairAuto.Data.Models;
-using GrandRepairAuto.Services.Contracts;
+﻿using GrandRepairAuto.Data.Models;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace GrandRepairAuto.Web.Services
 {

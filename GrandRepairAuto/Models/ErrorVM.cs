@@ -1,5 +1,3 @@
-using System;
-
 namespace GrandRepairAuto.Models
 {
     public class ErrorVM

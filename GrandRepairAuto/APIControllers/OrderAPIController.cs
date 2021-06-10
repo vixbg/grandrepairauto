@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using GrandRepairAuto.Data.Filters;
+﻿using GrandRepairAuto.Data.Filters;
 using GrandRepairAuto.Data.Models;
-using GrandRepairAuto.Services;
 using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.OrderDTOs;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GrandRepairAuto.Web.APIControllers
 {
@@ -15,7 +12,7 @@ namespace GrandRepairAuto.Web.APIControllers
     {
         public OrderAPIController(IOrderService service) : base(service)
         {
-            
+
         }
     }
 }

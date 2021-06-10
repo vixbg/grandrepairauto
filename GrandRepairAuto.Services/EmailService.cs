@@ -1,12 +1,9 @@
 ﻿using GrandRepairAuto.Services.Contracts;
+using GrandRepairAuto.Services.Models.OrderDTOs;
 using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using GrandRepairAuto.Services.Models.OrderDTOs;
 
 namespace GrandRepairAuto.Services
 {
@@ -51,8 +48,8 @@ namespace GrandRepairAuto.Services
             return;
         }
 
-        public async Task SendOrderDetailsEmailAsync(string email, string names, OrderWithCustomerServicesDTO order) 
-            
+        public async Task SendOrderDetailsEmailAsync(string email, string names, OrderWithCustomerServicesDTO order)
+
         {
             var client = new SendGridClient(config.GetValue<string>("SendGrid:Key"));
             var msg = new SendGridMessage();

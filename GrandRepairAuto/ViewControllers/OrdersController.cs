@@ -29,12 +29,12 @@ namespace GrandRepairAuto.Web.ViewControllers
         static HttpClient client = new HttpClient();
 
         public OrdersController(
-            IOrderWithCustomerServicesService orderWithCustomerServicesService, 
-            IOrderService orderService, 
-            IUserService userService, 
-            IVehicleService vehicleService, 
-            ICustomerServiceService customerServiceService, 
-            IServiceService serviceService, 
+            IOrderWithCustomerServicesService orderWithCustomerServicesService,
+            IOrderService orderService,
+            IUserService userService,
+            IVehicleService vehicleService,
+            ICustomerServiceService customerServiceService,
+            IServiceService serviceService,
             ICurrencyConverter currencyConverter,
             IMapper mapper,
             IEmailService emailService)
@@ -98,6 +98,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpPost]
         public IActionResult Create(OrderVM order)
         {
+            if (order == null)
+            {
+                return BadRequest();
+            }
+
             OrderCreateWithCustomerServicesDTO createDTO = mapper.Map<OrderCreateWithCustomerServicesDTO>(order);
             orderWithCustomerServicesService.Create(createDTO);
 
@@ -108,6 +113,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         public IActionResult Update([FromRoute] int id)
         {
             OrderWithCustomerServicesDTO getDTO = orderWithCustomerServicesService.GetByID(id);
+            if (getDTO == null)
+            {
+                return NotFound();
+            }
+
             OrderVM viewModel = mapper.Map<OrderVM>(getDTO);
 
             return View(viewModel);
@@ -116,8 +126,17 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpPost]
         public IActionResult Update([FromBody] OrderVM order, [FromRoute] int id)
         {
+            if (order == null)
+            {
+                return BadRequest();
+            }
+
             OrderUpdateWithCustomerServicesDTO updateDTO = mapper.Map<OrderUpdateWithCustomerServicesDTO>(order);
-            orderWithCustomerServicesService.Update(updateDTO, id);
+            OrderWithCustomerServicesDTO updatedOrderDTO = orderWithCustomerServicesService.Update(updateDTO, id);
+            if (updatedOrderDTO == null)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction("Index");
         }
@@ -125,7 +144,13 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpPost]
         public IActionResult AddService(int serviceId, int id)
         {
-            CustomerServiceCreateDTO customerService = mapper.Map<CustomerServiceCreateDTO>(this.serviceService.GetByID(serviceId));
+            var service = this.serviceService.GetByID(serviceId);
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            CustomerServiceCreateDTO customerService = mapper.Map<CustomerServiceCreateDTO>(service);
             customerService.OrderID = id;
             customerService.ServiceId = serviceId;
             this.customerServiceService.Create(customerService);
@@ -137,13 +162,28 @@ namespace GrandRepairAuto.Web.ViewControllers
         public async Task<IActionResult> ChangeStatus(int id)
         {
             OrderDTO orderDTO = orderservice.GetByID(id);
+            if (orderDTO == null)
+            {
+                return NotFound();
+            }
+
             OrderUpdateDTO orderUpdateDTO = mapper.Map<OrderUpdateDTO>(orderDTO);
             orderUpdateDTO.Status = orderDTO.Status + 1;
-            orderservice.Update(orderUpdateDTO, id);
+            OrderDTO updatedOrderDTO = orderservice.Update(orderUpdateDTO, id);
+            if (updatedOrderDTO == null)
+            {
+                BadRequest();
+            }
+
             if (orderUpdateDTO.Status == OrderStatuses.InProgress)
             {
-                var order = orderWithCustomerServicesService.GetByID(id);
-                await emailService.SendOrderDetailsEmailAsync(User.Identity.Name,  User.FindFirst(c => c.Type == "GrandRepair_Names")?.Value, order);
+                OrderWithCustomerServicesDTO order = orderWithCustomerServicesService.GetByID(id);
+                if (order == null)
+                {
+                    return NotFound();
+                }
+
+                await emailService.SendOrderDetailsEmailAsync(User.Identity.Name, User.FindFirst(c => c.Type == "GrandRepair_Names")?.Value, order);
             }
 
             return RedirectToAction("Details", new { id });
@@ -153,9 +193,18 @@ namespace GrandRepairAuto.Web.ViewControllers
         public IActionResult RevertStatus(int id)
         {
             OrderDTO orderDTO = orderservice.GetByID(id);
+            if (orderDTO == null)
+            {
+                return NotFound();
+            }
+
             OrderUpdateDTO orderUpdateDTO = mapper.Map<OrderUpdateDTO>(orderDTO);
             orderUpdateDTO.Status = orderDTO.Status - 1;
-            orderservice.Update(orderUpdateDTO, id);
+            OrderDTO updatedOrderDTO = orderservice.Update(orderUpdateDTO, id);
+            if (updatedOrderDTO == null)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction("Details", new { id });
         }
@@ -163,14 +212,23 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpGet]
         public IActionResult RemoveCustomerService(int id, int customerServiceId)
         {
-            _ = customerServiceService.Delete(customerServiceId);
+            bool isDeleted = customerServiceService.Delete(customerServiceId);
+            if (!isDeleted)
+            {
+                return BadRequest();
+            }
+
             return RedirectToAction("Details", new { id });
         }
 
         [HttpGet]
         public IActionResult Delete([FromRoute] int id)
         {
-            orderWithCustomerServicesService.Delete(id);
+            bool isDeleted = orderWithCustomerServicesService.Delete(id);
+            if (!isDeleted)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction("Index");
         }

@@ -29,6 +29,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpPost]
         public IActionResult CreateManufacturer(ManufacturerVM manufacturer)
         {
+            if (manufacturer == null)
+            {
+                return BadRequest();
+            }
+
             ManufacturerCreateDTO manufacturerDTO = mapper.Map<ManufacturerCreateDTO>(manufacturer);
             manufacturerService.Create(manufacturerDTO);
 
@@ -44,6 +49,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpPost]
         public IActionResult CreateVehicleModel(VehicleModelVM vehicleModel, int manufacturerId)
         {
+            if (vehicleModel == null)
+            {
+                return BadRequest();
+            }
+
             VehicleModelCreateDTO vehicleModelDTO = mapper.Map<VehicleModelCreateDTO>(vehicleModel);
             vehicleModelDTO.ManufacturerId = manufacturerId;
             vehicleModelService.Create(vehicleModelDTO);

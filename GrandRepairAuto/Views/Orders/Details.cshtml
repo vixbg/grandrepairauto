@@ -92,15 +92,14 @@
             </ul>
 
 
-            @if (User.IsInRole(Roles.Employee) || User.IsInRole(Roles.Admin) && Model.Status < OrderStatuses.Closed)
+            @if ((User.IsInRole(Roles.Employee) || User.IsInRole(Roles.Admin)) && Model.Status < OrderStatuses.Closed)
             {
                 <a class="btn btn-outline-secondary" asp-controller="Orders" asp-action="ChangeStatus" asp-route-id="@Model.Id">Advance Status</a>
+            }
 
-                @if (User.IsInRole(Roles.Admin) && Model.Status != OrderStatuses.New)
-                {
-                    <a class="btn btn-outline-secondary" asp-controller="Orders" asp-action="RevertStatus" asp-route-id="@Model.Id">Revert Status</a>
-                }
-
+            @if (User.IsInRole(Roles.Admin) && Model.Status > OrderStatuses.New)
+            {
+                <a class="btn btn-outline-secondary" asp-controller="Orders" asp-action="RevertStatus" asp-route-id="@Model.Id">Revert Status</a>
             }
 
             <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary float-right" formnovalidate="formnovalidate">Close</a>

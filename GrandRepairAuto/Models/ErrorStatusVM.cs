@@ -11,7 +11,7 @@ namespace GrandRepairAuto.Models
             {
                 403 => "You Shall Not Pass!",
                 404 => "Oops .... we seem to have misplaced something...",
-                500 => "Uh, oh! Something went wrong!",
+                500 => "Uh, oh! Something went wrong! Stay put, we'll fix it asap..",
                 _ => ((HttpStatusCode)code).ToString(),
             };
         }

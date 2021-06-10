@@ -36,7 +36,6 @@
                     @if (User.IsInRole(Roles.Admin))
                     {
                         <td>
-                            <a asp-action="Update" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-edit'></i></a>
                             <a class="delete-warn" asp-action="Delete" asp-route-id="@order.Id"><i style="font-size: x-large" class='bx bx-trash'></i></a>
                         </td>
                     }

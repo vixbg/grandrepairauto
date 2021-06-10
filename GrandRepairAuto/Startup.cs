@@ -100,7 +100,7 @@ namespace GrandRepairAuto
                 {
                     options.RequireHttpsMetadata = false;
                     options.Audience = "api";
-
+                    options.Authority = Configuration.GetValue<string>("Authorization");
                 })
                 .AddCookie(cfg =>
                 {
@@ -147,7 +147,7 @@ namespace GrandRepairAuto
                 c.ResolveConflictingActions(a => a.First());
                 
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GrandRepairAuto", Version = "V1", Description = "This is Swagger documentation about GrandRepairAuto" });
-                c.AddSecurityDefinition("v1", new OpenApiSecurityScheme() {
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme() {
                     Type = SecuritySchemeType.OAuth2,
                     Flows = new OpenApiOAuthFlows
                     {
@@ -181,7 +181,7 @@ namespace GrandRepairAuto
             else
             {
                 app.UseExceptionHandler("/Errors/Status/500");
-            }
+            } 
             app.UseStatusCodePagesWithReExecute("/Errors/Status/{0}");
             app.UseStaticFiles();
             app.UseIdentityServer();

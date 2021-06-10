@@ -81,7 +81,7 @@ namespace GrandRepairAuto.Web.ViewControllers
 
             if (currency != "BGN")
             {
-                var rate = currencyConverter.GetCurrencyExchange(currency, "BGN");
+                var rate = currencyConverter.GetCurrencyExchange("BGN", currency);
                 orderVM.CustomerServices.ForEach(cs => cs.PricePerHour *= rate);
             }
 

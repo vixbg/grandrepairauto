@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GrandRepairAuto.Data.Filters.Contracts;
+using GrandRepairAuto.Data.Models.Contracts;
+using GrandRepairAuto.Services.Contracts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using GrandRepairAuto.Data.Filters.Contracts;
-using GrandRepairAuto.Data.Models.Contracts;
-using GrandRepairAuto.Services;
-using GrandRepairAuto.Services.Contracts;
 
 namespace GrandRepairAuto.Web.APIControllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "api")]
     public abstract class GenericAPIController<TEntity, TPrimaryKey, TPrimaryDTO, TCreateDTO, TUpdateDTO, TFilter> : ControllerBase
         where TEntity : class, IEntity<TPrimaryKey>, ISoftDeletable
         where TPrimaryDTO : class, IDTO
@@ -45,8 +47,6 @@ namespace GrandRepairAuto.Web.APIControllers
         [HttpPost()]
         public TPrimaryDTO Create(TCreateDTO entity)
         {
-            //TODO: Insert TryCatch Block.
-
             return this.service.Create(entity);
         }
 
@@ -76,14 +76,18 @@ namespace GrandRepairAuto.Web.APIControllers
         [HttpPut("restore/{id}")]
         public TPrimaryDTO Restore(TPrimaryKey id)
         {
-            var toRestore = this.service.Restore(id);
+            bool toRestore = this.service.Restore(id);
 
-            if (toRestore == null)
+            if (!toRestore)
             {
                 Response.StatusCode = StatusCodes.Status404NotFound;
             }
 
-            var result = this.service.GetByID(id);
+            TPrimaryDTO result = this.service.GetByID(id);
+            if (result == null)
+            {
+                Response.StatusCode = StatusCodes.Status404NotFound;
+            }
 
             return result;
         }

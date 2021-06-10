@@ -52,7 +52,6 @@ namespace GrandRepairAuto.Data
                 .HasOne<Order>(c => c.Order)
                 .WithMany(o => o.CustomerServices)
                 .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
-           
         }
 
         public DbSet<Vehicle> Vehicles { get; set; }

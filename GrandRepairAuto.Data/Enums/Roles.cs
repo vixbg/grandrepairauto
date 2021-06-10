@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GrandRepairAuto.Data.Enums
+﻿namespace GrandRepairAuto.Data.Enums
 {
     public static class Roles
     {
@@ -11,5 +7,7 @@ namespace GrandRepairAuto.Data.Enums
         public const string Customer = "Customer";
 
         public const string AdminsAndEmployees = "Administrator, Employee";
+
+        public static readonly string[] AllRoles = new[] { Admin, Employee, Customer };
     }
 }

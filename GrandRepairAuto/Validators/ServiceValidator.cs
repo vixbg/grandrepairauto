@@ -13,10 +13,6 @@ namespace GrandRepairAuto.Web.Validators
                 .NotEmpty()
                 .Length(5, 100);
 
-            RuleFor(s => s.FixedPrice)
-                .NotEmpty()
-                .GreaterThan(0);
-
             RuleFor(s => s.PricePerHour)
                 .NotEmpty()
                 .GreaterThan(0);

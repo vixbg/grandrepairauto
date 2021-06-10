@@ -29,7 +29,6 @@ namespace GrandRepairAuto.Web.ViewControllers
             var servicesVMs = mapper.Map<List<ServiceVM>>(services);
             servicesVMs.ForEach(vm => vm.Currency = currency);
 
-
             return View(servicesVMs);
         }
 
@@ -41,6 +40,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpPost]
         public IActionResult Create(ServiceVM service)
         {
+            if (service == null)
+            {
+                return BadRequest();
+            }
+
             ServiceCreateDTO createDTO = mapper.Map<ServiceCreateDTO>(service);
             serviceService.Create(createDTO);
 
@@ -51,6 +55,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         public IActionResult Update(int id)
         {
             var getDTO = serviceService.GetByID(id);
+            if (getDTO == null)
+            {
+                return NotFound();
+            }
+
             var viewModel = mapper.Map<ServiceVM>(getDTO);
 
             return View(viewModel);
@@ -60,7 +69,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         public IActionResult Update(ServiceVM service, int id)
         {
             ServiceUpdateDTO updateDTO = mapper.Map<ServiceUpdateDTO>(service);
-            serviceService.Update(updateDTO, id);
+            ServiceDTO updatedServiceDTO = serviceService.Update(updateDTO, id);
+            if (updatedServiceDTO == null)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction("Index");
         }
@@ -68,7 +81,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            serviceService.Delete(id);
+            bool isDeleted = serviceService.Delete(id);
+            if (!isDeleted)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction("Index");
         }

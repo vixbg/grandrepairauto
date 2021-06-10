@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using GrandRepairAuto.Data.Enums;
-using GrandRepairAuto.Data.Models;
-using GrandRepairAuto.Services;
 using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.VehiclesDTOs;
 using GrandRepairAuto.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GrandRepairAuto.Web.ViewControllers
 {
@@ -23,7 +21,12 @@ namespace GrandRepairAuto.Web.ViewControllers
         private readonly IUserService userService;
         private IMapper mapper;
 
-        public VehiclesController(IVehicleWithModelAndMakeService vehicleService, IVehicleModelService vehicleModelService, IManufacturerService manufacturerService, IUserService userService, IMapper mapper)
+        public VehiclesController(
+            IVehicleWithModelAndMakeService vehicleService,
+            IVehicleModelService vehicleModelService,
+            IManufacturerService manufacturerService,
+            IUserService userService,
+            IMapper mapper)
         {
             this.vehicleService = vehicleService;
             this.vehicleModelService = vehicleModelService;
@@ -33,10 +36,9 @@ namespace GrandRepairAuto.Web.ViewControllers
         }
 
         public IActionResult Index()
-        {            
+        {
             var vehicles = vehicleService.GetAll();
             var vehiclesVMs = mapper.Map<List<VehicleVM>>(vehicles);
-
             return View(vehiclesVMs);
         }
 
@@ -51,6 +53,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpPost]
         public IActionResult Create(VehicleVM vehicle)
         {
+            if (vehicle == null)
+            {
+                return BadRequest();
+            }
+
             VehicleWithModelAndMakeCreateDTO createDTO = mapper.Map<VehicleWithModelAndMakeCreateDTO>(vehicle);
             vehicleService.Create(createDTO);
 
@@ -61,6 +68,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         public async Task<IActionResult> Update(int id)
         {
             var getDTO = vehicleService.GetByID(id);
+            if (getDTO == null)
+            {
+                return NotFound();
+            }
+
             var viewModel = mapper.Map<VehicleVM>(getDTO);
             ViewBag.Owners = (await userService.GetCustomersAsync()).Select(c => mapper.Map<UserVM>(c));
 
@@ -70,8 +82,17 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpPost]
         public IActionResult Update(VehicleVM vehicle, int id)
         {
+            if (vehicle == null)
+            {
+                return BadRequest();
+            }
+
             VehicleWithModelAndMakeUpdateDTO updateDTO = mapper.Map<VehicleWithModelAndMakeUpdateDTO>(vehicle);
-            vehicleService.Update(updateDTO, id);
+            VehicleWithModelAndMakeDTO updatedVehicleDTO = vehicleService.Update(updateDTO, id);
+            if (updatedVehicleDTO == null)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction("Index");
         }
@@ -79,7 +100,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            vehicleService.Delete(id);
+            bool isDeleted = vehicleService.Delete(id);
+            if (!isDeleted)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction("Index");
         }

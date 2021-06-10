@@ -1,17 +1,14 @@
-﻿using System.Security.Claims;
+﻿using AutoMapper;
 using GrandRepairAuto.Data.Models;
+using GrandRepairAuto.Models;
+using GrandRepairAuto.Services.Contracts;
+using GrandRepairAuto.Services.Models.UserDTOs;
 using GrandRepairAuto.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
-using GrandRepairAuto.Controllers;
-using GrandRepairAuto.Models;
-using GrandRepairAuto.Services.Contracts;
-using IdentityModel;
-using Microsoft.Extensions.Options;
-using GrandRepairAuto.Services.Models.UserDTOs;
-using AutoMapper;
 
 namespace GrandRepairAuto.Web.ViewControllers
 {
@@ -42,6 +39,7 @@ namespace GrandRepairAuto.Web.ViewControllers
                     return RedirectToAction("Index", "Home");
                 return Redirect(returnUrl);
             }
+
             return View(new LoginInputModel { ReturnUrl = returnUrl });
         }
 
@@ -104,17 +102,17 @@ namespace GrandRepairAuto.Web.ViewControllers
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                return View(new InitialPasswordInputVM { IsValid =  false });
+                return View(new InitialPasswordInputVM { IsValid = false });
             }
 
             if (!(await userManager.VerifyUserTokenAsync(user, "Default", "EmailConfirmation", loginToken)))
             {
-                return View(new InitialPasswordInputVM { IsValid =  false });
+                return View(new InitialPasswordInputVM { IsValid = false });
             }
-            
+
             // userManager.ResetPasswordAsync()
 
-            return View(new InitialPasswordInputVM { IsValid = true, Email = email, Token = loginToken});
+            return View(new InitialPasswordInputVM { IsValid = true, Email = email, Token = loginToken });
         }
 
         [HttpPost("InitialLogin")]
@@ -124,18 +122,18 @@ namespace GrandRepairAuto.Web.ViewControllers
             var user = await userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                return RedirectToAction("InitialLogin", new {email = model.Email, Token = model.Token});
+                return RedirectToAction("InitialLogin", new { email = model.Email, Token = model.Token });
             }
 
             if (!(await userManager.VerifyUserTokenAsync(user, "Default", "EmailConfirmation", model.Token)))
             {
-                return RedirectToAction("InitialLogin", new {email = model.Email, Token = model.Token});
+                return RedirectToAction("InitialLogin", new { email = model.Email, Token = model.Token });
             }
 
             if (model.Password != model.RePassword)
             {
                 ModelState.AddModelError("RePassword", "Passwords do not match");
-                return RedirectToAction("InitialLogin", new {email = model.Email, Token = model.Token});
+                return RedirectToAction("InitialLogin", new { email = model.Email, Token = model.Token });
             }
 
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
@@ -143,7 +141,7 @@ namespace GrandRepairAuto.Web.ViewControllers
             token = await userManager.GenerateEmailConfirmationTokenAsync(user);
             await userManager.ConfirmEmailAsync(user, token);
 
-            return await Login(new LoginInputModel {Password = model.Password, Username = model.Email});
+            return await Login(new LoginInputModel { Password = model.Password, Username = model.Email });
         }
 
         [HttpGet]
@@ -157,7 +155,17 @@ namespace GrandRepairAuto.Web.ViewControllers
         public async Task<IActionResult> ForgottenPassword(PasswordResetVM model)
         {
             var user = await userManager.FindByEmailAsync(model.Email);
+            if (user==null)
+            {
+                return BadRequest();
+            }
+
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest();
+            }
+
             var link = $"http://{Request.Host}/Account/InitialLogin?loginToken={HttpUtility.UrlEncode(token)}&email={HttpUtility.UrlEncode(user.Email)}";
 
             await emailService.SendForgottenPasswordEmailAsync(user.Email, $"{user.FirstName} {user.LastName}", link);
@@ -174,7 +182,17 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpGet("Profile/{email}")]
         public async Task<IActionResult> Profile(string email)
         {
+            if (string.IsNullOrEmpty(email))
+            {
+                return BadRequest();
+            }
+
             UserDTO user = await userService.GetByEmailAsync(email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             UserVM userVM = mapper.Map<UserVM>(user);
 
             return View(userVM);

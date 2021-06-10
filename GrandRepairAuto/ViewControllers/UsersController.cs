@@ -39,6 +39,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(UserVM user)
         {
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
             UserCreateDTO createDTO = mapper.Map<UserCreateDTO>(user);
             await userService.CreateAsync(createDTO);
 
@@ -49,6 +54,11 @@ namespace GrandRepairAuto.Web.ViewControllers
         public async Task<IActionResult> Update(int id)
         {
             UserDTO getDTO = await userService.GetByIDAsync(id);
+            if (getDTO == null)
+            {
+                return NotFound();
+            }
+
             UserVM viewModel = mapper.Map<UserVM>(getDTO);
 
             return View(viewModel);
@@ -57,16 +67,30 @@ namespace GrandRepairAuto.Web.ViewControllers
         [HttpPost]
         public async Task<IActionResult> UpdateAsync(UserVM user, int id)
         {
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
             UserUpdateDTO updateDTO = mapper.Map<UserUpdateDTO>(user);
-            await userService.UpdateAsync(updateDTO, id);
+            UserDTO updatedUserDTO = await userService.UpdateAsync(updateDTO, id);
+            if (updatedUserDTO == null)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction("Index");
-        }        
+        }
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            await userService.Delete(id);
+            bool isDeleted = await userService.Delete(id);
+            if (!isDeleted)
+            {
+                return BadRequest();
+            }
+
             return RedirectToAction("Index");
         }
     }

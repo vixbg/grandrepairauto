@@ -9,6 +9,7 @@ using GrandRepairAuto.Services.Contracts;
 using GrandRepairAuto.Services.Models.VehiclesDTOs;
 using GrandRepairAuto.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GrandRepairAuto.Web.ViewControllers
@@ -61,6 +62,10 @@ namespace GrandRepairAuto.Web.ViewControllers
         public async Task<IActionResult> Update(int id)
         {
             var getDTO = vehicleService.GetByID(id);
+            if (getDTO == null)
+            {
+                return NotFound();
+            }
             var viewModel = mapper.Map<VehicleVM>(getDTO);
             ViewBag.Owners = (await userService.GetCustomersAsync()).Select(c => mapper.Map<UserVM>(c));
 

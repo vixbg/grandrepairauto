@@ -40,7 +40,7 @@
                 </div>
             }
 
-            @if (User.IsInRole(Roles.Employee) || User.IsInRole(Roles.Admin) && Model.Status < OrderStatuses.ReadyForPickup)
+            @if ((User.IsInRole(Roles.Employee) || User.IsInRole(Roles.Admin)) && Model.Status < OrderStatuses.ReadyForPickup)
             {
                 <div class="container" style="padding-top:15px">
                     <form method="post" asp-action="AddService" asp-route-id="@Model.Id">

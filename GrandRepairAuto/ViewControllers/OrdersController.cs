@@ -167,7 +167,13 @@ namespace GrandRepairAuto.Web.ViewControllers
                 return NotFound();
             }
 
+            if (orderDTO.Status >= OrderStatuses.Closed)
+            {
+                return BadRequest();
+            }
+
             OrderUpdateDTO orderUpdateDTO = mapper.Map<OrderUpdateDTO>(orderDTO);
+
             orderUpdateDTO.Status = orderDTO.Status + 1;
             OrderDTO updatedOrderDTO = orderservice.Update(orderUpdateDTO, id);
             if (updatedOrderDTO == null)
@@ -196,6 +202,11 @@ namespace GrandRepairAuto.Web.ViewControllers
             if (orderDTO == null)
             {
                 return NotFound();
+            }
+
+            if (orderDTO.Status <= OrderStatuses.New)
+            {
+                return BadRequest();
             }
 
             OrderUpdateDTO orderUpdateDTO = mapper.Map<OrderUpdateDTO>(orderDTO);
